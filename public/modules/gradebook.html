@@ -1,0 +1,93 @@
+<table id="layout">
+	<tr><td>
+			<b>The following is the specification:</b>
+			<ul>
+				<li>There are many types of Subjects.</li>
+				<li>A Student is a type of Subject.</li>
+				<li>A Professor is a type of Subject.</li>
+				<br/>
+				<li>A Class consists of:</li>
+				<ul>
+					<li><button id="b1" type="button" style="display:inline;">TAs, who are a set of Students.</button></li>
+					<li><button id="b2" type="button" style="display:inline;">instructor, who is a single Professor.</button></li>
+				</ul>
+				<br/>
+				<li>An Assignment consists of:</li>
+				<ul>
+					<li><button id="b3" type="button" style="display:inline;">class, who is a single Class.</button></li>
+					<li><button id="b4" type="button" style="display:inline;">students, who is one or more Students.</button></li>
+				</ul>
+				<br/>
+				<li>A Subject s can grade for Assignment a if:</li>
+				<ul>
+					<li><button id="b5" type="button" style="display:inline;">s is one of the TAs of the class of a</button></li>
+					<li><button id="b6" type="button" style="display:inline;">or s is the instructor of the class of a.</button></li>
+				</ul>
+			</ul>
+	</td>
+	<td>
+		<div id="counterexamples">
+				<img src="/modules/img/gradebook/1.png">
+				<img src="/modules/img/gradebook/2.png">
+				<img src="/modules/img/gradebook/3.png">
+		</div>
+</tr></td>
+</table>
+			<b>Our assertion that no one can grade their own assignment is failing...</b>
+			<ul>
+				<li>For every Subject s and Assignment a:</li>
+				<ul>
+					<li>Subject s did not submit for Assignment a</li>
+					<li>or Subject s cannot grade for Assignment a.</li>
+				</ul>
+			</ul>
+<b>Please click on the buggy part of the spec. That is, the part of the spec that caused the assertion to fail, and proliferated the counterexamples.</b>
+</div>			
+<div id="feedback"></div>
+
+
+
+<style>
+  #layout {
+  	border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 860px;
+  }
+  #counterexamples {
+    overflow-y: scroll;
+    width:480px;
+    height:480px;
+  }
+  img{
+  	max-width: 100%;
+  }
+</style>
+
+<script>
+  function init() {
+    experimentr.hideNext();
+    d3.select('#b1').on('click', foo);
+    d3.select('#b2').on('click', foo);
+    d3.select('#b3').on('click', foo);
+    d3.select('#b4').on('click', foo);
+    d3.select('#b5').on('click', bar);
+    d3.select('#b6').on('click', foo);
+  }
+
+  function foo() {
+  	d3.select('#feedback').text("Your selection is not the buggy part of the spec. Please try again.");
+  	d3.select('#feedback').style("color", "red");
+  	d3.select('#'+d3.event.target.id).attr("disabled", true);
+  	d3.select('#'+d3.event.target.id).style("color", "red");
+  }
+
+  function bar() {
+  	d3.select('#feedback').text("Correct, you selected the buggy part of the spec! Press next to continue.");
+  	d3.select('#feedback').style("color", "green");
+  	d3.select('#'+d3.event.target.id).attr("disabled", true);
+  	d3.select('#'+d3.event.target.id).style("color", "green");
+  	experimentr.showNext();
+  	d3.select('#next-button').attr('disabled', null);
+  }
+  init();
+</script>

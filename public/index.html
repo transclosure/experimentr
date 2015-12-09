@@ -37,9 +37,26 @@
 <body></body>
 
 <script>
-experimentr.sequence([
-  'modules/consent.html',
-  'modules/hit.html',
-  'modules/debrief.html'
-]).start();
+experimentr.sequence(getsequence()).start();
+
+function getsequence() {
+  var pre = ['modules/consent.html'];
+  var tasks = shuffle(['modules/gradebook.html']);
+  var post = ['modules/debrief.html'];
+  return (pre.concat(tasks)).concat(post);
+}
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
 </script>
