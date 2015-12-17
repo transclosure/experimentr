@@ -1,0 +1,136 @@
+<div id="spec"><p>
+	We consider 3 classes:
+	<ul>
+		<li><b>Persons</b></li>
+		<li><b>Classes</b></li>
+		<li><b>Assignments</b></li>
+	</ul>
+	The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses:
+	<ul>
+		<li><b>Students</b></li>
+		<li><b>Professors</b></li>
+	</ul>
+	We make the following assumptions:
+	<ol>
+		<li id="ab1">For each <b>Class</b> there is a single <b>Professor</b> who is the <i>instructor_of</i> it.</li>
+		<li id="ab2">For each <b>Class</b> there is a set of <b>Students</b> who are the <i>assistants_for</i> it.</li>
+		<li id="ab3">For each <b>Assignment</b> there is a single <b>Class</b> <i>associated_with</i> it.</li>
+		<li id="ab4">For each <b>Assignment</b> there is a set of <b>Students</b> <i>assigned_to</i> it.</li>
+		<li id="ab5">A <b>Person</b> <i>can_grade</i> an <b>Assignment</b> only if either the <b>Person</b> is an <i>assistant_for</i> the <b>Class</b> <i>associated_with</i> the <b>Assignment</b> or the <b>Person</b> is the <b>Professor</b> who is the <i>instructor_of</i> that <b>Class</b>.</li>
+	</ol>
+</p></div>
+<div id="assert">
+	<p>Here is the assertion that we thought would be true:<p>
+	<p>There cannot exist a <b>Person</b> who <i>can_grade</i> an <b>Assignment</b> <i>assigned_to</i> them.</p>
+</div>
+<div id="question">
+	<p>Please select the buggy part of the specification (the part of the specification that caused the assertion to fail) from the options below.</p>
+	<div style="text-align:center;">
+		<button id="b1">1</button>
+		<button id="b2">2</button>
+		<button id="b3">3</button>
+		<button id="b4">4</button>
+		<button id="b5">5</button>
+	</div>
+	<p id="wrong">Your selection is not the buggy part of the spec. Please try again.</p>
+	<p id="right">Correct! Press next to proceed to the next situation.</p>
+</div>
+<div id="scenarios">
+	<div style="text-align:center;">
+		<button id="prev">prev</button>
+		<button id="num" disabled="true">0</button>
+		<button disabled="true">of</button>
+		<button id="all" disabled="true">1</button>
+		<button id="next">next</button>
+	</div>
+	<div id="s1" style="display:none;">
+		<ul>
+			<li><b>Student_0</b> is <i>assistant_for</i> <b>Class_0</b>.</li>
+			<li><b>Professor_0</b> is <i>instructor_of</i> <b>Class_0</b>.</li>
+			<li><b>Assignment_0</b> is <i>associated_with</i> <b>Class_0</b>.</li>
+			<li><b>Assignment_0</b> is <i>assigned_to</i> <b>Student_0</b>.</li>
+		</ul>
+		One way to see the failure of the assertion: <b>Student_0</b> <i>can_grade</i> </b>Assignment_0</b>.
+	</div>
+</div>
+
+<style>
+#spec, #assert, #question, #scenarios {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: inline-block;
+    height: 50%;
+    width: 45%;
+    padding: 15px;
+}
+button{
+	font-size: large;
+  }
+#wrong {
+	color: red;
+	visibility: hidden;
+}
+#right {
+	color: green;
+	visibility: hidden;
+}
+</style>
+
+<script>
+  function init() {
+    experimentr.hideNext();
+    next();
+    d3.select('#prev').on('click', prev);
+    d3.select('#next').on('click', next)
+    d3.selectAll('button').on('mouseover', fizz);
+    d3.selectAll('button').on('mouseout', buzz);
+    d3.select('#b1').on('click', foo);
+    d3.select('#b2').on('click', foo);
+    d3.select('#b3').on('click', foo);
+    d3.select('#b4').on('click', foo);
+    d3.select('#b5').on('click', bar);
+  }
+  function prev() {
+  	var num = Number(d3.select('#num').text());
+  	if(num > 1) {
+  		d3.select('#s'+num).style('display', 'none');
+  		num--;
+  		d3.select('#s'+num).style('display', null);
+  		d3.select('#num').text(""+num);
+  	}
+  }
+  function next() {
+  	var num = Number(d3.select('#num').text());
+  	var all = Number(d3.select('#all').text());
+  	if(num < all) {
+  		d3.select('#s'+num).style('display', 'none');
+  		num++;
+  		d3.select('#s'+num).style('display', null);
+  		d3.select('#num').text(""+num);
+  	}
+  }
+  function fizz() {
+  	d3.select('#a'+d3.event.target.id).style("background-color", "gray");
+  }
+  function buzz() {
+  	d3.select('#a'+d3.event.target.id).style("background-color", null);
+  }
+  function foo() {
+  	d3.select('#wrong').style("visibility", "visible");
+  	d3.select('#right').style("visibility", "hidden");
+  	d3.select('#'+d3.event.target.id).attr("disabled", true);
+  	d3.select('#'+d3.event.target.id).style("background-color", "red");
+  	d3.select('#a'+d3.event.target.id).style("background-color", "red");
+  }
+  function bar() {
+  	d3.select('#right').style("visibility", "visible");
+  	d3.select('#wrong').style("visibility", "hidden");
+  	d3.select('#'+d3.event.target.id).attr("disabled", true);
+  	d3.selectAll('button').attr("disabled", true);
+  	d3.select('#'+d3.event.target.id).style("background-color", "green");
+  	d3.select('#a'+d3.event.target.id).style("background-color", "green");
+  	experimentr.showNext();
+  	d3.select('#next-button').attr('disabled', null);
+  }
+  init();
+</script>

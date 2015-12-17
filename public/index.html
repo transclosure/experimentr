@@ -41,9 +41,10 @@ experimentr.sequence(getsequence()).start();
 
 function getsequence() {
   var pre = ['modules/consent.html'];
-  var tasks = shuffle(['modules/gradebook.html']);
+  var tasks = shuffle(['modules/gradebook_s1min.html']);
   var post = ['modules/debrief.html'];
-  return (pre.concat(tasks)).concat(post);
+  return tasks;
+  //return (pre.concat(tasks)).concat(post);
 }
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
