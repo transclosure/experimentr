@@ -1,21 +1,25 @@
-<div id="spec">
+<div id="specification">
 	<h1>Specification</h1>
-	<p>We consider 3 classes: <b>Persons, Classes, and Assignments.</b></p>
-	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Students, and Professors.</b></p>
-	<p>We make the following assumptions:
-		<ol>
-			<li id="ab1">For each <b>Class</b> there is a single <b>Professor</b> who is the <i>instructor_of</i> it.</li>
-			<li id="ab2">For each <b>Class</b> there is a set of <b>Students</b> who are the <i>assistants_for</i> it.</li>
-			<li id="ab3">For each <b>Assignment</b> there is a single <b>Class</b> <i>associated_with</i> it.</li>
-			<li id="ab4">For each <b>Assignment</b> there is a set of <b>Students</b> <i>assigned_to</i> it.</li>
-			<li id="ab5">A <b>Person</b> <i>can_grade</i> an <b>Assignment</b> only if either the <b>Person</b> is an <i>assistant_for</i> the <b>Class</b> <i>associated_with</i> the <b>Assignment</b> or the <b>Person</b> is the <b>Professor</b> who is the <i>instructor_of</i> that <b>Class</b>.</li>
-		</ol>
-	</p>
+  <div id="spec">
+  	<p>We consider 3 classes: <b>Persons, Classes, and Assignments.</b></p>
+  	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Students, and Professors.</b></p>
+  	<p>We make the following assumptions:
+  		<ol>
+  			<li id="ab1">For each <b>Class</b> there is a single <b>Professor</b> who is the <i>instructor_of</i> it.</li>
+  			<li id="ab2">For each <b>Class</b> there is a set of <b>Students</b> who are the <i>assistants_for</i> it.</li>
+  			<li id="ab3">For each <b>Assignment</b> there is a single <b>Class</b> <i>associated_with</i> it.</li>
+  			<li id="ab4">For each <b>Assignment</b> there is a set of <b>Students</b> <i>assigned_to</i> it.</li>
+  			<li id="ab5">A <b>Person</b> <i>can_grade</i> an <b>Assignment</b> only if either the <b>Person</b> is an <i>assistant_for</i> the <b>Class</b> <i>associated_with</i> the <b>Assignment</b> or the <b>Person</b> is the <b>Professor</b> who is the <i>instructor_of</i> that <b>Class</b>.</li>
+  		</ol>
+  	</p>
+  </div>
 </div>
-<div id="assert">
+<div id="assertion">
 	<h1>Assertion</h1>
-	Here is the assertion that we thought would be true:
-	<p>There cannot exist a <b>Person</b> who <i>can_grade</i> an <b>Assignment</b> <i>assigned_to</i> them.</p>
+  <div id="assert">
+  	Here is the assertion that we thought would be true:
+  	<p>There cannot exist a <b>Person</b> who <i>can_grade</i> an <b>Assignment</b> <i>assigned_to</i> them.</p>
+  </div>
 </div>
 <div id="scenarios">
 	<h1>Counterexamples</h1>
@@ -37,32 +41,42 @@
 			One way to see the failure of the assertion: <b>Student0</b> <i>can_grade</i> <b>Assignment0</b>.
 		</div>
 	</div>
-	</div>
 </div>
 <div id="question">
 	<h1>Question</h1>
-	<p>Please select the buggy part of the specification (the part of the specification that caused the assertion to fail) from the options below.</p>
-	<div style="text-align:center;">
-		<button id="b1">1</button>
-		<button id="b2">2</button>
-		<button id="b3">3</button>
-		<button id="b4">4</button>
-		<button id="b5">5</button>
-	</div>
-	<p id="feedback"></p>
+  <div id="quest">
+  	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
+  	<div style="text-align:center;">
+  		<button id="b1">1</button>
+  		<button id="b2">2</button>
+  		<button id="b3">3</button>
+  		<button id="b4">4</button>
+  		<button id="b5">5</button>
+  	</div>
+	  <p id="feedback"></p>
+  </div>
 </div>
 
 <style>
-#spec, #assert, #question, #scenarios, #scenario {
-    border: 1px solid #ccc;
+#specification, #assertion, #question, #scenarios {
+    border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    background: #CCC;
 }
-#spec {
+#spec, #assert, #quest, #scenario {
+  border: 1px solid #AAA;
+  border-radius: 5px;
+  padding: 5px;
+  background: #FFF;
+}
+#specification {
 	width: 55%;
 	float:left;
 }
-#assert{
+#assertion{
 	width: 40%;
 	float: right;
 }
@@ -110,23 +124,23 @@
   	}
   }
   function fizz() {
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#ccc");
+  	d3.select('#a'+d3.event.target.id).style("background-color", "#CCC");
   }
   function buzz() {
   	d3.select('#a'+d3.event.target.id).style("background-color", null);
   }
   function foo() {
-  	d3.select('#feedback').text("Your selection is not the buggy part of the spec. Please try again.");
+  	d3.select('#feedback').text("Your selection is not the part of the specification that requires changes. Please try again.");
   	d3.select('#'+d3.event.target.id).attr("disabled", true);
-  	d3.select('#'+d3.event.target.id).style("background-color", "#FF6666");
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#FF6666");
+  	d3.select('#'+d3.event.target.id).style("background-color", "#FAA");
+  	d3.select('#a'+d3.event.target.id).style("background-color", "#FAA");
   }
   function bar() {
   	d3.select('#feedback').text("Correct! Press next to proceed to the next situation.")
   	d3.select('#'+d3.event.target.id).attr("disabled", true);
   	d3.selectAll('button').attr("disabled", true);
-  	d3.select('#'+d3.event.target.id).style("background-color", "#66FF66");
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#66FF66");
+  	d3.select('#'+d3.event.target.id).style("background-color", "#AFA");
+  	d3.select('#a'+d3.event.target.id).style("background-color", "#AFA");
   	experimentr.showNext();
   	d3.select('#next-button').attr('disabled', null);
   }
