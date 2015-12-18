@@ -16,6 +16,27 @@
     margin: 1em auto 4em auto;
     width: 960px;
   }
+  button {
+  font-size: large;
+}
+h1 {
+  font-size: 150%;
+    margin-top: 0em;
+    margin-bottom: .5em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: normal;
+}
+ul, ol {
+  margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0em;
+    margin-right: 0em;
+    padding-left: 1.5em;
+}
+i {
+  text-shadow : 0 0 0 #333;
+}
   #experimentr {
     margin: 4em auto 1em auto;
     width: 720px;
@@ -43,8 +64,8 @@ function getsequence() {
   var pre = ['modules/consent.html'];
   var tasks = shuffle(['modules/gradebook_s1min.html']);
   var post = ['modules/debrief.html'];
-  return tasks;
-  //return (pre.concat(tasks)).concat(post);
+ // return tasks;
+  return (pre.concat(tasks)).concat(post);
 }
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
