@@ -1,15 +1,15 @@
 <div id="specification">
 	<h1>Specification</h1>
   <div id="spec">
-  	<p>We consider 3 classes: <b>Persons, Classes, and Assignments.</b></p>
-  	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Students, and Professors.</b></p>
+  	<p>We consider 3 classes: <b>Persons, Departments, and Salaries.</b></p>
+  	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Employees, and Bosses.</b></p>
   	<p>We make the following assumptions:
   		<ol>
-  			<li>For each <b>Class</b> there is <span id="ab1">a single</span> <b>Professor</b> who is the <i>instructor_of</i> it.</li>
-  			<li>For each <b>Class</b> there is <span id="ab2">a set of</span> <b>Students</b> who are the <i>assistants_for</i> it.</li>
-  			<li>For each <b>Assignment</b> there is <span id="ab3">a single</span> <b>Class</b> <i>associated_with</i> it.</li>
-  			<li>For each <b>Assignment</b> there is <span id="ab4">a set of</span> <b>Students</b> <i>assigned_to</i> it.</li>
-  			<li>A <b>Person</b> <i>can_grade</i> an <b>Assignment</b> only if either <span id="ab5a">the <b>Person</b> is an <i>assistant_for</i> the <b>Class</b> <i>associated_with</i> the <b>Assignment</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Professor</b> who is the <i>instructor_of</i> that <b>Class</b>.</span></li>
+  			<li>For each <b>Department</b> there is <span id="ab1">a single</span> <b>Boss</b> who is the <i>head_of</i> it.</li>
+  			<li>For each <b>Department</b> there is <span id="ab2">a set of</span> <b>Employees</b> who are the <i>managers_for</i> it.</li>
+  			<li>For each <b>Salary</b> there is <span id="ab3">a single</span> <b>Department</b> <i>associated_with</i> it.</li>
+  			<li>For each <b>Salary</b> there is <span id="ab4">a set of</span> <b>Employees</b> <i>assigned_to</i> it.</li>
+  			<li>A <b>Person</b> <i>can_raise</i> a <b>Salary</b> only if either <span id="ab5a">the <b>Person</b> is a <i>manager_for</i> the <b>Department</b> <i>associated_with</i> the <b>Salary</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Boss</b> who is the <i>head_of</i> that <b>Department</b>.</span></li>
   		</ol>
   	</p>
   </div>
@@ -18,7 +18,7 @@
 	<h1>Assertion</h1>
   <div id="assert">
   	Here is the assertion that we thought would be true:
-  	<p>There cannot exist a <b>Person</b> who <i>can_grade</i> an <b>Assignment</b> <i>assigned_to</i> them.</p>
+  	<p>There cannot exist a <b>Person</b> who <i>can_raise</i> a <b>Salary</b> <i>assigned_to</i> them.</p>
   </div>
 </div>
 <div id="scenarios">
@@ -27,19 +27,40 @@
 		<button id="prev">prev</button>
 		<span id="num">0</span>
 		<span>of</span>
-		<span id="all">1</span>
+		<span id="all">3</span>
 		<button id="next">next</button>
 	</div>
 	<div id="scenario">
 		<div id="s1" style="display:none;">
 			<ul>
-				<li><b>Student0</b> is an <i>assistant_for</i> <b>Class0</b>.</li>
-				<li><b>Professor0</b> is the <i>instructor_of</i> <b>Class0</b>.</li>
-				<li><b>Assignment0</b> is <i>associated_with</i> <b>Class0</b>.</li>
-				<li><b>Assignment0</b> is <i>assigned_to</i> <b>Student0</b>.</li>
+				<li><b>Employee1</b> is a <i>manager_for</i> <b>Department0</b>.</li>
+        <li><b>Employee2</b> is a <i>manager_for</i> <b>Department0</b>.</li>
+				<li><b>Boss0</b> is the <i>head_of</i> <b>Department0</b>.</li>
+				<li><b>Salary0</b> is <i>associated_with</i> <b>Department0</b>.</li>
+        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee1</b>.</li>
 			</ul>
-			One way to see the failure of the assertion: <b>Student0</b> <i>can_grade</i> <b>Assignment0</b>.
+			One way to see the failure of the assertion: <b>Employee1</b> <i>can_raise</i> <b>Salary0</b>.
 		</div>
+    <div id="s2" style="display:none;">
+      <ul>
+        <li><b>Employee0</b> is a <i>manager_for</i> <b>Department0</b>.</li>
+        <li><b>Employee1</b> is a <i>manager_for</i> <b>Department0</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department0</b>.</li>
+        <li><b>Salary0</b> is <i>associated_with</i> <b>Department0</b>.</li>
+        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee0</b>.</li>
+        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee1</b>.</li>
+        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee0</b>.</li>
+        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee1</b>.</li>
+      </ul>
+      One way to see the failure of the assertion: <b>Employee1</b> <i>can_raise</i> <b>Salary0</b>.
+    </div>
+    <div id="s3" style="display:none;">
+      <ul>
+        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee0</b>.</li>
+        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee1</b>.</li>
+      </ul>
+      One way to see the failure of the assertion: <b>Employee1</b> <i>can_raise</i> <b>Salary0</b>.
+    </div>
 	</div>
 </div>
 <div id="question">
