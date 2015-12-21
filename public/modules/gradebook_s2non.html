@@ -7,9 +7,9 @@
   		<ol>
   			<li>For each <b>Department</b> there is <span id="ab1">a single</span> <b>Boss</b> who is the <i>head_of</i> it.</li>
   			<li>For each <b>Department</b> there is <span id="ab2">a set of</span> <b>Employees</b> who are the <i>managers_for</i> it.</li>
-  			<li>For each <b>Salary</b> there is <span id="ab3">a single</span> <b>Department</b> <i>associated_with</i> it.</li>
-  			<li>For each <b>Salary</b> there is <span id="ab4">a set of</span> <b>Employees</b> <i>assigned_to</i> it.</li>
-  			<li>A <b>Person</b> <i>can_raise</i> a <b>Salary</b> only if either <span id="ab5a">the <b>Person</b> is a <i>manager_for</i> the <b>Department</b> <i>associated_with</i> the <b>Salary</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Boss</b> who is the <i>head_of</i> that <b>Department</b>.</span></li>
+  			<li>For each <b>Salary</b> there is <span id="ab3">a single</span> <b>Department</b> <i>affiliated_with</i> it.</li>
+  			<li>For each <b>Salary</b> there is <span id="ab4">a set of</span> <b>Employees</b> that it is <i>paid_to</i>.</li>
+  			<li>A <b>Person</b> <i>can_raise</i> a <b>Salary</b> only if either <span id="ab5a">the <b>Person</b> is a <i>manager_for</i> the <b>Department</b> <i>affiliated_with</i> the <b>Salary</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Boss</b> who is the <i>head_of</i> that <b>Department</b>.</span></li>
   		</ol>
   	</p>
   </div>
@@ -18,7 +18,7 @@
 	<h1>Assertion</h1>
   <div id="assert">
   	Here is the assertion that we thought would be true:
-  	<p>There cannot exist a <b>Person</b> who <i>can_raise</i> a <b>Salary</b> <i>assigned_to</i> them.</p>
+  	<p>There cannot exist a <b>Person</b> who <i>can_raise</i> a <b>Salary</b> <i>paid_to</i> them.</p>
   </div>
 </div>
 <div id="scenarios">
@@ -32,34 +32,59 @@
 	</div>
 	<div id="scenario">
 		<div id="s1" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee1</b> <i>can_raise</i> <b>Salary2</b>.
 			<ul>
-				<li><b>Employee1</b> is a <i>manager_for</i> <b>Department0</b>.</li>
-        <li><b>Employee2</b> is a <i>manager_for</i> <b>Department0</b>.</li>
-				<li><b>Boss0</b> is the <i>head_of</i> <b>Department0</b>.</li>
-				<li><b>Salary0</b> is <i>associated_with</i> <b>Department0</b>.</li>
-        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee1</b>.</li>
+				<li><b>Employee0</b> is a <i>manager_for</i> <b>Department0</b>.</li>
+        <li><b>Employee0</b> is a <i>manager_for</i> <b>Department1</b>.</li>
+        <li><b>Employee0</b> is a <i>manager_for</i> <b>Department2</b>.</li>
+        <li><b>Employee1</b> is a <i>manager_for</i> <b>Department2</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department0</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department1</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department2</b>.</li>
+        <li><b>Salary0</b> is <i>affiliated_with</i> <b>Department0</b>.</li>
+        <li><b>Salary1</b> is <i>affiliated_with</i> <b>Department1</b>.</li>
+        <li><b>Salary2</b> is <i>affiliated_with</i> <b>Department2</b>.</li>
+        <li><b>Salary0</b> is <i>paid_to</i> <b>Employee0</b>.</li>
+        <li><b>Salary0</b> is <i>paid_to</i> <b>Employee1</b>.</li>
+        <li><b>Salary1</b> is <i>paid_to</i> <b>Employee0</b>.</li>
+        <li><b>Salary1</b> is <i>paid_to</i> <b>Employee1</b>.</li>
+        <li><b>Salary2</b> is <i>paid_to</i> <b>Employee1</b>.</li>
 			</ul>
-			One way to see the failure of the assertion: <b>Employee1</b> <i>can_raise</i> <b>Salary0</b>.
 		</div>
     <div id="s2" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee0</b> <i>can_raise</i> <b>Salary2</b>.
       <ul>
         <li><b>Employee0</b> is a <i>manager_for</i> <b>Department0</b>.</li>
-        <li><b>Employee1</b> is a <i>manager_for</i> <b>Department0</b>.</li>
+        <li><b>Employee0</b> is a <i>manager_for</i> <b>Department1</b>.</li>
+        <li><b>Employee0</b> is a <i>manager_for</i> <b>Department2</b>.</li>
         <li><b>Boss0</b> is the <i>head_of</i> <b>Department0</b>.</li>
-        <li><b>Salary0</b> is <i>associated_with</i> <b>Department0</b>.</li>
-        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee0</b>.</li>
-        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee1</b>.</li>
-        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee0</b>.</li>
-        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee1</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department1</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department2</b>.</li>
+        <li><b>Salary0</b> is <i>affiliated_with</i> <b>Department2</b>.</li>
+        <li><b>Salary1</b> is <i>affiliated_with</i> <b>Department1</b>.</li>
+        <li><b>Salary2</b> is <i>affiliated_with</i> <b>Department0</b>.</li>
+        <li><b>Salary0</b> is <i>paid_to</i> <b>Employee0</b>.</li>
+        <li><b>Salary1</b> is <i>paid_to</i> <b>Employee0</b>.</li>
+        <li><b>Salary2</b> is <i>paid_to</i> <b>Employee0</b>.</li>
       </ul>
-      One way to see the failure of the assertion: <b>Employee1</b> <i>can_raise</i> <b>Salary0</b>.
     </div>
     <div id="s3" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee1</b> <i>can_raise</i> <b>Salary2</b>.
       <ul>
-        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee0</b>.</li>
-        <li><b>Salary0</b> is <i>assigned_to</i> <b>Employee1</b>.</li>
+        <li><b>Employee1</b> is a <i>manager_for</i> <b>Department0</b>.</li>
+        <li><b>Employee1</b> is a <i>manager_for</i> <b>Department1</b>.</li>
+        <li><b>Employee2</b> is a <i>manager_for</i> <b>Department2</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department0</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department1</b>.</li>
+        <li><b>Boss0</b> is the <i>head_of</i> <b>Department2</b>.</li>
+        <li><b>Salary0</b> is <i>affiliated_with</i> <b>Department2</b>.</li>
+        <li><b>Salary1</b> is <i>affiliated_with</i> <b>Department1</b>.</li>
+        <li><b>Salary2</b> is <i>affiliated_with</i> <b>Department2</b>.</li>
+        <li><b>Salary0</b> is <i>paid_to</i> <b>Employee1</b>.</li>
+        <li><b>Salary1</b> is <i>paid_to</i> <b>Employee1</b>.</li>
+        <li><b>Salary2</b> is <i>paid_to</i> <b>Employee0</b>.</li>
+        <li><b>Salary2</b> is <i>paid_to</i> <b>Employee1</b>.</li>
       </ul>
-      One way to see the failure of the assertion: <b>Employee1</b> <i>can_raise</i> <b>Salary0</b>.
     </div>
 	</div>
 </div>
@@ -80,39 +105,6 @@
   </div>
 </div>
 
-<style>
-#specification, #assertion, #question, #scenarios {
-    border: 1px solid #AAA;
-    border-radius: 5px;
-    padding: 5px;
-    margin-top: 5px;
-    margin-right: 5px;
-    background: #CCC;
-}
-#spec, #assert, #quest, #scenario {
-  border: 1px solid #AAA;
-  border-radius: 5px;
-  padding: 5px;
-  background: #FFF;
-}
-#specification {
-	width: 55%;
-	float:left;
-}
-#assertion{
-	width: 40%;
-	float: right;
-}
-#question{
-	width: 55%;
-	float: left;	
-}
-#scenarios {
-	width: 40%;
-	float: right;
-}
-</style>
-
 <script>
   function init() {
     experimentr.hideNext();
@@ -128,46 +120,6 @@
     d3.select('#b5a').on('click', bar);
     d3.select('#b5b').on('click', foo);
     d3.select('#b5c').on('click', foo);
-  }
-  function prev() {
-  	var num = Number(d3.select('#num').text());
-  	if(num > 1) {
-  		d3.select('#s'+num).style('display', 'none');
-  		num--;
-  		d3.select('#s'+num).style('display', null);
-  		d3.select('#num').text(""+num);
-  	}
-  }
-  function next() {
-  	var num = Number(d3.select('#num').text());
-  	var all = Number(d3.select('#all').text());
-  	if(num < all) {
-  		d3.select('#s'+num).style('display', 'none');
-  		num++;
-  		d3.select('#s'+num).style('display', null);
-  		d3.select('#num').text(""+num);
-  	}
-  }
-  function fizz() {
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#FFA");
-  }
-  function buzz() {
-  	d3.select('#a'+d3.event.target.id).style("background-color", null);
-  }
-  function foo() {
-  	d3.select('#feedback').text("Your selection is not the part of the specification that requires changes. Please try again.");
-  	d3.select('#'+d3.event.target.id).attr("disabled", true);
-  	d3.select('#'+d3.event.target.id).style("background-color", "#FAA");
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#FAA");
-  }
-  function bar() {
-  	d3.select('#feedback').text("Correct! Press next to proceed to the next situation.")
-  	d3.select('#'+d3.event.target.id).attr("disabled", true);
-  	d3.selectAll('button').attr("disabled", true);
-  	d3.select('#'+d3.event.target.id).style("background-color", "#AFA");
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#AFA");
-  	experimentr.showNext();
-  	d3.select('#next-button').attr('disabled', null);
   }
   init();
 </script>

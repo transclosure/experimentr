@@ -32,13 +32,13 @@
 	</div>
 	<div id="scenario">
 		<div id="s1" style="display:none;">
+      One way to see the failure of the assertion: <b>Student0</b> <i>can_grade</i> <b>Assignment0</b>.
 			<ul>
 				<li><b>Student0</b> is an <i>assistant_for</i> <b>Class0</b>.</li>
 				<li><b>Professor0</b> is the <i>instructor_of</i> <b>Class0</b>.</li>
 				<li><b>Assignment0</b> is <i>associated_with</i> <b>Class0</b>.</li>
 				<li><b>Assignment0</b> is <i>assigned_to</i> <b>Student0</b>.</li>
 			</ul>
-			One way to see the failure of the assertion: <b>Student0</b> <i>can_grade</i> <b>Assignment0</b>.
 		</div>
 	</div>
 </div>
@@ -59,39 +59,6 @@
   </div>
 </div>
 
-<style>
-#specification, #assertion, #question, #scenarios {
-    border: 1px solid #AAA;
-    border-radius: 5px;
-    padding: 5px;
-    margin-top: 5px;
-    margin-right: 5px;
-    background: #CCC;
-}
-#spec, #assert, #quest, #scenario {
-  border: 1px solid #AAA;
-  border-radius: 5px;
-  padding: 5px;
-  background: #FFF;
-}
-#specification {
-	width: 55%;
-	float:left;
-}
-#assertion{
-	width: 40%;
-	float: right;
-}
-#question{
-	width: 55%;
-	float: left;	
-}
-#scenarios {
-	width: 40%;
-	float: right;
-}
-</style>
-
 <script>
   function init() {
     experimentr.hideNext();
@@ -107,46 +74,6 @@
     d3.select('#b5a').on('click', bar);
     d3.select('#b5b').on('click', foo);
     d3.select('#b5c').on('click', foo);
-  }
-  function prev() {
-  	var num = Number(d3.select('#num').text());
-  	if(num > 1) {
-  		d3.select('#s'+num).style('display', 'none');
-  		num--;
-  		d3.select('#s'+num).style('display', null);
-  		d3.select('#num').text(""+num);
-  	}
-  }
-  function next() {
-  	var num = Number(d3.select('#num').text());
-  	var all = Number(d3.select('#all').text());
-  	if(num < all) {
-  		d3.select('#s'+num).style('display', 'none');
-  		num++;
-  		d3.select('#s'+num).style('display', null);
-  		d3.select('#num').text(""+num);
-  	}
-  }
-  function fizz() {
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#FFA");
-  }
-  function buzz() {
-  	d3.select('#a'+d3.event.target.id).style("background-color", null);
-  }
-  function foo() {
-  	d3.select('#feedback').text("Your selection is not the part of the specification that requires changes. Please try again.");
-  	d3.select('#'+d3.event.target.id).attr("disabled", true);
-  	d3.select('#'+d3.event.target.id).style("background-color", "#FAA");
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#FAA");
-  }
-  function bar() {
-  	d3.select('#feedback').text("Correct! Press next to proceed to the next situation.")
-  	d3.select('#'+d3.event.target.id).attr("disabled", true);
-  	d3.selectAll('button').attr("disabled", true);
-  	d3.select('#'+d3.event.target.id).style("background-color", "#AFA");
-  	d3.select('#a'+d3.event.target.id).style("background-color", "#AFA");
-  	experimentr.showNext();
-  	d3.select('#next-button').attr('disabled', null);
   }
   init();
 </script>
