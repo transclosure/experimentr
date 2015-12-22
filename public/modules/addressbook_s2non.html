@@ -9,7 +9,7 @@
   			<li>For each <b>Dictionary</b> there is <span id="ab2">some</span> <b>Entry</b> that is the <i>entry_for</i> each <i>word_in</i> it.</li>
   			<li>For each <b>Dictionary</b> there is <span id="ab3">at most one</span> <i>entry_for</i> each <i>word_in</i> it.</li>
         <li><span id="ab4">For each <b>Dictionary</b> there is no <i>word_in</i> it listed in it's own <u>search</u></span>.</li>
-  			<li>We can <span id="ab5a"><u>search</u> the <b>Definitions</b> of a <b>Word</b> in a <b>Dictionary</b></span> by <span id="ab5b">successively browsing the <i>entry_for</i> the words</span> <span id="ab5c">that are also <b>Definitions</b>.</span></li>
+  			<li>We can <span id="ab5a"><u>search</u> the <b>Entries</b> of a <b>Word</b> in a <b>Dictionary</b></span> by <span id="ab5b">successively</span> <span id="ab5c">browsing the <i>entry_for</i> the words</span>.</li>
   		</ol>
   	</p>
   </div>
@@ -78,6 +78,7 @@
   		<button id="b5a">5a</button>
       <button id="b5b">5b</button>
       <button id="b5c">5c</button>
+      <button id="bb">None of the above</button>
   	</div>
 	  <p id="feedback"></p>
   </div>
@@ -98,6 +99,7 @@
     d3.select('#b5a').on('click', foo);
     d3.select('#b5b').on('click', foo);
     d3.select('#b5c').on('click', foo);
+    d3.select('#bb').on('click', foo);
   }
   init();
 </script>

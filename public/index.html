@@ -99,7 +99,7 @@
   experimentr.sequence(getsequence()).start();
   function getsequence() {
     var pre = ['modules/consent.html'];
-    var tasks = ['modules/addressbook_s1min.html','modules/addressbook_s2non.html'];
+    var tasks = ['modules/filesystem_teachdo.html', 'modules/addressbook_s1min.html','modules/addressbook_s2non.html'];
     var post = ['modules/debrief.html'];
     return tasks;
     //return (pre.concat(tasks)).concat(post);
@@ -137,7 +137,7 @@
     d3.select('#a'+d3.event.target.id).style("background-color", "#FAA");
   }
   function bar() {
-    d3.select('#feedback').text("Correct! Press next to proceed to the next situation.")
+    d3.select('#feedback').text("Correct! Press next to proceed to the next situation.");
     d3.select('#'+d3.event.target.id).attr("disabled", true);
     d3.selectAll('button').attr("disabled", true);
     d3.select('#'+d3.event.target.id).style("background-color", "#AFA");

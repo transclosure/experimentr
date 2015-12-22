@@ -54,6 +54,7 @@
   		<button id="b5a">5a</button>
       <button id="b5b">5b</button>
       <button id="b5c">5c</button>
+      <button id="bb">None of the above</button>
   	</div>
 	  <p id="feedback"></p>
   </div>
@@ -74,6 +75,7 @@
     d3.select('#b5a').on('click', bar);
     d3.select('#b5b').on('click', foo);
     d3.select('#b5c').on('click', foo);
+    d3.select('#bb').on('click', foo);
   }
   init();
 </script>
