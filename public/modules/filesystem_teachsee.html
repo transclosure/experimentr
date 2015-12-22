@@ -1,5 +1,6 @@
 <div id="specification">
 	<h1>Specification</h1>
+  <button id="teach1" style="display:none">Click me!</button>
   <div id="spec">
   	<p>We consider a class of <b>Objects.</b></p>
   	<p>The class of <b>Objects</b> is partitioned into 2 non-overlapping subclasses: <b>Files, and Folders.</b></p>
@@ -14,6 +15,7 @@
 </div>
 <div id="assertion">
 	<h1>Assertion</h1>
+  <button id="teach2" style="display:none">Click me!</button>
   <div id="assert">
   	Here is the assertion that we thought would be true: 
   	<p>There cannot exist an <b>Object</b> where the <u>Root</u> is one of the <i>contents_of</i> that <b>Object</b>.</p>
@@ -21,6 +23,7 @@
 </div>
 <div id="scenarios">
 	<h1>Counterexamples</h1>
+  <button id="teach3" style="display:none">Click me!</button>
 	<div style="text-align:center;">
 		<button id="prev">prev</button>
 		<span id="num">0</span>
@@ -30,16 +33,17 @@
 	</div>
 	<div id="scenario">
 		<div id="s1" style="display:none;">
-      One way to see the failure of the assertion: the <u>lookup</u> of <b>Name1</b> in <b>Book0</b> lists no <b>Addresses</b>.
+      One way to see the failure of the assertion: the <u>Root</u> is <i>contents_of</i> <b>Folder0</b>.
 			<ul>
-				<li><b>Name1</b> is an <i>entry_in</i> <b>Book0</b>.</li>
-				<li><b>Name0</b> is the <i>target_of</i> <b>Name1</b> in <b>Book0</b>.</li>
+				<li><b>Folder0</b> is <i>contents_of</i> <u>Root</u>.</li>
+				<li><u>Root</u> is <i>contents_of</i> <b>Folder0</b>.</li>
 			</ul>
 		</div>
 	</div>
 </div>
 <div id="question">
 	<h1>Question</h1>
+  <button id="teach4" style="display:none">Click me!</button>
   <div id="quest">
   	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
   	<div style="text-align:center;">
@@ -50,18 +54,32 @@
 	  <p id="feedback"></p>
   </div>
 </div>
+<div id="teacher">
+  <h1>Teacher</h1>
+  <div id="teach">
+    <p id="teachwords">We will walk you through the first task. Read the teacher directions carefully. Hit the "Click me!" buttons to continue.<p>
+  </div>
+</div>
 
 <script>
   function init() {
     experimentr.hideNext();
     next();
     d3.select('#prev').on('click', prev);
-    d3.select('#next').on('click', next)
+    d3.select('#next').on('click', next);
     d3.selectAll('button').on('mouseover', fizz);
     d3.selectAll('button').on('mouseout', buzz);
-    d3.select('#b1').on('click', foo2);
-    d3.select('#b2').on('click', foo2);
-    d3.select('#bb').on('click', bar2);
+    d3.select('#b1').on('click', teach5);
+    d3.select('#b2').on('click', teach6);
+    d3.select('#bb').on('click', teach7);
+    d3.select('#teach1').on('click', teach1);
+    d3.select('#teach2').on('click', teach2);
+    d3.select('#teach3').on('click', teach3);
+    d3.select('#teach4').on('click', teach4);
+    d3.selectAll('button').attr("disabled", true);
+    d3.selectAll("#spec, #assert, #quest, #scenario").style('visibility', 'hidden');
+    d3.select('#teach1').style("display", null);
+    d3.select('#teach1').attr("disabled", null);
   }
   function foo2() {
     foo();
@@ -75,7 +93,52 @@
   }
   function bar2() {
     bar();
-    d3.select('#feedback').text("Correct! None of the assumptions are related to the failure of the assertion. An entirely new assumption is needed for the assertion to be true.")
+    d3.select('#feedback').text("Correct! None of the assumptions are related to the failure of the assertion. An entirely new assumption is needed to restrict objects from being reached by starting at themselves and taking the contents_of the Folders.")
+  }
+  function teach1(){
+    d3.select('#teach1').style("display", "none");
+    d3.select('#teach1').attr("disabled", true);
+    d3.selectAll("#spec").style('visibility', null);
+    d3.select('#teach2').style("display", null);
+    d3.select('#teach2').attr("disabled", null);
+    d3.select('#teachwords').text("The specification of this task defines what a file system consists of (the classes), and how it works (the assumptions).");
+  }
+  function teach2(){
+    d3.select('#teach2').style("display", "none");
+    d3.select('#teach2').attr("disabled", true);
+    d3.selectAll("#assert").style('visibility', null);
+    d3.select('#teach3').style("display", null);
+    d3.select('#teach3').attr("disabled", null);
+    d3.select('#teachwords').text("This assertion of this task expects root to the \"The King of All Folders.\" Yes, most file systems work that way in real life, but that's not important. Focus less on your intuition, and more on the information provided in the specification and counterexamples.");
+  }
+  function teach3(){
+    d3.select('#teach3').style("display", "none");
+    d3.select('#teach3').attr("disabled", true);
+    d3.selectAll("#scenario").style('visibility', null);
+    d3.select('#teach4').style("display", null);
+    d3.select('#teach4').attr("disabled", null);
+    d3.select('#teachwords').text("For this task you are provided with one simple counterexample. You should be able to take the information in this example, and apply it to the specification. Notice that the bolded/italicized words in the counterexample, match the ones in the assertion, and in the specification.");
+  }
+  function teach4(){
+    d3.select('#teach4').style("display", "none");
+    d3.select('#teach4').attr("disabled", true);
+    d3.selectAll("#quest").style('visibility', null);
+    d3.select('#b1').attr("disabled", null);
+    d3.select('#teachwords').text("Now for the question. Are any parts of the current specification related to the information in the counterexample? Option #1 looks related. Maybe folders should only contain one thing. Try this option.");
+  }
+  function teach5(){
+    foo2();
+    d3.select('#b2').attr("disabled", null);
+    d3.select('#teachwords').text("Oops... we were wrong. What about Option #2? Root shouldn't be reachable by starting at Root right? Try that option!");
+  }
+  function teach6(){
+    foo2();
+    d3.select('#bb').attr("disabled", null);
+    d3.select('#teachwords').text("Darn... wrong again! That assumption defined reachability in general; it didn't have much to do with the root folder. I guess none of the current assumptions are to blame. Select the only option left.");
+  }
+  function teach7(){
+    bar2();
+    d3.select('#teachwords').text("Hopefully this helped you understand how to approach the task, and how to think about the question carefully. If not, you'll have a chance to leave us feedback at the end. Now the training wheels come off... you'll be getting less and less feedback for the 5 tasks. Good luck!");
   }
   init();
 </script>

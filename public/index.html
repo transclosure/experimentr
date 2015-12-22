@@ -60,14 +60,14 @@
     font-weight: bold;
     text-decoration: underline;
   }
-  #specification, #assertion, #question, #scenarios {
+  #specification, #assertion, #question, #scenarios, #teacher {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     margin: 0px 0px 0px 0px;
     background: #CCC;
   }
-  #spec, #assert, #quest, #scenario {
+  #spec, #assert, #quest, #scenario, #teach {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
@@ -90,6 +90,10 @@
     float: right;
     margin: 15px 0px 15px 0px;
   }
+  #teacher {
+    width: 45%;
+    float: right;
+  }
 </style>
 
 <body></body>
@@ -101,11 +105,10 @@
     var pre = ['modules/consent.html'];
     var teach = ['modules/filesystem_teachsee.html', 'modules/familytree_teachdo.html'];
     var minimal = ['modules/gradebook_s1min.html', 'modules/addressbook_s1min.html'];
-    var nonminimal = ['modules/gradebook_s1min.html', 'modules/addressbook_s2non.html'];
+    var nonminimal = ['modules/gradebook_s2non.html', 'modules/addressbook_s2non.html'];
     var post = ['modules/debrief.html'];
     var tasks = (teach.concat(minimal)).concat(nonminimal);
-    return ['modules/familytree_teachdo.html'];
-    //return (pre.concat(tasks)).concat(post);
+    return (pre.concat(tasks)).concat(post);
   }
 /* TASK */
   function prev() {
