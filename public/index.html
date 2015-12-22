@@ -99,9 +99,12 @@
   experimentr.sequence(getsequence()).start();
   function getsequence() {
     var pre = ['modules/consent.html'];
-    var tasks = ['modules/filesystem_teachdo.html', 'modules/addressbook_s1min.html','modules/addressbook_s2non.html'];
+    var teach = ['modules/filesystem_teachsee.html', 'modules/familytree_teachdo.html'];
+    var minimal = ['modules/gradebook_s1min.html', 'modules/addressbook_s1min.html'];
+    var nonminimal = ['modules/gradebook_s1min.html', 'modules/addressbook_s2non.html'];
     var post = ['modules/debrief.html'];
-    return tasks;
+    var tasks = (teach.concat(minimal)).concat(nonminimal);
+    return ['modules/familytree_teachdo.html'];
     //return (pre.concat(tasks)).concat(post);
   }
 /* TASK */
