@@ -9,7 +9,7 @@
   			<li>For each <b>Class</b> there is <span id="ab2">a set of</span> <b>Students</b> who are the <i>assistants_for</i> it.</li>
   			<li>For each <b>Assignment</b> there is <span id="ab3">a single</span> <b>Class</b> <i>associated_with</i> it.</li>
   			<li>For each <b>Assignment</b> there is <span id="ab4">a set of</span> <b>Students</b> <i>assigned_to</i> it.</li>
-  			<li>A <b>Person</b> <i>can_grade</i> an <b>Assignment</b> only if either <span id="ab5a">the <b>Person</b> is an <i>assistant_for</i> the <b>Class</b> <i>associated_with</i> the <b>Assignment</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Professor</b> who is the <i>instructor_of</i> that <b>Class</b>.</span></li>
+  			<li>A <b>Person</b> <u>can_grade</u> an <b>Assignment</b> only if either <span id="ab5a">the <b>Person</b> is an <i>assistant_for</i> the <b>Class</b> <i>associated_with</i> the <b>Assignment</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Professor</b> who is the <i>instructor_of</i> that <b>Class</b>.</span></li>
   		</ol>
   	</p>
   </div>
@@ -18,7 +18,7 @@
 	<h1>Assertion</h1>
   <div id="assert">
   	Here is the assertion that we thought would be true:
-  	<p>There cannot exist a <b>Person</b> who <i>can_grade</i> an <b>Assignment</b> <i>assigned_to</i> them.</p>
+  	<p>There cannot exist a <b>Person</b> who <u>can_grade</u> an <b>Assignment</b> <i>assigned_to</i> them.</p>
   </div>
 </div>
 <div id="scenarios">
@@ -32,7 +32,7 @@
 	</div>
 	<div id="scenario">
 		<div id="s1" style="display:none;">
-      One way to see the failure of the assertion: <b>Student0</b> <i>can_grade</i> <b>Assignment0</b>.
+      One way to see the failure of the assertion: <b>Student0</b> <u>can_grade</u> <b>Assignment0</b>.
 			<ul>
 				<li><b>Student0</b> is an <i>assistant_for</i> <b>Class0</b>.</li>
 				<li><b>Professor0</b> is the <i>instructor_of</i> <b>Class0</b>.</li>

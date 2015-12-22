@@ -40,6 +40,9 @@
   i {
     text-shadow : 0 0 0 #333;
   }
+  u {
+    text-shadow : 0 0 0 #333;
+  }
   #experimentr {
     margin: 0em auto 0em auto;
     width: 720px;
@@ -96,7 +99,7 @@
   experimentr.sequence(getsequence()).start();
   function getsequence() {
     var pre = ['modules/consent.html'];
-    var tasks = ['modules/gradebook_s2non.html','modules/gradebook_s1min.html'];
+    var tasks = ['modules/addressbook_s1min.html','modules/addressbook_s2non.html'];
     var post = ['modules/debrief.html'];
     return tasks;
     //return (pre.concat(tasks)).concat(post);

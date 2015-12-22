@@ -1,0 +1,77 @@
+<div id="specification">
+	<h1>Specification</h1>
+  <div id="spec">
+  	<p>We consider 2 classes: <b>Books, and Targets.</b></p>
+  	<p>The class of <b>Targets</b> is partitioned into 2 non-overlapping subclasses: <b>Addresses, and Names.</b></p>
+  	<p>We make the following assumptions:
+  		<ol>
+  			<li>For each <b>Book</b> there is <span id="ab1">a set of</span> <b>Names</b> that are the <i>entries_in</i> it.</li>
+  			<li>For each <b>Book</b> there is <span id="ab2">some</span> <b>Target</b> that is the <i>target_of</i> each <i>entry_in</i> it.</li>
+  			<li>For each <b>Book</b> there is <span id="ab3">at most one</span> <i>target_of</i> each <i>entry_in</i> it.</li>
+        <li><span id="ab4">For each <b>Book</b> there is no <i>entry_in</i> it listed in it's own <u>lookup</u></span>.</li>
+  			<li>We can <span id="ab5a"><u>lookup</u> the <b>Addresses</b> of a <b>Name</b> in a <b>Book</b></span> by <span id="ab5b">successively finding the <i>target_of</i> the names</span> <span id="ab5c">that are also <b>Addresses</b>.</span></li>
+  		</ol>
+  	</p>
+  </div>
+</div>
+<div id="assertion">
+	<h1>Assertion</h1>
+  <div id="assert">
+  	Here is the assertion that we thought would be true: 
+  	<p>Each <u>lookup</u> of each <i>entry_in</i> each <b>Book</b> lists some <b>Address</b>.</p>
+  </div>
+</div>
+<div id="scenarios">
+	<h1>Counterexamples</h1>
+	<div style="text-align:center;">
+		<button id="prev">prev</button>
+		<span id="num">0</span>
+		<span>of</span>
+		<span id="all">1</span>
+		<button id="next">next</button>
+	</div>
+	<div id="scenario">
+		<div id="s1" style="display:none;">
+      One way to see the failure of the assertion: the <u>lookup</u> of <b>Name1</b> in <b>Book0</b> lists no <b>Addresses</b>.
+			<ul>
+				<li><b>Name1</b> is an <i>entry_in</i> <b>Book0</b>.</li>
+				<li><b>Name0</b> is the <i>target_of</i> <b>Name1</b> in <b>Book0</b>.</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="question">
+	<h1>Question</h1>
+  <div id="quest">
+  	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
+  	<div style="text-align:center;">
+  		<button id="b1">1</button>
+  		<button id="b2">2</button>
+  		<button id="b3">3</button>
+      <button id="b4">4</button>
+  		<button id="b5a">5a</button>
+      <button id="b5b">5b</button>
+      <button id="b5c">5c</button>
+  	</div>
+	  <p id="feedback"></p>
+  </div>
+</div>
+
+<script>
+  function init() {
+    experimentr.hideNext();
+    next();
+    d3.select('#prev').on('click', prev);
+    d3.select('#next').on('click', next)
+    d3.selectAll('button').on('mouseover', fizz);
+    d3.selectAll('button').on('mouseout', buzz);
+    d3.select('#b1').on('click', foo);
+    d3.select('#b2').on('click', foo);
+    d3.select('#b3').on('click', bar);
+    d3.select('#b4').on('click', foo);
+    d3.select('#b5a').on('click', foo);
+    d3.select('#b5b').on('click', foo);
+    d3.select('#b5c').on('click', foo);
+  }
+  init();
+</script>
