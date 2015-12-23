@@ -68,6 +68,7 @@
     d3.select('#prev').on('click', prev);
     d3.select('#next').on('click', next);
     d3.selectAll('button').on('mouseover', fizz);
+    d3.select('#teach').on('mouseover', buzz2);
     d3.selectAll('button').on('mouseout', buzz);
     d3.select('#b1').on('click', teach5);
     d3.select('#b2').on('click', teach6);
@@ -95,7 +96,11 @@
     bar();
     d3.select('#feedback').text("Correct! None of the assumptions are related to the failure of the assertion. An entirely new assumption is needed to restrict objects from being reached by starting at themselves and taking the contents_of the Folders.")
   }
+  function buzz2(){
+    d3.select('#teach').style("background-color", null);
+  }
   function teach1(){
+    d3.select('#teach').style("background-color", "#aaf");
     d3.select('#teach1').style("display", "none");
     d3.select('#teach1').attr("disabled", true);
     d3.selectAll("#spec").style('visibility', null);
@@ -104,6 +109,7 @@
     d3.select('#teachwords').text("The specification of this task defines what a file system consists of (the classes), and how it works (the assumptions).");
   }
   function teach2(){
+    d3.select('#teach').style("background-color", "#aaf");
     d3.select('#teach2').style("display", "none");
     d3.select('#teach2').attr("disabled", true);
     d3.selectAll("#assert").style('visibility', null);
@@ -112,6 +118,7 @@
     d3.select('#teachwords').text("This assertion of this task expects root to the \"The King of All Folders.\" Yes, most file systems work that way in real life, but that's not important. Focus less on your intuition, and more on the information provided in the specification and counterexamples.");
   }
   function teach3(){
+    d3.select('#teach').style("background-color", "#aaf");
     d3.select('#teach3').style("display", "none");
     d3.select('#teach3').attr("disabled", true);
     d3.selectAll("#scenario").style('visibility', null);
@@ -120,6 +127,7 @@
     d3.select('#teachwords').text("For this task you are provided with one simple counterexample. You should be able to take the information in this example, and apply it to the specification. Notice that the bolded/italicized words in the counterexample, match the ones in the assertion, and in the specification.");
   }
   function teach4(){
+    d3.select('#teach').style("background-color", "#aaf");
     d3.select('#teach4').style("display", "none");
     d3.select('#teach4').attr("disabled", true);
     d3.selectAll("#quest").style('visibility', null);
@@ -127,16 +135,19 @@
     d3.select('#teachwords').text("Now for the question. Are any parts of the current specification related to the information in the counterexample? Option #1 looks related. Maybe folders should only contain one thing. Try this option.");
   }
   function teach5(){
+    d3.select('#teach').style("background-color", "#aaf");
     foo2();
     d3.select('#b2').attr("disabled", null);
     d3.select('#teachwords').text("Oops... we were wrong. What about Option #2? Root shouldn't be reachable by starting at Root right? Try that option!");
   }
   function teach6(){
+    d3.select('#teach').style("background-color", "#aaf");
     foo2();
     d3.select('#bb').attr("disabled", null);
     d3.select('#teachwords').text("Darn... wrong again! That assumption defined reachability in general; it didn't have much to do with the root folder. I guess none of the current assumptions are to blame. Select the only option left.");
   }
   function teach7(){
+    d3.select('#teach').style("background-color", "#aaf");
     bar2();
     d3.select('#teachwords').text("Hopefully this helped you understand how to approach the task, and how to think about the question carefully. If not, you'll have a chance to leave us feedback at the end. Now the training wheels come off... you'll be getting less and less feedback for the 5 tasks. Good luck!");
   }
