@@ -59,8 +59,9 @@
 </div>
 
 <script>
+  var id = "t??";
   function init2() {
-    init();
+    init(id);
     d3.select('#b1').on('click', foo2);
     d3.select('#b2').on('click', foo2);
     d3.select('#b3a').on('click', foo2);
@@ -92,7 +93,7 @@
     }
   }
   function bar2() {
-    bar();
+    bar(id);
     d3.select('#feedback').text("Correct! None of the assumptions are related to the failure of the assertion. The specification does not take Parents who re-marry into account. Adding an entirely new assumption to constrain this case will make our assertion true.")
   }
   init2();

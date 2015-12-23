@@ -62,8 +62,9 @@
 </div>
 
 <script>
+  var id = "f??";
   function init2() {
-    init();
+    init(id);
     d3.select('#teach').on('mouseover', buzz2);
     d3.select('#b1').on('click', teach5);
     d3.select('#b2').on('click', teach6);
@@ -88,7 +89,7 @@
     }
   }
   function bar2() {
-    bar();
+    bar(id);
     d3.select('#feedback').text("Correct! None of the assumptions are related to the failure of the assertion. An entirely new assumption is needed to restrict objects from being reached by starting at themselves and taking the contents_of the Folders.")
   }
   function buzz2(){

@@ -61,16 +61,20 @@
 </div>
 
 <script>
+  var id = "gom";
   function init2() {
-    init();
+    init(id);
     d3.select('#b1').on('click', foo);
     d3.select('#b2').on('click', foo);
     d3.select('#b3').on('click', foo);
     d3.select('#b4').on('click', foo);
-    d3.select('#b5a').on('click', bar);
+    d3.select('#b5a').on('click', bar2);
     d3.select('#b5b').on('click', foo);
     d3.select('#b5c').on('click', foo);
     d3.select('#bb').on('click', foo);
+  }
+  function bar2() {
+    bar(id);
   }
   init2();
 </script>
