@@ -36,6 +36,7 @@ Thank you again for your participation. Feel free submit any additional comments
 
   function validate() {
     if( data.comments ) {
+      data.finished = true;
       experimentr.addData(data);
       d3.select('#submitComments').attr('disabled', 'true');
       d3.select('#submitFeedback').text('Submit Successful');

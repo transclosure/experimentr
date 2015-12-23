@@ -62,6 +62,8 @@
   var id = "t??";
   function init2() {
     init(id);
+    d3.select('#prev').on('click', prev2);
+    d3.select('#next').on('click', next2);
     d3.select('#b1').on('click', foo2);
     d3.select('#b2').on('click', foo2);
     d3.select('#b3a').on('click', foo2);
@@ -70,8 +72,10 @@
     d3.select('#b4b').on('click', foo2);
     d3.select('#bb').on('click', bar2);
   }
+  function prev2() { prev(id); }
+  function next2() { next(id); }
   function foo2() {
-    foo();
+    foo(id);
     var choice = d3.event.target.id;
     if(choice=="b1") {
       d3.select('#feedback').text("Changing children_of to be less than a set of Persons would not make the assumption true. Take a closer look at the counterexample. Doesn't every parent pair only have one child?");

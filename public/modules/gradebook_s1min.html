@@ -64,17 +64,20 @@
   var id = "gom";
   function init2() {
     init(id);
-    d3.select('#b1').on('click', foo);
-    d3.select('#b2').on('click', foo);
-    d3.select('#b3').on('click', foo);
-    d3.select('#b4').on('click', foo);
+    d3.select('#prev').on('click', prev2);
+    d3.select('#next').on('click', next2);
+    d3.select('#b1').on('click', foo2);
+    d3.select('#b2').on('click', foo2);
+    d3.select('#b3').on('click', foo2);
+    d3.select('#b4').on('click', foo2);
     d3.select('#b5a').on('click', bar2);
-    d3.select('#b5b').on('click', foo);
-    d3.select('#b5c').on('click', foo);
-    d3.select('#bb').on('click', foo);
+    d3.select('#b5b').on('click', foo2);
+    d3.select('#b5c').on('click', foo2);
+    d3.select('#bb').on('click', foo2);
   }
-  function bar2() {
-    bar(id);
-  }
+  function prev2() { prev(id); }
+  function next2() { next(id); }
+  function foo2()  { foo(id); }
+  function bar2()  { bar(id); }
   init2();
 </script>

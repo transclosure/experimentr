@@ -65,6 +65,8 @@
   var id = "f??";
   function init2() {
     init(id);
+    d3.select('#prev').on('click', prev2);
+    d3.select('#next').on('click', next2);
     d3.select('#teach').on('mouseover', buzz2);
     d3.select('#b1').on('click', teach5);
     d3.select('#b2').on('click', teach6);
@@ -78,8 +80,10 @@
     d3.select('#teach1').style("display", null);
     d3.select('#teach1').attr("disabled", null);
   }
+  function prev2() { prev(id); }
+  function next2() { next(id); }
   function foo2() {
-    foo();
+    foo(id);
     var choice = d3.event.target.id;
     if(choice=="b1") {
       d3.select('#feedback').text("This assumption defines the general contents of each folder. There is no way to change it to exclude the Root folder.");

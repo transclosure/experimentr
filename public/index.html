@@ -98,6 +98,7 @@
   var data = {};
   var eid = "OM"; // CHANGE IF GETSEQUENCE IS CHANGED
   experimentr.sequence(getsequence()).start();
+  var junktimer;
   function getsequence() {
     var pre = ['modules/consent.html'];
     var teach = ['modules/filesystem_teachsee.html', 'modules/familytree_teachdo.html'];
@@ -109,32 +110,48 @@
   }
 /* GENERIC TASK FUNCTIONS */
   function init(tid) {
+    data = {};
+    data['_start_'+tid+eid] = Date.now();
+    data['_clicks_'+tid+eid] = 0;
+    data['_clicktime_'+tid+eid] = [];
+    data['_clickorder_'+tid+eid] = [];
+    var all = Number(d3.select('#all').text());
+    data['_scenariotime_'+tid+eid] = Array.apply(null, Array(all)).map(Number.prototype.valueOf,0);
+    junktimer = Date.now();
+    //
     experimentr.hideNext();
-    next();
-    d3.select('#prev').on('click', prev);
-    d3.select('#next').on('click', next);
+    next(tid);
     d3.selectAll('button').on('mouseover', fizz);
     d3.selectAll('button').on('mouseout', buzz);
-    //
-    data['_start_'+tid+eid] = Date.now();
   }
-  function prev() {
+  function prev(tid) {
     var num = Number(d3.select('#num').text());
+    var all = Number(d3.select('#all').text());
     if(num > 1) {
       d3.select('#s'+num).style('display', 'none');
-      num--;
+      num = num-1; 
       d3.select('#s'+num).style('display', null);
       d3.select('#num').text(""+num);
+      //
+      var diff = Date.now() - junktimer;
+      (data['_scenariotime_'+tid+eid])[num] = ((data['_scenariotime_'+tid+eid])[num]) + diff;
+      junktimer = Date.now();
     }
   }
-  function next() {
+  function next(tid) {
     var num = Number(d3.select('#num').text());
     var all = Number(d3.select('#all').text());
     if(num < all) {
       d3.select('#s'+num).style('display', 'none');
-      num++;
+      num = num+1;
       d3.select('#s'+num).style('display', null);
       d3.select('#num').text(""+num);
+      //
+      if(num-2 >= 0) {
+        var diff = Date.now() - junktimer;
+        (data['_scenariotime_'+tid+eid])[num-2] = ((data['_scenariotime_'+tid+eid])[num-2]) + diff;
+        junktimer = Date.now();
+      }
     }
   }
   function fizz() {
@@ -143,11 +160,16 @@
   function buzz() {
     d3.select('#a'+d3.event.target.id).style("background-color", null);
   }
-  function foo() {
+  function foo(tid) {
     d3.select('#feedback').text("Your selection is not the part of the specification that requires changes. Please try again.");
     d3.select('#'+d3.event.target.id).attr("disabled", true);
     d3.select('#'+d3.event.target.id).style("background-color", "#FAA");
     d3.select('#a'+d3.event.target.id).style("background-color", "#FAA");
+    //
+    data['_clicks_'+tid+eid] = data['_clicks_'+tid+eid] + 1;
+    var ctime = Date.now() - data['_start_'+tid+eid];
+    data['_clicktime_'+tid+eid] = (data['_clicktime_'+tid+eid]).concat([ctime]);
+    data['_clickorder_'+tid+eid] = (data['_clickorder_'+tid+eid]).concat([d3.event.target.id]);
   }
   function bar(tid) {
     d3.select('#feedback').text("Correct! Press next to proceed to the next situation.");
@@ -160,6 +182,9 @@
     //
     data['_end_'+tid+eid] = Date.now();
     data['_time_'+tid+eid] = parseFloat(data['_end_'+tid+eid]) - parseFloat(data['_start_'+tid+eid]);
+    var diff = Date.now() - junktimer;
+    var num = Number(d3.select('#num').text());
+    (data['_scenariotime_'+tid+eid])[num-1] = ((data['_scenariotime_'+tid+eid])[num-1]) + diff;
     experimentr.addData(data);
   }
   /* DOCUMENTATION
@@ -167,5 +192,13 @@
    the <experimentID><taskID> should denote the experiment condition
    generic, parameterized code goes here. anything task specific goes in their module
    sorry for the obfuscated names. i did that to avoid quick CTRL+F to win cheaters.
+   */
+  /*
+   CONDITIONS
+   spec             F(filesystem), T(familytree), G(gradebook), A(addressbook)
+   phrasing         o(original), r(rephrase)
+   scenario         m(minimal), n(nonmimimal)
+   phrasing first   O, R
+   scenario first   M, N
    */
 </script>
