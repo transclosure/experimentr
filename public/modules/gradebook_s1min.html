@@ -61,13 +61,8 @@
 </div>
 
 <script>
-  function init() {
-    experimentr.hideNext();
-    next();
-    d3.select('#prev').on('click', prev);
-    d3.select('#next').on('click', next)
-    d3.selectAll('button').on('mouseover', fizz);
-    d3.selectAll('button').on('mouseout', buzz);
+  function init2() {
+    init();
     d3.select('#b1').on('click', foo);
     d3.select('#b2').on('click', foo);
     d3.select('#b3').on('click', foo);
@@ -77,5 +72,5 @@
     d3.select('#b5c').on('click', foo);
     d3.select('#bb').on('click', foo);
   }
-  init();
+  init2();
 </script>

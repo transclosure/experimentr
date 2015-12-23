@@ -62,14 +62,9 @@
 </div>
 
 <script>
-  function init() {
-    experimentr.hideNext();
-    next();
-    d3.select('#prev').on('click', prev);
-    d3.select('#next').on('click', next);
-    d3.selectAll('button').on('mouseover', fizz);
+  function init2() {
+    init();
     d3.select('#teach').on('mouseover', buzz2);
-    d3.selectAll('button').on('mouseout', buzz);
     d3.select('#b1').on('click', teach5);
     d3.select('#b2').on('click', teach6);
     d3.select('#bb').on('click', teach7);
@@ -151,5 +146,5 @@
     bar2();
     d3.select('#teachwords').text("Hopefully this helped you understand how to approach the task, and how to think about the question carefully. If not, you'll have a chance to leave us feedback at the end. Now the training wheels come off... you'll be getting less and less feedback for the 5 tasks. Good luck!");
   }
-  init();
+  init2();
 </script>

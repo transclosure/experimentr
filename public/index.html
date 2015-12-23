@@ -55,11 +55,6 @@
     font-size: xx-large;
     font-weight: bold;
   }
-  .placeholder {
-    color: #7A378B;
-    font-weight: bold;
-    text-decoration: underline;
-  }
   #specification, #assertion, #question, #scenarios, #teacher {
     border: 1px solid #AAA;
     border-radius: 5px;
@@ -100,6 +95,7 @@
 
 <script>
 /* EXPERIMENT */
+  var data = {};
   experimentr.sequence(getsequence()).start();
   function getsequence() {
     var pre = ['modules/consent.html'];
@@ -111,6 +107,14 @@
     return (pre.concat(tasks)).concat(post);
   }
 /* TASK */
+  function init() {
+    experimentr.hideNext();
+    next();
+    d3.select('#prev').on('click', prev);
+    d3.select('#next').on('click', next);
+    d3.selectAll('button').on('mouseover', fizz);
+    d3.selectAll('button').on('mouseout', buzz);
+  }
   function prev() {
     var num = Number(d3.select('#num').text());
     if(num > 1) {

@@ -59,13 +59,8 @@
 </div>
 
 <script>
-  function init() {
-    experimentr.hideNext();
-    next();
-    d3.select('#prev').on('click', prev);
-    d3.select('#next').on('click', next)
-    d3.selectAll('button').on('mouseover', fizz);
-    d3.selectAll('button').on('mouseout', buzz);
+  function init2() {
+    init();
     d3.select('#b1').on('click', foo2);
     d3.select('#b2').on('click', foo2);
     d3.select('#b3a').on('click', foo2);
@@ -100,5 +95,5 @@
     bar();
     d3.select('#feedback').text("Correct! None of the assumptions are related to the failure of the assertion. The specification does not take Parents who re-marry into account. Adding an entirely new assumption to constrain this case will make our assertion true.")
   }
-  init();
+  init2();
 </script>
