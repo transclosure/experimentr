@@ -6,7 +6,7 @@ var fs      = require('fs')
   , redis   = require('redis')
   , client
 
-client = redis.createClient()
+client = redis.createClient(9000)
 
 client.on('connect', keys)
 
