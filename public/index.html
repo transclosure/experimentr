@@ -109,9 +109,10 @@
     return (pre.concat(tasks)).concat(post);
   }
 /* GENERIC TASK FUNCTIONS */
-  function init(tid) {
+  function init(tid, numoptions) {
     data = {};
     data['_start_'+tid+eid] = Date.now();
+    data['_scale_'+tid+eid] = numoptions;
     data['_clicks_'+tid+eid] = 0;
     data['_clicktime_'+tid+eid] = [];
     data['_clickorder_'+tid+eid] = [];
@@ -180,6 +181,10 @@
     experimentr.showNext();
     d3.select('#next-button').attr('disabled', null);
     //
+    data['_clicks_'+tid+eid] = data['_clicks_'+tid+eid] + 1;
+    var ctime = Date.now() - data['_start_'+tid+eid];
+    data['_clicktime_'+tid+eid] = (data['_clicktime_'+tid+eid]).concat([ctime]);
+    data['_clickorder_'+tid+eid] = (data['_clickorder_'+tid+eid]).concat([d3.event.target.id]);
     data['_end_'+tid+eid] = Date.now();
     data['_time_'+tid+eid] = parseFloat(data['_end_'+tid+eid]) - parseFloat(data['_start_'+tid+eid]);
     var diff = Date.now() - junktimer;
