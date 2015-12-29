@@ -3,8 +3,9 @@ var j2c    = require('json2csv')
   , file   = process.argv[2]
   , _      = require('underscore')
   , fields = [ // EDIT THESE
-	'postId',
 	'workerId',
+	'postId'
+/*,
 	'_start_f??OM',
 	'_clicks_f??OM',
 	'_clicktime_f??OM',
@@ -49,6 +50,7 @@ var j2c    = require('json2csv')
         '_scenariotime_arnOM',
         '_end_arnOM',
 	'comments'
+*/
     ]
   , data
 
