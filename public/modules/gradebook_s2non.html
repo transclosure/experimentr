@@ -5,11 +5,11 @@
   	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Employees, and Bosses.</b></p>
   	<p>We make the following assumptions:
   		<ol>
-  			<li>For each <b>Department</b> there is <span id="ab1">a single</span> <b>Boss</b> who is the <i>head_of</i> it.</li>
-  			<li>For each <b>Department</b> there is <span id="ab2">a set of</span> <b>Employees</b> who are the <i>managers_for</i> it.</li>
-  			<li>For each <b>Salary</b> there is <span id="ab3">a single</span> <b>Department</b> <i>affiliated_with</i> it.</li>
-  			<li>For each <b>Salary</b> there is <span id="ab4">a set of</span> <b>Employees</b> that it is <i>paid_to</i>.</li>
-  			<li>A <b>Person</b> <u>can_raise</u> a <b>Salary</b> only if either <span id="ab5a">the <b>Person</b> is a <i>manager_for</i> the <b>Department</b> <i>affiliated_with</i> the <b>Salary</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Boss</b> who is the <i>head_of</i> that <b>Department</b>.</span></li>
+        <li>For each <b>Salary</b> there is <span id="ab4">a set of</span> <b>Employees</b> that it is <i>paid_to</i>.</li>
+        <li>A <b>Person</b> <u>can_raise</u> a <b>Salary</b> only if either <span id="ab5a">the <b>Person</b> is a <i>manager_for</i> the <b>Department</b> <i>affiliated_with</i> the <b>Salary</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Boss</b> who is the <i>head_of</i> that <b>Department</b>.</span></li>
+        <li>For each <b>Salary</b> there is <span id="ab3">a single</span> <b>Department</b> <i>affiliated_with</i> it.</li>
+        <li>For each <b>Department</b> there is <span id="ab1">a single</span> <b>Boss</b> who is the <i>head_of</i> it.</li>
+        <li>For each <b>Department</b> there is <span id="ab2">a set of</span> <b>Employees</b> who are the <i>managers_for</i> it.</li>
   		</ol>
   	</p>
   </div>
@@ -93,13 +93,13 @@
   <div id="quest">
   	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
   	<div style="text-align:center;">
-  		<button id="b1">1</button>
-  		<button id="b2">2</button>
-  		<button id="b3">3</button>
-  		<button id="b4">4</button>
-  		<button id="b5a">5a</button>
-      <button id="b5b">5b</button>
-      <button id="b5c">5c</button>
+  		<button id="b4">1</button>
+  		<button id="b5a">2a</button>
+      <button id="b5b">2b</button>
+      <button id="b5c">2c</button>
+      <button id="b3">3</button>
+      <button id="b1">4</button>
+      <button id="b2">5</button>
       <button id="bb">nothing wrong with current spec; new assumption needed</button>
   	</div>
 	  <p id="feedback"></p>

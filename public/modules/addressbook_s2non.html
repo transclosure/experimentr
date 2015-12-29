@@ -5,11 +5,11 @@
   	<p>The class of <b>Entries</b> is partitioned into 2 non-overlapping subclasses: <b>Definitions, and Words.</b></p>
   	<p>We make the following assumptions:
   		<ol>
-  			<li>For each <b>Dictionary</b> there is <span id="ab1">a set of</span> <b>Words</b> that are the <i>words_in</i> it.</li>
-  			<li>For each <b>Dictionary</b> there is <span id="ab2">some</span> <b>Entry</b> that is the <i>entry_for</i> each <i>word_in</i> it.</li>
   			<li>For each <b>Dictionary</b> there is <span id="ab3">at most one</span> <i>entry_for</i> each <i>word_in</i> it.</li>
-        <li><span id="ab4">For each <b>Dictionary</b> there is no <i>word_in</i> it listed in it's own <u>search</u></span>.</li>
+        <li>For each <b>Dictionary</b> there is <span id="ab2">some</span> <b>Entry</b> that is the <i>entry_for</i> each <i>word_in</i> it.</li>
+        <li>For each <b>Dictionary</b> there is <span id="ab1">a set of</span> <b>Words</b> that are the <i>words_in</i> it.</li>
   			<li>We can <span id="ab5a"><u>search</u> the <b>Definition</b> of a <b>Word</b> in a <b>Dictionary</b></span> by <span id="ab5b">successively</span> <span id="ab5c">browsing the <i>entry_for</i> the words</span>.</li>
+        <li><span id="ab4">For each <b>Dictionary</b> there is no <i>word_in</i> it listed in it's own <u>search</u></span>.</li>
   		</ol>
   	</p>
   </div>
@@ -71,13 +71,13 @@
   <div id="quest">
   	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
   	<div style="text-align:center;">
-  		<button id="b1">1</button>
-  		<button id="b2">2</button>
-  		<button id="b3">3</button>
-      <button id="b4">4</button>
-  		<button id="b5a">5a</button>
-      <button id="b5b">5b</button>
-      <button id="b5c">5c</button>
+  		<button id="b3">1</button>
+      <button id="b2">2</button>
+      <button id="b1">3</button>
+      <button id="b5a">4a</button>
+      <button id="b5b">4b</button>
+      <button id="b5c">4c</button>
+      <button id="b4">5</button>
       <button id="bb">nothing wrong with current spec; new assumption needed</button>
   	</div>
 	  <p id="feedback"></p>
