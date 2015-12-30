@@ -1,63 +1,49 @@
 var j2c    = require('json2csv')
   , fs     = require('fs')
   , file   = process.argv[2]
+  , spec   = process.argv[3]
+  , phrase = process.argv[4]
+  , scenario = process.argv[5]
   , _      = require('underscore')
-  , fields = [ // EDIT THESE
-	'workerId',
-	'postId'
-/*,
-	'_start_f??OM',
-	'_clicks_f??OM',
-	'_clicktime_f??OM',
-	'_clickorder_f??OM',
-	'_scenariotime_f??OM',
-	'_end_f??OM',
-	'_time_f??OM',
-	'_start_t??OM',
-	'_clicks_t??OM',
-	'_clicktime_t??OM',
-	'_clickorder_t??OM',
-	'_scenariotime_t??OM',
-	'_end_t??OM',
-	'_start_f??OM',
-        '_clicks_f??OM',
-        '_clicktime_f??OM',
-        '_clickorder_f??OM',
-        '_scenariotime_f??OM',
-        '_end_f??OM',
-	'_start_gomOM',
-        '_clicks_gomOM',
-        '_clicktime_gomOM',
-        '_clickorder_gomOM',
-        '_scenariotime_gomOM',
-        '_end_gomOM',
-	'_start_aomOM',
-        '_clicks_aomOM',
-        '_clicktime_aomOM',
-        '_clickorder_aomOM',
-        '_scenariotime_aomOM',
-        '_end_aomOM',
-	'_start_grnOM',
-        '_clicks_grnOM',
-        '_clicktime_grnOM',
-        '_clickorder_grnOM',
-        '_scenariotime_grnOM',
-        '_end_grnOM',
-	'_start_arnOM',
-        '_clicks_arnOM',
-        '_clicktime_arnOM',
-        '_clickorder_arnOM',
-        '_scenariotime_arnOM',
-        '_end_arnOM',
-	'comments'
-*/
-    ]
+  , fields = getFields(spec, phrase, scenario)
   , data
+
+function getFields(spec, phrase, scenario) {
+  var p1, p2, s1, s2;
+  if(phrase == 'O') {
+    p1 = 'o';
+    p2 = 'r';
+  } else {
+    p1 = 'r';
+    p2 = 'o';
+  }
+  if(scenario == 'M') {
+    s1 = 'm';
+    s2 = 'n';
+  } else {
+    s1 = 'n';
+    s2 = 'm';
+  }
+  return [	'workerId', 
+  	  	'postId',
+		'spec',
+		'phrase',
+		'scenario',
+		'_clicks_f??'+phrase+scenario,
+		'_time_f??'+phrase+scenario,
+		'_clicks_t??'+phrase+scenario,
+		'_time_t??'+phrase+scenario,
+		'_clicks_'+spec+p1+s1+phrase+scenario,
+		'_time_'+spec+p2+s2+phrase+scenario ];
+
+}
 
 fs.readFile(file, 'utf8', function (err, data) {
   if (err) console.log(err)
 
   data = JSON.parse(data)
+
+  data = addCondition(data)
 
   // filters any undefined data (it makes R scripting easier)
   data = filterUndefined(data)
@@ -66,7 +52,7 @@ fs.readFile(file, 'utf8', function (err, data) {
   //   comment out if you want to analyze data from yourself
   data = filterDebug(data) 
 
-  convert( data )
+  if (data.length > 0) convert( data )
 })
 
 function convert(d) {
@@ -91,3 +77,13 @@ function filterDebug (arr) {
     return row.workerId !== 'debug'
   })
 }
+
+function addCondition (arr) {
+  return _.map(arr, function(row) {
+    row.spec = spec;
+    row.phrase = phrase;
+    row.scenario = scenario;
+    return row;
+  })
+}
+
