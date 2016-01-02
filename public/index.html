@@ -96,7 +96,7 @@
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
   var data = {};
-  var eid = "OM"; // CHANGE IF GETSEQUENCE IS CHANGED
+  var eid = "RN"; // CHANGE IF GETSEQUENCE IS CHANGED
   experimentr.sequence(getsequence()).start();
   var junktimer;
   function getsequence() {
@@ -105,7 +105,7 @@
     var minimal = ['modules/gradebook_s1min.html', 'modules/addressbook_s1min.html'];
     var nonminimal = ['modules/gradebook_s2non.html', 'modules/addressbook_s2non.html'];
     var post = ['modules/debrief.html'];
-    var tasks = (teach.concat(minimal)).concat(nonminimal);
+    var tasks = (teach.concat(nonminimal)).concat(minimal);
     return (pre.concat(tasks)).concat(post);
   }
 /* GENERIC TASK FUNCTIONS */

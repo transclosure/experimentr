@@ -24,7 +24,7 @@ function getFields(spec, phrase, scenario) {
     s1 = 'n';
     s2 = 'm';
   }
-  return [	'workerId', 
+  return [	'workerId',
   	  	'postId',
 		'spec',
 		'phrase',
@@ -34,6 +34,8 @@ function getFields(spec, phrase, scenario) {
 		'_clicks_t??'+phrase+scenario,
 		'_time_t??'+phrase+scenario,
 		'_clicks_'+spec+p1+s1+phrase+scenario,
+		'_time_'+spec+p1+s1+phrase+scenario,
+		'_clicks_'+spec+p2+s2+phrase+scenario,
 		'_time_'+spec+p2+s2+phrase+scenario ];
 
 }
