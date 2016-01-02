@@ -31,20 +31,24 @@ function getFields(spec, phrase, scenario) {
 		'scenario',
 		'_clicks_f??'+phrase+scenario,
 		'_time_f??'+phrase+scenario,
+		'_clickorder_f??'+phrase+scenario,
 		'_clicktime_f??'+phrase+scenario,
 		'_scenariotime_f??'+phrase+scenario,
 		'_clicks_t??'+phrase+scenario,
 		'_time_t??'+phrase+scenario,
+		'_clickorder_t??'+phrase+scenario,
 		'_clicktime_t??'+phrase+scenario, 
                 '_scenariotime_t??'+phrase+scenario,
 		'_clicks_'+spec+p1+s1+phrase+scenario,
 		'_time_'+spec+p1+s1+phrase+scenario,
+		'_clickorder_'+spec+p1+s1+phrase+scenario,
 		'_clicktime_'+spec+p1+s1+phrase+scenario, 
                 '_scenariotime_'+spec+p1+s1+phrase+scenario,
 		'_clicks_'+spec+p2+s2+phrase+scenario,
-		'_time_'+spec+p2+s2+phrase+scenario ]
+		'_time_'+spec+p2+s2+phrase+scenario,
+		'_clickorder_'+spec+p2+s2+phrase+scenario
 		'_clicktime_'+spec+p2+s2+phrase+scenario,
-                '_scenariotime_'+spec+p2+s2+phrase+scenario;
+                '_scenariotime_'+spec+p2+s2+phrase+scenario];
 
 }
 
