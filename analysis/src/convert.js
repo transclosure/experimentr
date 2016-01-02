@@ -46,7 +46,7 @@ function getFields(spec, phrase, scenario) {
                 '_scenariotime_'+spec+p1+s1+phrase+scenario,
 		'_clicks_'+spec+p2+s2+phrase+scenario,
 		'_time_'+spec+p2+s2+phrase+scenario,
-		'_clickorder_'+spec+p2+s2+phrase+scenario
+		'_clickorder_'+spec+p2+s2+phrase+scenario,
 		'_clicktime_'+spec+p2+s2+phrase+scenario,
                 '_scenariotime_'+spec+p2+s2+phrase+scenario];
 
