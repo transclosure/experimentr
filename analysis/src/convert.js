@@ -1,63 +1,30 @@
-var j2c    = require('json2csv')
-  , fs     = require('fs')
-  , file   = process.argv[2]
-  , spec   = process.argv[3]
-  , phrase = process.argv[4]
-  , scenario = process.argv[5]
-  , _      = require('underscore')
-  , fields = getFields(spec, phrase, scenario)
-  , data
+var j2c           = require('json2csv')
+  , fs            = require('fs')
+  , file          = process.argv[2]
+  , experimentID  = process.argv[3]
+  , formerTask    = process.argv[4]
+  , latterTask    = process.argv[5]
+  , _             = require('underscore')
+  , fields        = getFields()
+  , data;
 
-function getFields(spec, phrase, scenario) {
-  var p1, p2, s1, s2;
-  if(phrase == 'O') {
-    p1 = 'o';
-    p2 = 'r';
-  } else {
-    p1 = 'r';
-    p2 = 'o';
+function getFields() {
+  var experimentFields = ['workerId','postId','experimentID','formerTask','latterTask'];
+  var taskFields;
+  for (let taskID of [formerTask,latterTask]) {
+    taskFields = taskFields.concat([  '_clicks_'+experimentID+'_'+taskID,
+                                      '_time_'+experimentID+'_'+taskID
+                                      '_clickorder_'+experimentID+'_'+taskID
+                                      '_clicktime_'+experimentID+'_'+taskID
+                                      '_scenariotime_'+experimentID+'_'+taskID]);
   }
-  if(scenario == 'M') {
-    s1 = 'm';
-    s2 = 'n';
-  } else {
-    s1 = 'n';
-    s2 = 'm';
-  }
-  return [	'workerId',
-  	  	'postId',
-		'spec',
-		'phrase',
-		'scenario',
-		'_clicks_f??'+phrase+scenario,
-		'_time_f??'+phrase+scenario,
-		'_clickorder_f??'+phrase+scenario,
-		'_clicktime_f??'+phrase+scenario,
-		'_scenariotime_f??'+phrase+scenario,
-		'_clicks_t??'+phrase+scenario,
-		'_time_t??'+phrase+scenario,
-		'_clickorder_t??'+phrase+scenario,
-		'_clicktime_t??'+phrase+scenario, 
-                '_scenariotime_t??'+phrase+scenario,
-		'_clicks_'+spec+p1+s1+phrase+scenario,
-		'_time_'+spec+p1+s1+phrase+scenario,
-		'_clickorder_'+spec+p1+s1+phrase+scenario,
-		'_clicktime_'+spec+p1+s1+phrase+scenario, 
-                '_scenariotime_'+spec+p1+s1+phrase+scenario,
-		'_clicks_'+spec+p2+s2+phrase+scenario,
-		'_time_'+spec+p2+s2+phrase+scenario,
-		'_clickorder_'+spec+p2+s2+phrase+scenario,
-		'_clicktime_'+spec+p2+s2+phrase+scenario,
-                '_scenariotime_'+spec+p2+s2+phrase+scenario];
-
+  return experimentFields.concat(taskFields);
 }
 
 fs.readFile(file, 'utf8', function (err, data) {
   if (err) console.log(err)
 
   data = JSON.parse(data)
-
-  data = addCondition(data)
 
   // filters any undefined data (it makes R scripting easier)
   data = filterUndefined(data)
@@ -94,10 +61,10 @@ function filterDebug (arr) {
 
 function addCondition (arr) {
   return _.map(arr, function(row) {
-    row.spec = spec;
-    row.phrase = phrase;
-    row.scenario = scenario;
+    row.formerTask = formerTask;
+    row.latterTask = latterTask;
     return row;
   })
 }
 
+}
