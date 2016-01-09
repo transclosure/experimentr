@@ -10,12 +10,12 @@ var j2c           = require('json2csv')
 
 function getFields() {
   var experimentFields = ['workerId','postId','experimentID','formerTask','latterTask'];
-  var taskFields;
-  for (let taskID of [formerTask,latterTask]) {
+  var taskFields = [];
+  for (taskID of [formerTask,latterTask]) {
     taskFields = taskFields.concat([  '_clicks_'+experimentID+'_'+taskID,
-                                      '_time_'+experimentID+'_'+taskID
-                                      '_clickorder_'+experimentID+'_'+taskID
-                                      '_clicktime_'+experimentID+'_'+taskID
+                                      '_time_'+experimentID+'_'+taskID,
+                                      '_clickorder_'+experimentID+'_'+taskID,
+                                      '_clicktime_'+experimentID+'_'+taskID,
                                       '_scenariotime_'+experimentID+'_'+taskID]);
   }
   return experimentFields.concat(taskFields);
@@ -26,12 +26,14 @@ fs.readFile(file, 'utf8', function (err, data) {
 
   data = JSON.parse(data)
 
+  data = addConditions(data);
+
   // filters any undefined data (it makes R scripting easier)
   data = filterUndefined(data)
 
   // use 'debug' for your workerId when testing experiments, 
   //   comment out if you want to analyze data from yourself
-  data = filterDebug(data) 
+  //data = filterDebug(data) 
 
   if (data.length > 0) convert( data )
 })
@@ -59,12 +61,10 @@ function filterDebug (arr) {
   })
 }
 
-function addCondition (arr) {
+function addConditions (arr) {
   return _.map(arr, function(row) {
     row.formerTask = formerTask;
     row.latterTask = latterTask;
     return row;
-  })
-}
-
+})
 }

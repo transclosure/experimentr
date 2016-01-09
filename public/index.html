@@ -109,6 +109,7 @@
 /* GENERIC TASK FUNCTIONS */
   function init(taskID, numoptions) {
     data = {};
+    data['experimentID'] = experimentID;
     data['_start_'+experimentID+'_'+taskID] = Date.now();
     data['_scale_'+experimentID+'_'+taskID] = numoptions;
     data['_clicks_'+experimentID+'_'+taskID] = 0;
