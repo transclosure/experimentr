@@ -33,7 +33,7 @@ fs.readFile(file, 'utf8', function (err, data) {
 
   // use 'debug' for your workerId when testing experiments, 
   //   comment out if you want to analyze data from yourself
-  //data = filterDebug(data) 
+  data = filterDebug(data) 
 
   if (data.length > 0) convert( data )
 })
