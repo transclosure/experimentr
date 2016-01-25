@@ -96,8 +96,8 @@
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
   var data = {};
-  var experimentID = "GRM,ARM,GOC,AOC"; // CHANGE IF EXPERIMENT IS CHANGED
-  var experiment = ['modules/GRM.html', 'modules/ARM.html', 'modules/GOC.html', 'modules/AOC.html'];
+  var experimentID = "GOC,AOC,GRM,ARM"; // CHANGE IF EXPERIMENT IS CHANGED
+  var experiment = ['modules/GOC.html', 'modules/AOC.html', 'modules/GRM.html', 'modules/ARM.html'];
   var junktimer;
   function getsequence() {
     var pre = ['modules/consent.html'];
@@ -109,6 +109,7 @@
 /* GENERIC TASK FUNCTIONS */
   function init(taskID, numoptions) {
     data = {};
+    data['experimentID'] = experimentID;
     data['_start_'+experimentID+'_'+taskID] = Date.now();
     data['_scale_'+experimentID+'_'+taskID] = numoptions;
     data['_clicks_'+experimentID+'_'+taskID] = 0;
