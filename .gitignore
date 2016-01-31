@@ -12,4 +12,4 @@ analysis/*.Rhistory
 analysis/*.RData
 analysis/*.r.Rout
 
-.jar
+*.jar
