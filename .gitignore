@@ -11,3 +11,5 @@ analysis/results/*
 analysis/*.Rhistory
 analysis/*.RData
 analysis/*.r.Rout
+
+.jar
