@@ -13,3 +13,4 @@ analysis/*.RData
 analysis/*.r.Rout
 
 *.jar
+/public/alloy/bin
