@@ -10,6 +10,7 @@ var express     = require('express')
   , port        = process.argv[2] || 9100
   , rport       = process.argv[3] || 9000
   , debug       = process.argv[4] || null
+  , exec        = require('child_process').exec;
 
 // Database setup
 redisClient = redis.createClient(rport)
@@ -57,6 +58,15 @@ app.post('/', function handlePost(req, res) {
   save(d)
   // Send a 'success' response to the frontend
   res.send(200)
+})
+
+// Handle spec gets
+app.post('/alloy', function handlePost(req, res) {
+  var output;
+  var dir = process.cwd()+"/alloy";
+  exec("./run.sh", {cwd: dir}, function(error, stdout, stderr) {
+    res.send(stdout);
+  });
 })
 
 // Create the server and tell which port to listen to

@@ -1,6 +1,6 @@
 wget https://github.com/codemirror/CodeMirror/archive/master.zip
 unzip master.zip
-mv CodeMirror-master components/codemirror
+mv CodeMirror-master public/components/codemirror
 rm master.zip
 
 wget http://alloy.mit.edu/alloy/downloads/alloy4.2.jar

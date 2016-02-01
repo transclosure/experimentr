@@ -63,5 +63,14 @@ check NoOneCanGradeTheirOwnAssignment",
 mode : "text/x-java",
 readOnly: true 
   });
+
+  d3.select("#runalloy").on('click', runalloy)
+
+  function runalloy (){
+    var req = new XMLHttpRequest();
+    req.open("POST", "/alloy", false);
+    req.send(specCM.getValue);
+    d3.select("#scenario").text(req.response);
+  }
 </script>
 
