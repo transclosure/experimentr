@@ -12,5 +12,7 @@ analysis/*.Rhistory
 analysis/*.RData
 analysis/*.r.Rout
 
+public/components/*
+
 *.jar
 /public/alloy/bin

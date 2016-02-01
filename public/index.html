@@ -3,6 +3,9 @@
 <meta charset="utf-8">
 <title>Survey</title>
 
+<script src="components/codemirror/lib/codemirror.js"></script>
+<link rel="stylesheet" href="components/codemirror/lib/codemirror.css">
+<script src="components/codemirror/mode/clike/clike.js"></script>
 <script src="components/d3js/d3.v3.min.js"></script>
 <script src="experimentr.js"></script>
 
@@ -73,12 +76,12 @@
     float:left;
   }
   #assertion{
-    width: 45%;
+    width: 50%;
     float: left;
   }
   #question{
-    width: 50%;
-    float: left;  
+    width: 45%;
+    float: right;  
   }
   #scenarios {
     width: 45%;
@@ -94,115 +97,5 @@
 <body></body>
 
 <script>
-/* OVERALL EXPERIMENT FUNCTIONS */
-  var data = {};
-  var experimentID = "GOC,AOC,GRM,ARM"; // CHANGE IF EXPERIMENT IS CHANGED
-  var experiment = ['modules/GOC.html', 'modules/AOC.html', 'modules/GRM.html', 'modules/ARM.html'];
-  var junktimer;
-  function getsequence() {
-    var pre = ['modules/consent.html'];
-    var teach = ['modules/walkthrough.html', 'modules/teach.html'];
-    var post = ['modules/debrief.html'];
-    var tasks = teach.concat(experiment);
-    return (pre.concat(tasks)).concat(post);
-  }
-/* GENERIC TASK FUNCTIONS */
-  function init(taskID, numoptions) {
-    data = {};
-    data['experimentID'] = experimentID;
-    data['_start_'+experimentID+'_'+taskID] = Date.now();
-    data['_scale_'+experimentID+'_'+taskID] = numoptions;
-    data['_clicks_'+experimentID+'_'+taskID] = 0;
-    data['_clicktime_'+experimentID+'_'+taskID] = [];
-    data['_clickorder_'+experimentID+'_'+taskID] = [];
-    var all = Number(d3.select('#all').text());
-    data['_scenariotime_'+experimentID+'_'+taskID] = Array.apply(null, Array(all)).map(Number.prototype.valueOf,0);
-    junktimer = Date.now();
-    //
-    experimentr.hideNext();
-    next(taskID);
-    d3.selectAll('button').on('mouseover', fizz);
-    d3.selectAll('button').on('mouseout', buzz);
-  }
-  function prev(taskID) {
-    var num = Number(d3.select('#num').text());
-    var all = Number(d3.select('#all').text());
-    if(num > 1) {
-      d3.select('#s'+num).style('display', 'none');
-      num = num-1; 
-      d3.select('#s'+num).style('display', null);
-      d3.select('#num').text(""+num);
-      //
-      var diff = Date.now() - junktimer;
-      (data['_scenariotime_'+experimentID+'_'+taskID])[num] = ((data['_scenariotime_'+experimentID+'_'+taskID])[num]) + diff;
-      junktimer = Date.now();
-    }
-  }
-  function next(taskID) {
-    var num = Number(d3.select('#num').text());
-    var all = Number(d3.select('#all').text());
-    if(num < all) {
-      d3.select('#s'+num).style('display', 'none');
-      num = num+1;
-      d3.select('#s'+num).style('display', null);
-      d3.select('#num').text(""+num);
-      //
-      if(num-2 >= 0) {
-        var diff = Date.now() - junktimer;
-        (data['_scenariotime_'+experimentID+'_'+taskID])[num-2] = ((data['_scenariotime_'+experimentID+'_'+taskID])[num-2]) + diff;
-        junktimer = Date.now();
-      }
-    }
-  }
-  function fizz() {
-    d3.select('#a'+d3.event.target.id).style("background-color", "#FFA");
-  }
-  function buzz() {
-    d3.select('#a'+d3.event.target.id).style("background-color", null);
-  }
-  function foo(taskID) {
-    d3.select('#feedback').text("Your selection is not the part of the specification that requires changes. Please try again.");
-    d3.select('#'+d3.event.target.id).attr("disabled", true);
-    d3.select('#'+d3.event.target.id).style("background-color", "#FAA");
-    d3.select('#a'+d3.event.target.id).style("background-color", "#FAA");
-    //
-    data['_clicks_'+experimentID+'_'+taskID] = data['_clicks_'+experimentID+'_'+taskID] + 1;
-    var ctime = Date.now() - data['_start_'+experimentID+'_'+taskID];
-    data['_clicktime_'+experimentID+'_'+taskID] = (data['_clicktime_'+experimentID+'_'+taskID]).concat([ctime]);
-    data['_clickorder_'+experimentID+'_'+taskID] = (data['_clickorder_'+experimentID+'_'+taskID]).concat([d3.event.target.id]);
-  }
-  function bar(taskID) {
-    d3.select('#feedback').text("Correct! Press next to proceed to the next situation.");
-    d3.select('#'+d3.event.target.id).attr("disabled", true);
-    d3.selectAll('button').attr("disabled", true);
-    d3.select('#'+d3.event.target.id).style("background-color", "#AFA");
-    d3.select('#a'+d3.event.target.id).style("background-color", "#AFA");
-    experimentr.showNext();
-    d3.select('#next-button').attr('disabled', null);
-    //
-    data['_clicks_'+experimentID+'_'+taskID] = data['_clicks_'+experimentID+'_'+taskID] + 1;
-    var ctime = Date.now() - data['_start_'+experimentID+'_'+taskID];
-    data['_clicktime_'+experimentID+'_'+taskID] = (data['_clicktime_'+experimentID+'_'+taskID]).concat([ctime]);
-    data['_clickorder_'+experimentID+'_'+taskID] = (data['_clickorder_'+experimentID+'_'+taskID]).concat([d3.event.target.id]);
-    data['_end_'+experimentID+'_'+taskID] = Date.now();
-    data['_time_'+experimentID+'_'+taskID] = parseFloat(data['_end_'+experimentID+'_'+taskID]) - parseFloat(data['_start_'+experimentID+'_'+taskID]);
-    var diff = Date.now() - junktimer;
-    var num = Number(d3.select('#num').text());
-    (data['_scenariotime_'+experimentID+'_'+taskID])[num-1] = ((data['_scenariotime_'+experimentID+'_'+taskID])[num-1]) + diff;
-    experimentr.addData(data);
-  }
-  /* DOCUMENTATION
-   all data is recorded in _<metric>_<experimentID><taskID> form
-   the <experimentID><taskID> should denote the trial conditions (see example below)
-   generic, parameterized code goes here. anything task specific goes in their module
-   sorry for the obfuscated names. i did that to avoid quick CTRL+F to win cheaters.
-   */
-  /*
-   CONDITIONS
-   experimentID     order of the tasks
-   spec             G(gradebook), A(addressbook)
-   phrasing         O(original), R(rephrase)
-   scenario         M(minimal), C(control)
-   */
-   experimentr.sequence(getsequence()).start();
+  experimentr.sequence(['modules/AaaS.html']).start();
 </script>

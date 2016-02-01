@@ -1,0 +1,67 @@
+<div id="specification">
+	<h1>Specification</h1>
+  <div id="spec">
+  </div>
+</div>
+<div id="question">
+  <h1>Question</h1>
+  <div id="quest">
+    <p>Please edit the specification to make the assertion true.</p>
+    <p>When you are done, check your work using the button below.</p>
+    <div style="text-align:center;">
+      <button id="runalloy">Check Specification</button>
+    </div>
+    <p id="feedback"></p>
+  </div>
+</div>
+<div id="scenarios">
+	<h1>Counterexamples</h1>
+	<div style="text-align:center;">
+		<button id="prev">prev</button>
+		<span id="num">1</span>
+		<span>of</span>
+		<span id="all">1</span>
+		<button id="next">next</button>
+	</div>
+	<div id="scenario">
+	</div>
+</div>
+<div id="assertion">
+  <h1>Assertion</h1>
+    <div id="assert">
+    </div>
+</div>
+
+<script>
+  var assert = d3.select("#assert");
+  var specCM = CodeMirror(d3.select("#spec")[0][0], {
+    value: 
+"abstract sig Subject {}\n\
+sig Student extends Subject {}\n\
+sig Professor extends Subject {}\n\
+sig Class {\n\
+  TAs: set Student,\n\
+  instructor: one Professor\n\
+}\n\
+sig Assignment {\n\
+  class: one Class,\n\
+  students: some Student\n\
+}\n\
+pred PolicyAllowsGrading(s: Subject, a: Assignment) {\n\
+  s in a.class.TAs or s in a.class.instructor\n\
+}",
+    mode: "text/x-java"
+  });
+  var assertCM = CodeMirror(d3.select("#assert")[0][0], {
+    value:
+"assert NoOneCanGradeTheirOwnAssignment {\n\
+  all s : Person \n\
+  | all a: Assignment \n\
+  | PolicyAllowsGrading[s, a] implies not s in a.assigned_to\n\
+}\n\
+check NoOneCanGradeTheirOwnAssignment",
+mode : "text/x-java",
+readOnly: true 
+  });
+</script>
+
