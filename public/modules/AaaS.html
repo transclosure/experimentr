@@ -6,12 +6,13 @@
 <div id="question">
   <h1>Question</h1>
   <div id="quest">
-    <p>Please edit the specification to make the assertion true.</p>
-    <p>When you are done, check your work using the button below.</p>
+    <p>Please edit the specification to make the assertion true, and have your answer checked.</p>
     <div style="text-align:center;">
       <button id="runalloy">Check Specification</button>
     </div>
-    <p id="feedback"></p>
+    <p id="feedback">
+      Status: <span id="status"></span>.
+    </p>
   </div>
 </div>
 <div id="scenarios">
@@ -33,25 +34,27 @@
 </div>
 
 <script>
-  var assert = d3.select("#assert");
+/* SPEC */
   var specCM = CodeMirror(d3.select("#spec")[0][0], {
     value: 
-"abstract sig Subject {}\n\
-sig Student extends Subject {}\n\
-sig Professor extends Subject {}\n\
-sig Class {\n\
-  TAs: set Student,\n\
-  instructor: one Professor\n\
-}\n\
-sig Assignment {\n\
-  class: one Class,\n\
-  students: some Student\n\
-}\n\
-pred PolicyAllowsGrading(s: Subject, a: Assignment) {\n\
-  s in a.class.TAs or s in a.class.instructor\n\
+"abstract sig Person {} \n\
+sig Student extends Person {} \n\
+sig Professor extends Person {} \n\
+sig Class { \n\
+  assistant_for: set Student, \n\
+  instructor_of: one Professor \n\
+} \n\
+sig Assignment { \n\
+  associated_with: one Class, \n\
+  assigned_to: some Student \n\
+} \n\
+\n\
+pred PolicyAllowsGrading(s: Person, a: Assignment) { \n\
+  s in a.associated_with.assistant_for or s in a.associated_with.instructor_of \n\
 }",
     mode: "text/x-java"
   });
+/* ASSERT */
   var assertCM = CodeMirror(d3.select("#assert")[0][0], {
     value:
 "assert NoOneCanGradeTheirOwnAssignment {\n\
@@ -63,14 +66,26 @@ check NoOneCanGradeTheirOwnAssignment",
 mode : "text/x-java",
 readOnly: true 
   });
+/* SCENARIOS */
+var scenarioCM = CodeMirror(d3.select("#scenario")[0][0], {
+    value: "",
+mode : "text/x-java",
+readOnly: true 
+  });
 
-  d3.select("#runalloy").on('click', runalloy)
-
+  d3.select("#runalloy").on('click', runalloy);
   function runalloy (){
     var req = new XMLHttpRequest();
-    req.open("POST", "/alloy", false);
-    req.send(specCM.getValue);
-    d3.select("#scenario").text(req.response);
+    var url = "/alloy?spec="+specCM.getValue()+assertCM.getValue();
+    req.open("GET", url, false);
+    req.send();
+    var response = req.response.split('\n');
+    var status = response[0];
+    response.shift();
+    var info = response.join('\n');
+    d3.select("#status").text(status);
+    scenarioCM.setValue(info);
   }
+  runalloy();
 </script>
 

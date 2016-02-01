@@ -1,1 +1,1 @@
-java -jar RunAlloy.jar spec.als
+java -jar RunAlloy.jar $1

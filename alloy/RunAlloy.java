@@ -69,11 +69,10 @@ public final class RunAlloy {
             }
             catch (Exception e)
             {
-                System.out.println("ERROR");
+                System.out.println("SYNTAX ERROR IN SPEC");
                 System.out.println(e);
                 return;
             }
-            
 
             // Choose some default options for how you want to execute the commands
             A4Options options = new A4Options();
@@ -99,12 +98,12 @@ public final class RunAlloy {
                     // } else {
                     //     viz.loadXML("alloy_example_output.xml", true);
                     // }
-                    System.out.println("SAT");
+                    System.out.println("ASSERTION IS FALSE");
                     System.out.println(ans.toString());
                 }
                 // If unsatisfiable... assertion is valid up to the bounds! 
                 else {
-                    System.out.println("UNSAT");
+                    System.out.println("ASSERTION IS TRUE");
                 }
             }
         }

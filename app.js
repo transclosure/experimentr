@@ -10,7 +10,8 @@ var express     = require('express')
   , port        = process.argv[2] || 9100
   , rport       = process.argv[3] || 9000
   , debug       = process.argv[4] || null
-  , exec        = require('child_process').exec;
+  , exec        = require('child_process').exec
+  , fs          = require('fs');
 
 // Database setup
 redisClient = redis.createClient(rport)
@@ -61,10 +62,13 @@ app.post('/', function handlePost(req, res) {
 })
 
 // Handle spec gets
-app.post('/alloy', function handlePost(req, res) {
+app.get('/alloy', function handlePost(req, res) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var dir = process.cwd()+"/alloy/";
+  var spec = "temp/"+ip+".als";
+  fs.writeFile(dir+spec, req.query.spec, (err) => {});
   var output;
-  var dir = process.cwd()+"/alloy";
-  exec("./run.sh", {cwd: dir}, function(error, stdout, stderr) {
+  exec("./run.sh "+spec, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
