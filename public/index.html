@@ -62,7 +62,7 @@
     margin: 0px 0px 0px 0px;
     background: #CCC;
   }
-  #spec, #assert, #quest, #scenario, #teach {
+  #spec, #assert, #quest, #post, #scenario, #teach {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
@@ -96,15 +96,15 @@
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
   var data = {};
-  var experimentID = "GOC,AOC,GRM,ARM"; // CHANGE IF EXPERIMENT IS CHANGED
-  var experiment = ['modules/GOC.html', 'modules/AOC.html', 'modules/GRM.html', 'modules/ARM.html'];
+  var experimentID = "walkthrough_prime,..."; // CHANGE IF EXPERIMENT IS CHANGED
+  var experiment = ['modules/WRC.html', 'modules/AOC.html', 'modules/GRM.html', 'modules/ARM.html'];
   var junktimer;
   function getsequence() {
     var pre = ['modules/consent.html'];
-    var teach = ['modules/walkthrough.html', 'modules/teach.html'];
+    var teach = ['modules/walkthrough_prime.html', 'modules/teach_prime.html'];
     var post = ['modules/debrief.html'];
     var tasks = teach.concat(experiment);
-    return (pre.concat(tasks)).concat(post);
+    return experiment; //(pre.concat(tasks)).concat(post);
   }
 /* GENERIC TASK FUNCTIONS */
   function init(taskID, numoptions) {
@@ -172,13 +172,10 @@
     data['_clickorder_'+experimentID+'_'+taskID] = (data['_clickorder_'+experimentID+'_'+taskID]).concat([d3.event.target.id]);
   }
   function bar(taskID) {
-    d3.select('#feedback').text("Correct! Press next to proceed to the next situation.");
     d3.select('#'+d3.event.target.id).attr("disabled", true);
     d3.selectAll('button').attr("disabled", true);
     d3.select('#'+d3.event.target.id).style("background-color", "#AFA");
     d3.select('#a'+d3.event.target.id).style("background-color", "#AFA");
-    experimentr.showNext();
-    d3.select('#next-button').attr('disabled', null);
     //
     data['_clicks_'+experimentID+'_'+taskID] = data['_clicks_'+experimentID+'_'+taskID] + 1;
     var ctime = Date.now() - data['_start_'+experimentID+'_'+taskID];
@@ -189,7 +186,13 @@
     var diff = Date.now() - junktimer;
     var num = Number(d3.select('#num').text());
     (data['_scenariotime_'+experimentID+'_'+taskID])[num-1] = ((data['_scenariotime_'+experimentID+'_'+taskID])[num-1]) + diff;
+    
+  }
+  function done(taskID, whyanswer, honestanswer) {
+    data['_why_'+experimentID+'_'+taskID] = whyanswer;
+    data['_honestly_'+experimentID+'_'+taskID] = honestanswer;
     experimentr.addData(data);
+    experimentr.next();
   }
   /* DOCUMENTATION
    all data is recorded in _<metric>_<experimentID><taskID> form

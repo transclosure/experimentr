@@ -1,0 +1,110 @@
+<div id="specification">
+  <h1>Specification</h1>
+  <div id="spec">
+    <p>We consider 3 classes: <b>Persons, Classes, and Assignments.</b></p>
+    <p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Students, and Professors.</b></p>
+    <p>We make the following assumptions:
+      <ol>
+        <li>For each <b>Class</b> there is <span id="ab1">a single</span> <b>Professor</b> who is the <i>instructor_of</i> it.</li>
+        <li>For each <b>Class</b> there is <span id="ab2">a set of</span> <b>Students</b> who are the <i>assistants_for</i> it.</li>
+        <li>For each <b>Assignment</b> there is <span id="ab3">a single</span> <b>Class</b> <i>associated_with</i> it.</li>
+        <li>For each <b>Assignment</b> there is <span id="ab4">a set of</span> <b>Students</b> <i>assigned_to</i> it.</li>
+        <li>A <b>Person</b> <u>can_grade</u> an <b>Assignment</b> only if either <span id="ab5a">the <b>Person</b> is an <i>assistant_for</i> the <b>Class</b> <i>associated_with</i> the <b>Assignment</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Professor</b> who is the <i>instructor_of</i> that <b>Class</b>.</span></li>
+      </ol>
+    </p>
+  </div>
+</div>
+<div id="assertion">
+  <h1>Assertion</h1>
+  <div id="assert">
+    Here is the assertion that we thought would be true:
+    <p>There cannot exist a <b>Person</b> who <u>can_grade</u> an <b>Assignment</b> <i>assigned_to</i> them.</p>
+  </div>
+</div>
+<div id="scenarios">
+  <h1>Counterexamples</h1>
+  <div style="text-align:center;">
+    <button id="prev">prev</button>
+    <span id="num">0</span>
+    <span>of</span>
+    <span id="all">1</span>
+    <button id="next">next</button>
+  </div>
+  <div id="scenario">
+    <div id="s1" style="display:none;">
+      One way to see the failure of the assertion: <b>Student0</b> <u>can_grade</u> <b>Assignment0</b>.
+      <ul>
+        <li><b>Student0</b> is an <i>assistant_for</i> <b>Class0</b>.</li>
+        <li><b>Professor0</b> is the <i>instructor_of</i> <b>Class0</b>.</li>
+        <li><b>Assignment0</b> is <i>associated_with</i> <b>Class0</b>.</li>
+        <li><b>Assignment0</b> is <i>assigned_to</i> <b>Student0</b>.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="question">
+  <h1>Question</h1>
+  <div id="quest">
+    <p>Please select the part of the specification that, if changed, would make the assertion true.</p>
+    <div style="text-align:center;">
+      <button id="b1">1</button>
+      <button id="b2">2</button>
+      <button id="b3">3</button>
+      <button id="b4">4</button>
+      <button id="b5a">5a</button>
+      <button id="b5b">5b</button>
+      <button id="b5c">5c</button>
+      <button id="bb">nothing wrong with current spec; new assumption needed</button>
+    </div>
+    <p id="feedback"></p>
+  </div>
+</div>
+
+<script>
+  var id = "teach";
+  function init2() {
+    init(id, 7);
+    d3.select('#prev').on('click', prev2);
+    d3.select('#next').on('click', next2);
+    d3.select('#b1').on('click', foo2);
+    d3.select('#b2').on('click', foo2);
+    d3.select('#b3').on('click', foo2);
+    d3.select('#b4').on('click', foo2);
+    d3.select('#b5a').on('click', bar2);
+    d3.select('#b5b').on('click', foo2);
+    d3.select('#b5c').on('click', foo2);
+    d3.select('#bb').on('click', foo2);
+  }
+  function prev2() { prev(id); }
+  function next2() { next(id); }
+  function foo2() {
+    foo(id);
+    var choice = d3.event.target.id;
+    if(choice=="b1") {
+      d3.select('#feedback').text("Changing the number of professors would not help.");
+    } 
+    else if (choice=="b2") {
+      d3.select('#feedback').text("Changing the number of students would not help.");
+    }
+    else if (choice=="b3") {
+      d3.select('#feedback').text("Assignments spanning multiple classes would only complicate the issue.");
+    }
+    else if (choice=="b4") {
+      d3.select('#feedback').text("Reducing the number of students assigned to an assignment would not help.");
+    }
+    else if (choice=="b5b") {
+      d3.select('#feedback').text("These are the two situations when someone can grade. Changing this would ruin that.");
+    }
+    else if (choice=="b5c") {
+      d3.select('#feedback').text("Is the Professor the issue in the counterexample?");
+    }
+    else if (choice=="bb") {
+      d3.select('#feedback').text("There is definitely an issue with one of the assumptions.");
+    }
+  }
+  function bar2() {
+    bar(id);
+    d3.select('#feedback').text("Correct! Assistants should not be able to grade a homework they are assigned to!")
+  }
+  init2();
+</script>

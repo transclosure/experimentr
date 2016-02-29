@@ -1,0 +1,148 @@
+<div id="specification">
+	<h1>Specification</h1>
+  <button id="teach1" style="display:none">Click me!</button>
+  <div id="spec">
+    <p>We consider 2 classes: <b>Books, and Targets.</b></p>
+    <p>The class of <b>Targets</b> is partitioned into 2 non-overlapping subclasses: <b>Addresses, and Names.</b></p>
+    <p>We make the following assumptions:
+      <ol>
+        <li>For each <b>Book</b> there is <span id="ab1">a set of</span> <b>Names</b> that are the <i>entries_in</i> it.</li>
+        <li>For each <b>Book</b> there is <span id="ab2">some</span> <b>Target</b> that is the <i>target_of</i> each <i>entry_in</i> it.</li>
+        <li>For each <b>Book</b> there is <span id="ab3">at most one</span> <i>target_of</i> each <i>entry_in</i> it.</li>
+        <li><span id="ab4">For each <b>Book</b> there is no <i>entry_in</i> it listed in it's own <u>lookup</u></span>.</li>
+        <li>We can <span id="ab5a"><u>lookup</u> the <b>Address</b> of a <b>Name</b> in a <b>Book</b></span> by <span id="ab5b">successively</span> <span id="ab5c">finding the <i>target_of</i> the names</span>.</li>
+      </ol>
+    </p>
+  </div>
+</div>
+<div id="assertion">
+	<h1>Assertion</h1>
+  <button id="teach2" style="display:none">Click me!</button>
+  <div id="assert">
+    Here is the assertion that we thought would be true: 
+    <p>Each <u>lookup</u> of each <i>entry_in</i> each <b>Book</b> lists some <b>Address</b>.</p>
+  </div>
+</div>
+<div id="scenarios">
+	<h1>Counterexamples</h1>
+  <button id="teach3" style="display:none">Click me!</button>
+	<div style="text-align:center;">
+    <button id="prev">prev</button>
+    <span id="num">0</span>
+    <span>of</span>
+    <span id="all">1</span>
+    <button id="next">next</button>
+  </div>
+  <div id="scenario">
+    <div id="s1" style="display:none;">
+      One way to see the failure of the assertion: the <u>lookup</u> of <b>Name1</b> in <b>Book0</b> lists no <b>Addresses</b>.
+      <ul>
+        <li><b>Name1</b> is an <i>entry_in</i> <b>Book0</b>.</li>
+        <li><b>Name0</b> is the <i>target_of</i> <b>Name1</b> in <b>Book0</b>.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="question">
+	<h1>Question</h1>
+  <button id="teach4" style="display:none">Click me!</button>
+  <div id="quest">
+    <p>Please select the part of the specification that, if changed, would make the assertion true.</p>
+    <div style="text-align:center;">
+      <button id="b1">1</button>
+      <button id="b2">2</button>
+      <button id="b3">3</button>
+      <button id="b4">4</button>
+      <button id="b5a">5a</button>
+      <button id="b5b">5b</button>
+      <button id="b5c">5c</button>
+      <button id="bb">nothing wrong with current spec; new assumption needed</button>
+    </div>
+    <p id="feedback"></p>
+  </div>
+</div>
+<div id="teacher">
+  <h1>Teacher</h1>
+  <div id="teach">
+    <p id="teachwords">We will walk you through the first task. Read the teacher directions carefully. Hit the "Click me!" buttons to continue.<p>
+  </div>
+</div>
+
+<script>
+  var id = "walkthrough";
+  function init2() {
+    init(id, 8);
+    d3.select('#prev').on('click', prev2);
+    d3.select('#next').on('click', next2);
+    d3.select('#teach').on('mouseover', buzz2);
+    d3.select('#b4').on('click', teach5);
+    d3.select('#b5a').on('click', teach6);
+    d3.select('#b3').on('click', teachdone);
+    d3.select('#teach1').on('click', teach1);
+    d3.select('#teach2').on('click', teach2);
+    d3.select('#teach3').on('click', teach3);
+    d3.select('#teach4').on('click', teach4);
+    d3.selectAll('button').attr("disabled", true);
+    d3.selectAll("#spec, #assert, #quest, #scenario").style('visibility', 'hidden');
+    d3.select('#teach1').style("display", null);
+    d3.select('#teach1').attr("disabled", null);
+  }
+  function prev2() { prev(id); }
+  function next2() { next(id); }
+  function buzz2(){
+    d3.select('#teach').style("background-color", null);
+  }
+  function teach1(){
+    d3.select('#teach').style("background-color", "#aaf");
+    d3.select('#teach1').style("display", "none");
+    d3.select('#teach1').attr("disabled", true);
+    d3.selectAll("#spec").style('visibility', null);
+    d3.select('#teach2').style("display", null);
+    d3.select('#teach2').attr("disabled", null);
+    d3.select('#teachwords').text("The specification of this task defines what an address book consists of (the classes), and how it works (the assumptions).");
+  }
+  function teach2(){
+    d3.select('#teach').style("background-color", "#aaf");
+    d3.select('#teach2').style("display", "none");
+    d3.select('#teach2').attr("disabled", true);
+    d3.selectAll("#assert").style('visibility', null);
+    d3.select('#teach3').style("display", null);
+    d3.select('#teach3').attr("disabled", null);
+    d3.select('#teachwords').text("This assertion of this task expects that looking up each name in the address book results in an address. That is, there's no unlisted name in the address book. Focus less on your intuition, and more on the information provided in the specification and counterexamples.");
+  }
+  function teach3(){
+    d3.select('#teach').style("background-color", "#aaf");
+    d3.select('#teach3').style("display", "none");
+    d3.select('#teach3').attr("disabled", true);
+    d3.selectAll("#scenario").style('visibility', null);
+    d3.select('#teach4').style("display", null);
+    d3.select('#teach4').attr("disabled", null);
+    d3.select('#teachwords').text("For this task you are provided with one simple counterexample. You should be able to take the information in this example, and apply it to the specification. Notice that the bolded/italicized words in the counterexample, match the ones in the assertion, and in the specification.");
+  }
+  function teach4(){
+    d3.select('#teach').style("background-color", "#aaf");
+    d3.select('#teach4').style("display", "none");
+    d3.select('#teach4').attr("disabled", true);
+    d3.selectAll("#quest").style('visibility', null);
+    d3.select('#b4').attr("disabled", null);
+    d3.select('#teachwords').text("Now for the question. Are any parts of the current specification related to the information in the counterexample? Option #4 looks related. Try this option.");
+  }
+  function teach5(){
+    d3.select('#teach').style("background-color", "#aaf");
+    foo(id);
+    d3.select('#b5a').attr("disabled", null);
+    d3.select('#teachwords').text("We were wrong! This prevents cyclic listings. It has nothing to do with our missing listing. What about Option #5a? Try that option!");
+  }
+  function teach6(){
+    d3.select('#teach').style("background-color", "#aaf");
+    foo(id);
+    d3.select('#b3').attr("disabled", null);
+    d3.select('#teachwords').text("Darn... wrong again! Nothing is wrong with how we lookup names in the addressbook. Something is wrong with the target_of the entries_in... that looks like Option #3. Try it!");
+  }
+  function teachdone(){
+    d3.select('#teach').style("background-color", "#aaf");
+    bar(id);
+    d3.select('#teachwords').text("Hopefully this helped you understand how to approach the task, and how to think about the question carefully. If not, you'll have a chance to leave us feedback at the end. Now the training wheels come off... you'll be getting less and less feedback for the 5 tasks. Good luck!");
+  }
+  init2();
+</script>
