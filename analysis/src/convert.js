@@ -2,22 +2,20 @@ var j2c           = require('json2csv')
   , fs            = require('fs')
   , file          = process.argv[2]
   , experimentID  = process.argv[3]
-  , formerTask    = process.argv[4]
-  , latterTask    = process.argv[5]
+  , taskID        = process.argv[4]
   , _             = require('underscore')
   , fields        = getFields()
   , data;
 
 function getFields() {
-  var experimentFields = ['workerId','postId','experimentID','formerTask','latterTask'];
-  var taskFields = [];
-  for (taskID of [formerTask,latterTask]) {
-    taskFields = taskFields.concat([  '_clicks_'+experimentID+'_'+taskID,
-                                      '_time_'+experimentID+'_'+taskID,
-                                      '_clickorder_'+experimentID+'_'+taskID,
-                                      '_clicktime_'+experimentID+'_'+taskID,
-                                      '_scenariotime_'+experimentID+'_'+taskID]);
-  }
+  var experimentFields = ['workerId','postId','experimentID','taskID'];
+  var taskFields = ['_clicks_'+experimentID+'_'+taskID,
+                    '_time_'+experimentID+'_'+taskID,
+                    '_clickorder_'+experimentID+'_'+taskID,
+                    '_clicktime_'+experimentID+'_'+taskID,
+                    '_scenariotime_'+experimentID+'_'+taskID,
+                    '_why_'+experimentID+'_'+taskID,
+                    '_honestly_'+experimentID+'_'+taskID];
   return experimentFields.concat(taskFields);
 }
 
@@ -33,7 +31,7 @@ fs.readFile(file, 'utf8', function (err, data) {
 
   // use 'debug' for your workerId when testing experiments, 
   //   comment out if you want to analyze data from yourself
-  data = filterDebug(data) 
+  //data = filterDebug(data) 
 
   if (data.length > 0) convert( data )
 })
@@ -63,8 +61,7 @@ function filterDebug (arr) {
 
 function addConditions (arr) {
   return _.map(arr, function(row) {
-    row.formerTask = formerTask;
-    row.latterTask = latterTask;
+    row.taskID = taskID;
     return row;
 })
 }
