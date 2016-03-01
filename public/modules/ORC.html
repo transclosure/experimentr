@@ -6,10 +6,10 @@
     <p>There is one <b>Section</b> in particular: <u>nonfiction</u>.</p>
   	<p>We make the following assumptions:
   		<ol>
-  			<li>Each <b>Book</b> is a <i>part of</i> <span id="ab1">some</span> <b>Genre</b>.</li>
   			<li>For each <b>Section</b> there is <span id="ab2">a set of</span> <b>Genres</b> that are <i>found_in</i> it.</li>
-        <li><span id="ab3a">At least</span>, <span id="ab3b">the <u>history</u> and <u>biography</u> <b>Genres</b></span> are <i>located_in</i> <span id="ab3c">the <u>nonfiction</u> <b>Section</b>.</span></li>
         <li>A <span id="ab4a"><b>Book</b> is <u>stored_in</u> a <b>Section</b></span> only if <span id="ab4b">the <b>Book</b> is a <i>part_of</i> a <b>Genre</b> <i>found_in</i> that <b>Section</b></span>.
+        <li><span id="ab3a">At least</span>, <span id="ab3b">the <u>history</u> and <u>biography</u> <b>Genres</b></span> are <i>located_in</i> <span id="ab3c">the <u>nonfiction</u> <b>Section</b>.</span></li>
+        <li>Each <b>Book</b> is a <i>part of</i> <span id="ab1">some</span> <b>Genre</b>.</li>
   		</ol>
   	</p>
   </div>
@@ -80,13 +80,13 @@
   <div id="quest">
   	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
   	<div style="text-align:center;">
-  		<button id="b1">1</button>
-  		<button id="b2">2</button>
+  		<button id="b2">1</button>
+      <button id="b4a">2a</button>
+      <button id="b4b">2b</button>
   		<button id="b3a">3a</button>
   		<button id="b3b">3b</button>
   		<button id="b3c">3c</button>
-      <button id="b4a">4a</button>
-      <button id="b4b">4b</button>
+      <button id="b1">4</button>
       <button id="bb">nothing wrong with current spec; new assumption needed</button>
   	</div>
 	  <p id="feedback"></p>

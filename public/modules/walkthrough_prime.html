@@ -137,12 +137,12 @@
     d3.select('#teach').style("background-color", "#aaf");
     foo(id);
     d3.select('#b3').attr("disabled", null);
-    d3.select('#teachwords').text("Darn... wrong again! Nothing is wrong with how we lookup names in the addressbook. Something is wrong with the target_of the entries_in... that looks like Option #3. Try it!");
+    d3.select('#teachwords').text("Darn... wrong again! Nothing is wrong with how we lookup names in the addressbook. Something is wrong with the target_of the entries_in... Option #3 is definitely the right answer.");
   }
-  function teachdone(){
+  function teachdone() {
     d3.select('#teach').style("background-color", "#aaf");
     bar(id);
-    d3.select('#teachwords').text("Hopefully this helped you understand how to approach the task, and how to think about the question carefully. If not, you'll have a chance to leave us feedback at the end. Now the training wheels come off... you'll be getting less and less feedback for the 5 tasks. Good luck!");
+    done(id, "", "");
   }
   init2();
 </script>

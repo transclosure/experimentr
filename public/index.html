@@ -97,14 +97,14 @@
 /* OVERALL EXPERIMENT FUNCTIONS */
   var data = {};
   var experimentID = "walkthrough_prime,teach_prime,BRC,ORC,BOM,OOM"; // CHANGE IF EXPERIMENT IS CHANGED
-  var experiment = ['modules/ORC.html', 'modules/AOC.html', 'modules/GRM.html', 'modules/ARM.html'];
+  var experiment = ['modules/BRC.html', 'modules/ORC.html', 'modules/BOM.html', 'modules/OOM.html'];
   var junktimer;
   function getsequence() {
     var pre = ['modules/consent.html'];
     var teach = ['modules/walkthrough_prime.html', 'modules/teach_prime.html'];
     var post = ['modules/debrief.html'];
     var tasks = teach.concat(experiment);
-    return experiment; //(pre.concat(tasks)).concat(post);
+    return pre.concat(tasks).concat(post);
   }
 /* GENERIC TASK FUNCTIONS */
   function init(taskID, numoptions) {
@@ -193,8 +193,8 @@
     
   }
   function done(taskID, whyanswer, honestanswer) {
-    data['_why_'+experimentID+'_'+taskID] = whyanswer;
-    data['_honestly_'+experimentID+'_'+taskID] = honestanswer;
+    data['_why_'+experimentID+'_'+taskID] = "why:"+whyanswer;
+    data['_honestly_'+experimentID+'_'+taskID] = "honestly:"+honestanswer;
     experimentr.addData(data);
     experimentr.next();
   }

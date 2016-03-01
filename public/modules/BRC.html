@@ -6,10 +6,10 @@
   	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Employees, and Customers</b></p>
   	<p>We make the following assumptions:
   		<ol>
-  			<li>Each <b>Person</b> <i>owns</i> <span id="ab1">a set of</span> <b>Cards</b>.</li>
+        <li>A <span id="ab4a"><b>Person</b> <u>can_apply</u> a <b>Rebate</b></span> only if <span id="ab4b">the <b>Rebate</b> is <i>loaded_on</i> a <b>Card</b> the <b>Person</b> <i>owns</i></span>.
   			<li>For each <b>Card</b> there is <span id="ab2">one</span> <b>Employee</b> who <i>authorized</i> it being given out.</li>
         <li>For each <b>Card</b> there is <span id="ab3">one</span> <b>Rebate</b> <i>loaded_on</i> it.</li>
-        <li>A <span id="ab4a"><b>Person</b> <u>can_apply</u> a <b>Rebate</b></span> only if <span id="ab4b">the <b>Rebate</b> is <i>loaded_on</i> a <b>Card</b> <i>owned</i> by the <b>Person</b> <i>owns</i></span>.
+        <li>Each <b>Person</b> <i>owns</i> <span id="ab1">a set of</span> <b>Cards</b>.</li>
   		</ol>
   	</p>
   </div>
@@ -85,11 +85,11 @@
   <div id="quest">
   	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
   	<div style="text-align:center;">
-  		<button id="b1">1</button>
-  		<button id="b2">2</button>
-  		<button id="b3">3</button>
-  		<button id="b4a">4a</button>
-  		<button id="b4b">4b</button>
+      <button id="b4a">1a</button>
+      <button id="b4b">1b</button>
+      <button id="b2">2</button>
+      <button id="b3">3</button>
+  		<button id="b1">4</button>
       <button id="bb">nothing wrong with current spec; new assumption needed</button>
   	</div>
 	  <p id="feedback"></p>

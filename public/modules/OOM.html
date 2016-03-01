@@ -1,0 +1,112 @@
+<div id="specification">
+	<h1>Specification</h1>
+  <div id="spec">
+  	<p>We consider 3 classes: <b>Persons, Groups, and Rooms.</b></p>
+    <p>There are two <b>Groups</b> in particular: <u>systems</u> and <u>logic</u>.</p>
+    <p>There is one <b>Room</b> in particular: the <u>secure_lab</u>.</p>
+  	<p>We make the following assumptions:
+  		<ol>
+  			<li>Each <b>Person</b> is a <i>member_of</i> <span id="ab1">some</span> <b>Group</b>.</li>
+  			<li>For each <b>Room</b> there is <span id="ab2">a set of</span> <b>Groups</b> that are <i>located_in</i> it.</li>
+        <li><span id="ab3a">At least</span>, <span id="ab3b">the <u>systems</u> and <u>logic</u> <b>Groups</b></span> are <i>located_in</i> <span id="ab3c">the <u>secure_lab</u> <b>Room</b>.</span></li>
+        <li>A <span id="ab4a"><b>Person</b> <u>can_enter</u> a <b>Room</b></span> only if <span id="ab4b">the <b>Person</b> is a <i>member_of</i> a <b>Group</b> <i>located_in</i> that <b>Room</b></span>.
+  		</ol>
+  	</p>
+  </div>
+</div>
+<div id="assertion">
+	<h1>Assertion</h1>
+  <div id="assert">
+  	Here is the assertion that we thought would be true:
+  	<p>Each <b>Person</b> that <u>can_enter</u> the <u>secure_lab</u> is a <i>member_of</i> the <u>systems</u> or <u>logic</u> <b>Group</b>.</p>
+  </div>
+</div>
+<div id="scenarios">
+	<h1>Counterexamples</h1>
+	<div style="text-align:center;">
+		<button id="prev">prev</button>
+		<span id="num">0</span>
+		<span>of</span>
+		<span id="all">1</span>
+		<button id="next">next</button>
+	</div>
+	<div id="scenario">
+		<div id="s1" style="display:nonehe ;">
+      One way to see the failure of the assertion: <b>Person0</b> <u>can_enter</u> t<u>secure_lab</u>.
+			<ul>
+				<li><b>Person0</b> is a <i>member_of</i> <b>Group0</b>.</li>
+        <li><b>Group0</b> is <i>located_in</i> the <u>secure_lab</u>.</li>
+        <li><u>logic</u> is <i>located_in</i> the <u>secure_lab</u>.</li>
+        <li><u>systems</u> is <i>located_in</i> the <u>secure_lab</u>.</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="question">
+	<h1>Question</h1>
+  <button id="gatekeeper" style="display:none">I have read the specification, assertion, and counterexamples fully. I am ready to answer the question.</button>
+  <div id="quest">
+  	<p>Please select the member_of the specification that, if changed, would make the assertion true.</p>
+  	<div style="text-align:center;">
+  		<button id="b1">1</button>
+  		<button id="b2">2</button>
+  		<button id="b3a">3a</button>
+  		<button id="b3b">3b</button>
+  		<button id="b3c">3c</button>
+      <button id="b4a">4a</button>
+      <button id="b4b">4b</button>
+      <button id="bb">nothing wrong with current spec; new assumption needed</button>
+  	</div>
+	  <p id="feedback"></p>
+  </div>
+  <div id="post">
+    <p>Correct! <b>The following questions do not affect your approval. Please answer honestly.</b>
+      <br/>
+      Why would changing that member_of the specification make the assertion true?
+    </p>
+    <textarea id="why" rows="5" cols="34"></textarea>
+      <button id="ididnt">I did not read carefully and started clicking.</button>
+      <button id="iread">I read the specification, assertion, and counterexamples carefully.</button>
+  </div>
+</div>
+
+<script>
+  var id = "ORC";
+  function init2() {
+    init(id, 8);
+    d3.select('#prev').on('click', prev2);
+    d3.select('#next').on('click', next2);
+    d3.select('#b1').on('click', foo2);
+    d3.select('#b2').on('click', foo2);
+    d3.select('#b3a').on('click', bar2);
+    d3.select('#b3b').on('click', foo2);
+    d3.select('#b3c').on('click', foo2);
+    d3.select('#b4a').on('click', foo2);
+    d3.select('#b4b').on('click', foo2);
+    d3.select('#bb').on('click', foo2);
+    // tweak
+    d3.select("#quest").style('visibility', 'hidden');
+    d3.select('#gatekeeper').style("display", null);
+    d3.select('#post').style("display", 'none');
+    d3.select('#gatekeeper').on('click', open);
+    d3.selectAll('#ididnt,#iread').on('click', done2);  
+  }
+  // tweak
+  function open() {
+    d3.select('#gatekeeper').style("display", 'none');
+    d3.select("#quest").style('visibility', null);
+  }
+  // tweak
+  function bar2()  { 
+    bar(id);
+    d3.select('#quest').style("display", 'none');
+    d3.select('#post').style("display", null);
+    d3.selectAll('#ididnt,#iread').attr('disabled',null);  
+  }
+  // tweak
+  function done2() { done(id, d3.select('#why').property('value'), ('#'+d3.event.target.id)); }
+  function prev2() { prev(id); }
+  function next2() { next(id); }
+  function foo2()  { foo(id); }
+  init2();
+</script>
