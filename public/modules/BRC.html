@@ -1,0 +1,145 @@
+<div id="specification">
+	<h1>Specification</h1>
+  <div id="spec">
+  	<p>We consider 3 classes: <b>Persons, Cards, and Rebates.</b></p>
+    <p>There is one <b>Rebate</b> in particular: <u>store_credit</u></p>
+  	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Employees, and Customers</b></p>
+  	<p>We make the following assumptions:
+  		<ol>
+  			<li>Each <b>Person</b> <i>owns</i> <span id="ab1">a set of</span> <b>Cards</b>.</li>
+  			<li>For each <b>Card</b> there is <span id="ab2">one</span> <b>Employee</b> who <i>authorized</i> it being given out.</li>
+        <li>For each <b>Card</b> there is <span id="ab3">one</span> <b>Rebate</b> <i>loaded_on</i> it.</li>
+        <li>A <span id="ab4a"><b>Person</b> <u>can_apply</u> a <b>Rebate</b></span> only if <span id="ab4b">the <b>Rebate</b> is <i>loaded_on</i> a <b>Card</b> <i>owned</i> by the <b>Person</b> <i>owns</i></span>.
+  		</ol>
+  	</p>
+  </div>
+</div>
+<div id="assertion">
+	<h1>Assertion</h1>
+  <div id="assert">
+  	Here is the assertion that we thought would be true:
+  	<p>Each <b>Person</b> that <u>can_apply</u> <u>store_credit</u> is a <b>Customer</b>.</p>
+  </div>
+</div>
+<div id="scenarios">
+	<h1>Counterexamples</h1>
+	<div style="text-align:center;">
+		<button id="prev">prev</button>
+		<span id="num">0</span>
+		<span>of</span>
+		<span id="all">3</span>
+		<button id="next">next</button>
+	</div>
+	<div id="scenario">
+		<div id="s1" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee1</b> <u>can_apply</u> <u>store_credit</u>.
+			<ul>
+				<li><b>Customer0</b> <i>owns</i> <b>Card1</b>.</li>
+        <li><b>Employee0</b> <i>owns</i> <b>Card0</b>.</li>
+        <li><b>Employee0</b> <i>owns</i> <b>Card1</b>.</li>
+        <li><b>Employee1</b> <i>owns</i> <b>Card0</b>.</li>
+        <li><b>Employee1</b> <i>owns</i> <b>Card2</b>.</li>
+				<li><b>Card0</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Card1</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Card2</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+				<li><b>Rebate0</b> is <i>loaded_on</i> <b>Card0</b>.</li>
+        <li><b>Rebate0</b> is <i>loaded_on</i> <b>Card1</b>.</li>
+        <li><u>store_credit</u> is <i>loaded_on</i> <b>Card2</b>.</li>
+			</ul>
+		</div>
+    <div id="s2" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee1</b> <u>can_apply</u> <u>store_credit</u>.
+      <ul>
+        <li><b>Customer0</b> <i>owns</i> <b>Card1</b>.</li>
+        <li><b>Customer0</b> <i>owns</i> <b>Card2</b>.</li>
+        <li><b>Employee0</b> <i>owns</i> <b>Card1</b>.</li>
+        <li><b>Employee1</b> <i>owns</i> <b>Card1</b>.</li>
+        <li><b>Employee1</b> <i>owns</i> <b>Card2</b>.</li>
+        <li><b>Card0</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Card1</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Card2</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Rebate0</b> is <i>loaded_on</i> <b>Card0</b>.</li>
+        <li><b>Rebate0</b> is <i>loaded_on</i> <b>Card1</b>.</li>
+        <li><u>store_credit</u> is <i>loaded_on</i> <b>Card2</b>.</li>
+      </ul>
+    </div>
+    <div id="s3" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee1</b> <u>can_apply</u> <u>store_credit</u>.
+      <ul>
+        <li><b>Customer0</b> <i>owns</i> <b>Card0</b>.</li>
+        <li><b>Customer0</b> <i>owns</i> <b>Card1</b>.</li>
+        <li><b>Employee0</b> <i>owns</i> <b>Card2</b>.</li>
+        <li><b>Card0</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Card1</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Card2</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Rebate0</b> is <i>loaded_on</i> <b>Card0</b>.</li>
+        <li><b>Rebate0</b> is <i>loaded_on</i> <b>Card1</b>.</li>
+        <li><u>store_credit</u> is <i>loaded_on</i> <b>Card2</b>.</li>
+      </ul>
+    </div>
+	</div>
+</div>
+<div id="question">
+	<h1>Question</h1>
+  <button id="gatekeeper" style="display:none">I have read the specification, assertion, and counterexamples fully. I am ready to answer the question.</button>
+  <div id="quest">
+  	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
+  	<div style="text-align:center;">
+  		<button id="b1">1</button>
+  		<button id="b2">2</button>
+  		<button id="b3">3</button>
+  		<button id="b4a">4a</button>
+  		<button id="b4b">4b</button>
+      <button id="bb">nothing wrong with current spec; new assumption needed</button>
+  	</div>
+	  <p id="feedback"></p>
+  </div>
+  <div id="post">
+    <p>Correct! <b>The following questions do not affect your approval. Please answer honestly.</b>
+      <br/>
+      Why would changing that part of the specification make the assertion true?
+    </p>
+    <textarea id="why" rows="5" cols="34"></textarea>
+      <button id="ididnt">I did not read carefully and started clicking.</button>
+      <button id="iread">I read the specification, assertion, and counterexamples carefully.</button>
+  </div>
+</div>
+
+<script>
+  var id = "BRC";
+  function init2() {
+    init(id, 8);
+    d3.select('#prev').on('click', prev2);
+    d3.select('#next').on('click', next2);
+    d3.select('#b1').on('click', foo2);
+    d3.select('#b2').on('click', foo2);
+    d3.select('#b3').on('click', foo2);
+    d3.select('#b4a').on('click', foo2);
+    d3.select('#b4b').on('click', foo2);
+    d3.select('#bb').on('click', bar2);
+    // tweak
+    d3.select("#quest").style('visibility', 'hidden');
+    d3.select('#gatekeeper').style("display", null);
+    d3.select('#post').style("display", 'none');
+    d3.select('#gatekeeper').on('click', open);
+    d3.selectAll('#ididnt,#iread').on('click', done2);  
+  }
+  // tweak
+  function open() {
+    d3.select('#gatekeeper').style("display", 'none');
+    d3.select("#quest").style('visibility', null);
+  }
+  // tweak
+  function bar2()  { 
+    bar(id);
+    d3.select('#quest').style("display", 'none');
+    d3.select('#post').style("display", null);
+    d3.selectAll('#ididnt,#iread').attr('disabled',null);  
+  }
+  // tweak
+  function done2() { done(id, d3.select('#why').property('value'), ('#'+d3.event.target.id)); }
+  function prev2() { prev(id); }
+  function next2() { next(id); }
+  function foo2()  { foo(id); }
+  init2();
+</script>

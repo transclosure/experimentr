@@ -96,8 +96,8 @@
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
   var data = {};
-  var experimentID = "walkthrough_prime,..."; // CHANGE IF EXPERIMENT IS CHANGED
-  var experiment = ['modules/WRC.html', 'modules/AOC.html', 'modules/GRM.html', 'modules/ARM.html'];
+  var experimentID = "walkthrough_prime,teach_prime,BRC,ORC,BOM,OOM"; // CHANGE IF EXPERIMENT IS CHANGED
+  var experiment = ['modules/ORC.html', 'modules/AOC.html', 'modules/GRM.html', 'modules/ARM.html'];
   var junktimer;
   function getsequence() {
     var pre = ['modules/consent.html'];
@@ -163,6 +163,8 @@
   function foo(taskID) {
     d3.select('#feedback').text("Your selection is not the part of the specification that requires changes. Please try again.");
     d3.select('#'+d3.event.target.id).attr("disabled", true);
+    d3.select('#'+d3.event.target.id).on("mouseout", null);
+    d3.select('#'+d3.event.target.id).on("mouseover", null);
     d3.select('#'+d3.event.target.id).style("background-color", "#FAA");
     d3.select('#a'+d3.event.target.id).style("background-color", "#FAA");
     //
@@ -174,6 +176,8 @@
   function bar(taskID) {
     d3.select('#'+d3.event.target.id).attr("disabled", true);
     d3.selectAll('button').attr("disabled", true);
+    d3.select('#'+d3.event.target.id).on("mouseout", null);
+    d3.select('#'+d3.event.target.id).on("mouseover", null);
     d3.select('#'+d3.event.target.id).style("background-color", "#AFA");
     d3.select('#a'+d3.event.target.id).style("background-color", "#AFA");
     //
