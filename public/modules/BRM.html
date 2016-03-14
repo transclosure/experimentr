@@ -1,15 +1,15 @@
 <div id="specification">
 	<h1>Specification</h1>
   <div id="spec">
-  	<p>We consider 3 classes: <b>Persons, Keys, and Rooms.</b></p>
-    <p>There is one <b>Room</b> in particular: the <u>secure_lab</u></p>
-  	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Employees, and Researchers</b></p>
+  	<p>We consider 3 classes: <b>Persons, Cards, and Rebates.</b></p>
+    <p>There is one <b>Rebate</b> in particular: <u>store_credit</u></p>
+  	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Employees, and Customers</b></p>
   	<p>We make the following assumptions:
   		<ol>
-  			<li>Each <b>Person</b> <i>owns</i> <span id="ab1">a set of</span> <b>Keys</b>.</li>
-  			<li>For each <b>Key</b> there is <span id="ab2">one</span> <b>Employee</b> who <i>authorized</i> it being given out.</li>
-        <li>For each <b>Key</b> there is <span id="ab3">one</span> <b>Room</b> <i>opened_by</i> it.</li>
-        <li>A <span id="ab4a"><b>Person</b> <u>can_enter</u> a <b>Room</b></span> only if <span id="ab4b">the <b>Room</b> is <i>opened_by</i> a <b>Key</b> the <b>Person</b> <i>owns</i></span>.
+        <li>A <span id="ab4a"><b>Person</b> <u>can_apply</u> a <b>Rebate</b></span> only if <span id="ab4b">the <b>Rebate</b> is <i>loaded_on</i> a <b>Card</b> the <b>Person</b> <i>owns</i></span>.
+  			<li>For each <b>Card</b> there is <span id="ab2">one</span> <b>Employee</b> who <i>authorized</i> it being given out.</li>
+        <li>For each <b>Card</b> there is <span id="ab3">one</span> <b>Rebate</b> <i>loaded_on</i> it.</li>
+        <li>Each <b>Person</b> <i>owns</i> <span id="ab1">a set of</span> <b>Cards</b>.</li>
   		</ol>
   	</p>
   </div>
@@ -18,7 +18,7 @@
 	<h1>Assertion</h1>
   <div id="assert">
   	Here is the assertion that we thought would be true:
-  	<p>Each <b>Person</b> that <u>can_enter</u> the <u>secure_lab</u> is a <b>Researcher</b>.</p>
+  	<p>Each <b>Person</b> that <u>can_apply</u> <u>store_credit</u> is a <b>Customer</b>.</p>
   </div>
 </div>
 <div id="scenarios">
@@ -31,14 +31,14 @@
 		<button id="next">next</button>
 	</div>
 	<div id="scenario">
-		<div id="s1" style="display:none;">
-      One way to see the failure of the assertion: <b>Employee0</b> <u>can_enter</u> <u>secure_lab</u>.
-			<ul>
-        <li><b>Employee0</b> <i>owns</i> <b>Key0</b>.</li>
-				<li><b>Key0</b> is <i>authorized</i> by <b>Employee0</b>.</li>
-        <li><u>secure_lab</u> is <i>opened_by</i> <b>Key0</b>.</li>
-			</ul>
-		</div>
+    <div id="s1" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee0</b> <u>can_apply</u> <u>store_credit</u>.
+      <ul>
+        <li><b>Employee0</b> <i>owns</i> <b>Card0</b>.</li>
+        <li><b>Card0</b> is <i>authorized</i> by <b>Employee0</b>.</li>
+        <li><u>store_credit</u> is <i>loaded_on</i> <b>Card0</b>.</li>
+      </ul>
+    </div>
 	</div>
 </div>
 <div id="question">
@@ -47,11 +47,11 @@
   <div id="quest">
   	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
   	<div style="text-align:center;">
-  		<button id="b1">1</button>
-  		<button id="b2">2</button>
-  		<button id="b3">3</button>
-  		<button id="b4a">4a</button>
-  		<button id="b4b">4b</button>
+      <button id="b4a">1a</button>
+      <button id="b4b">1b</button>
+      <button id="b2">2</button>
+      <button id="b3">3</button>
+  		<button id="b1">4</button>
       <button id="bb">nothing wrong with current spec; new assumption needed</button>
   	</div>
 	  <p id="feedback"></p>
@@ -68,7 +68,7 @@
 </div>
 
 <script>
-  var id = "BOM";
+  var id = "BRM";
   function init2() {
     init(id, 6);
     d3.select('#prev').on('click', prev2);

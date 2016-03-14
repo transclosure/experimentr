@@ -27,18 +27,56 @@
 		<button id="prev">prev</button>
 		<span id="num">0</span>
 		<span>of</span>
-		<span id="all">1</span>
+		<span id="all">3</span>
 		<button id="next">next</button>
 	</div>
 	<div id="scenario">
 		<div id="s1" style="display:none;">
-      One way to see the failure of the assertion: <b>Employee0</b> <u>can_enter</u> <u>secure_lab</u>.
-			<ul>
+      One way to see the failure of the assertion: <b>Employee1</b> <u>can_enter</u> <u>secure_lab</u>.
+      <ul>
+        <li><b>Researcher0</b> <i>owns</i> <b>Key1</b>.</li>
         <li><b>Employee0</b> <i>owns</i> <b>Key0</b>.</li>
-				<li><b>Key0</b> is <i>authorized</i> by <b>Employee0</b>.</li>
-        <li><u>secure_lab</u> is <i>opened_by</i> <b>Key0</b>.</li>
-			</ul>
-		</div>
+        <li><b>Employee0</b> <i>owns</i> <b>Key1</b>.</li>
+        <li><b>Employee1</b> <i>owns</i> <b>Key0</b>.</li>
+        <li><b>Employee1</b> <i>owns</i> <b>Key2</b>.</li>
+        <li><b>Key0</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Key1</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Key2</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Room0</b> is <i>opened_by</i> <b>Key0</b>.</li>
+        <li><b>Room0</b> is <i>opened_by</i> <b>Key1</b>.</li>
+        <li><u>secure_lab</u> is <i>opened_by</i> <b>Key2</b>.</li>
+      </ul>
+    </div>
+    <div id="s2" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee1</b> <u>can_enter</u> <u>secure_lab</u>.
+      <ul>
+        <li><b>Researcher0</b> <i>owns</i> <b>Key1</b>.</li>
+        <li><b>Researcher0</b> <i>owns</i> <b>Key2</b>.</li>
+        <li><b>Employee0</b> <i>owns</i> <b>Key1</b>.</li>
+        <li><b>Employee1</b> <i>owns</i> <b>Key1</b>.</li>
+        <li><b>Employee1</b> <i>owns</i> <b>Key2</b>.</li>
+        <li><b>Key0</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Key1</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Key2</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Room0</b> is <i>opened_by</i> <b>Key0</b>.</li>
+        <li><b>Room0</b> is <i>opened_by</i> <b>Key1</b>.</li>
+        <li><u>secure_lab</u> is <i>opened_by</i> <b>Key2</b>.</li>
+      </ul>
+    </div>
+    <div id="s3" style="display:none;">
+      One way to see the failure of the assertion: <b>Employee1</b> <u>can_enter</u> <u>secure_lab</u>.
+      <ul>
+        <li><b>Researcher0</b> <i>owns</i> <b>Key0</b>.</li>
+        <li><b>Researcher0</b> <i>owns</i> <b>Key1</b>.</li>
+        <li><b>Employee0</b> <i>owns</i> <b>Key2</b>.</li>
+        <li><b>Key0</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Key1</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Key2</b> is <i>authorized</i> by <b>Employee1</b>.</li>
+        <li><b>Room0</b> is <i>opened_by</i> <b>Key0</b>.</li>
+        <li><b>Room0</b> is <i>opened_by</i> <b>Key1</b>.</li>
+        <li><u>secure_lab</u> is <i>opened_by</i> <b>Key2</b>.</li>
+      </ul>
+    </div>
 	</div>
 </div>
 <div id="question">
@@ -68,7 +106,7 @@
 </div>
 
 <script>
-  var id = "BOM";
+  var id = "BOC";
   function init2() {
     init(id, 6);
     d3.select('#prev').on('click', prev2);
