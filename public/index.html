@@ -99,15 +99,15 @@
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
   var data = {};
-  var experimentID = "TODO"; // CHANGE IF EXPERIMENT IS CHANGED
-  var experiment = ['modules/AaaS.html'];
+  var experimentID = "+GOM,+AOM,+GRC,+ARC"; // CHANGE IF EXPERIMENT IS CHANGED
+  var experiment = ['modules/+GOM.html','modules/+AOM.html','modules/+GRC.html','modules/+ARC.html'];
   var junktimer;
   function getsequence() {
     var pre = ['modules/consent.html'];
-    var teach = ['modules/walkthrough_prime.html', 'modules/teach_prime.html'];
+    var teach = [];
     var post = ['modules/debrief.html'];
     var tasks = teach.concat(experiment);
-    return experiment; //return pre.concat(tasks).concat(post);
+    return pre.concat(tasks).concat(post);
   }
 /* GENERIC TASK FUNCTIONS */
   function runalloy () run("alloy");
@@ -171,7 +171,7 @@
     experimentr.hideNext();
     if (taskID.slice(-1)=="M"){
       d3.select("#run").on('click', runaluminum);
-      runalloy();
+      runaluminum();
     }
     else
     {
@@ -200,7 +200,9 @@
     data['_time_'+experimentID+'_'+taskID] = parseFloat(data['_end_'+experimentID+'_'+taskID]) - parseFloat(data['_start_'+experimentID+'_'+taskID]);
     var diff = Date.now() - junktimer;
     experimentr.addData(data);
+    experimentr.clearNext();
     experimentr.showNext();
+    d3.select("#next-button").attr("disabled",null);
   }
   /* DOCUMENTATION
    all data is recorded in _<metric>_<experimentID><taskID> form

@@ -1,0 +1,69 @@
+<div id="specification">
+	<h1>Specification</h1>
+  <div id="spec">
+  </div>
+</div>
+<div id="question">
+  <h1>Question</h1>
+  <div id="quest">
+    <p>Please edit the specification to make the assertion true, and have your answer checked.</p>
+    <div style="text-align:center;">
+      <button id="run">Check Specification</button>
+    </div>
+    <p>Attempts Remaining: <span id="attempts"></span>.</p>
+    <p>Status: <span id="status"></span>.</p>
+  </div>
+</div>
+<div id="scenarios">
+	<h1>Counterexample</h1>
+	<div id="scenario">
+	</div>
+</div>
+<div id="assertion">
+  <h1>Assertion</h1>
+    <div id="assert">
+    </div>
+</div>
+
+<script>
+var tid = "+ARC";
+/* SPEC */
+  var specCM = CodeMirror(d3.select("#spec")[0][0], {
+    value: 
+"sig Dictionary {\n\
+  word_in: set Word,\n\
+  entry_for: word_in->lone Entry\n\
+} {\n\
+  no w: Word | w in search[w]\n\
+  all w: Word, c: search[w] | c in word_in\n\
+}\n\
+abstract sig Entry { }\n\
+sig Definition extends Entry { }\n\
+sig Word extends Entry { }",
+lineNumbers: true,
+lineWrapping:true,
+    mode: "text/x-java"
+  });
+/* ASSERT */
+  var assertCM = CodeMirror(d3.select("#assert")[0][0], {
+    value:
+"fun search [d: Dictionary, w: Word] : set Entry { w.^(d.entry_for) }\n\
+\n\
+assert searchEndsInDefinition {\n\
+  all d: Dictionary, w: d.word_in | some (search [d,w] & Definition)\n\
+}\n\
+\n\
+check searchEndsInDefinition",
+lineWrapping:true,
+mode : "text/x-java",
+readOnly: true 
+  });
+/* SCENARIOS */
+var scenarioCM = CodeMirror(d3.select("#scenario")[0][0], {
+    value: "",
+    lineWrapping:true,
+    mode : "text/x-java",
+    readOnly: true 
+  });
+init(tid);
+</script>
