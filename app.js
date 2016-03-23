@@ -64,11 +64,23 @@ app.post('/', function handlePost(req, res) {
 // Handle spec gets
 app.get('/alloy', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
   var spec = "temp/"+ip+".als";
+  var data = req.query.spec;
   fs.writeFile(dir+spec, req.query.spec, (err) => {});
-  var output;
-  exec("./run.sh "+spec, {cwd: dir}, function(error, stdout, stderr) {
+  exec("./runalloy.sh "+spec, {cwd: dir}, function(error, stdout, stderr) {
+    res.send(stdout);
+  });
+})
+app.get('/aluminum', function handlePost(req, res) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  ip = ip.replace(/:/g,'');
+  var dir = process.cwd()+"/alloy/";
+  var spec = "temp/"+ip+".als";
+  var data = req.query.spec;
+  fs.writeFile(dir+spec, req.query.spec, (err) => {});
+  exec("./runaluminum.sh "+spec, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })

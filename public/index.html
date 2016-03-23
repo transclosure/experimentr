@@ -15,8 +15,8 @@
       font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     }
   body {
-    margin: 1em auto 4em auto;
-    width: 960px;
+    margin: auto auto auto auto;
+    width: 1080px;
   }
   button {
     font-size: large; 
@@ -48,7 +48,7 @@
   }
   #experimentr {
     margin: 0em auto 0em auto;
-    width: 720px;
+    width: 1080px;
   }
   #control {
     margin-top: 1em;
@@ -97,5 +97,123 @@
 <body></body>
 
 <script>
-  experimentr.sequence(['modules/AaaS.html']).start();
+/* OVERALL EXPERIMENT FUNCTIONS */
+  var data = {};
+  var experimentID = "TODO"; // CHANGE IF EXPERIMENT IS CHANGED
+  var experiment = ['modules/AaaS.html'];
+  var junktimer;
+  function getsequence() {
+    var pre = ['modules/consent.html'];
+    var teach = ['modules/walkthrough_prime.html', 'modules/teach_prime.html'];
+    var post = ['modules/debrief.html'];
+    var tasks = teach.concat(experiment);
+    return experiment; //return pre.concat(tasks).concat(post);
+  }
+/* GENERIC TASK FUNCTIONS */
+  function runalloy () run("alloy");
+  function runaluminum () run("aluminum");
+  function run (url){
+    var req = new XMLHttpRequest();
+    var url = "/"+url+"?spec="+encodeURIComponent(specCM.getValue()+assertCM.getValue());
+    req.open("GET", url, false);
+    req.send();
+    var response = req.response.split('\n');
+    var status = response[0];
+    response.shift();
+    var info = response.join('\n');
+    d3.select("#status").text(status);
+    // failed
+    if(status=="ASSERTION IS FALSE")
+    {
+      foo(tid, specCM.getValue());
+      scenarioCM.setValue(prettyScenario(info));
+    }
+    // pass
+    else if (status=="ASSERTION IS TRUE")
+    {
+      foo(tid, specCM.getValue());
+      bar(tid, "PASS");
+      scenarioCM.setValue(info);
+    }
+    // other, probably syntax error
+    else 
+    {
+      scenarioCM.setValue(info);
+    }
+  }
+  function prettyScenario(info) {
+    var pretty = "";
+    for(line of info.split('\n'))
+    {
+      if (line.startsWith("this") & line.contains("<:"))
+      {
+        pretty = pretty + line.split("=")[0] + " :=\n";
+        for (subline of (line.split("=")[1]).split(",")){
+          pretty = pretty + "\t\t\t\t" + subline + "\n";
+        }
+      }
+      else if (line.startsWith("skolem"))
+      {
+        pretty = pretty+line+"\n";
+      }
+    }
+    return pretty;
+  }
+  function init(taskID) {
+    data = {};
+    data['experimentID'] = experimentID;
+    data['_start_'+experimentID+'_'+taskID] = Date.now();
+    data['_clicks_'+experimentID+'_'+taskID] = 0;
+    data['_clicktime_'+experimentID+'_'+taskID] = [];
+    data['_specs_'+experimentID+'_'+taskID] = [];
+    junktimer = Date.now();
+    //
+    experimentr.hideNext();
+    if (taskID.slice(-1)=="M"){
+      d3.select("#run").on('click', runaluminum);
+      runalloy();
+    }
+    else
+    {
+      d3.select("#run").on('click', runalloy);
+      runalloy();
+    }
+  }
+  function foo(taskID, spec) {
+    //
+    data['_clicks_'+experimentID+'_'+taskID] = data['_clicks_'+experimentID+'_'+taskID] + 1;
+    var ctime = Date.now() - data['_start_'+experimentID+'_'+taskID];
+    data['_clicktime_'+experimentID+'_'+taskID] = (data['_clicktime_'+experimentID+'_'+taskID]).concat([ctime]);
+    data['_specs_'+experimentID+'_'+taskID] = (data['_specs_'+experimentID+'_'+taskID]).concat([spec]);
+    //
+    d3.select("#attempts").text(8 - data['_clicks_'+experimentID+'_'+taskID]);
+    if(data['_clicks_'+experimentID+'_'+taskID] > 7)
+    {
+      bar(taskID, "FAIL");
+    }
+  }
+  function bar(taskID, result) {
+    d3.selectAll('button').attr('disabled', true);
+    //
+    data['_end_'+experimentID+'_'+taskID] = Date.now();
+    data['_result_'+experimentID+'_'+taskID] = result;
+    data['_time_'+experimentID+'_'+taskID] = parseFloat(data['_end_'+experimentID+'_'+taskID]) - parseFloat(data['_start_'+experimentID+'_'+taskID]);
+    var diff = Date.now() - junktimer;
+    experimentr.addData(data);
+    experimentr.showNext();
+  }
+  /* DOCUMENTATION
+   all data is recorded in _<metric>_<experimentID><taskID> form
+   the <experimentID><taskID> should denote the trial conditions (see example below)
+   generic, parameterized code goes here. anything task specific goes in their module
+   sorry for the obfuscated names. i did that to avoid quick CTRL+F to win cheaters.
+   */
+  /*
+   CONDITIONS
+   experimentID     order of the tasks
+   spec             G(gradebook), A(addressbook)
+   phrasing         O(original), R(rephrase)
+   scenario         M(minimal), C(control)
+   */
+   experimentr.sequence(getsequence()).start();
 </script>

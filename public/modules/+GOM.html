@@ -8,22 +8,14 @@
   <div id="quest">
     <p>Please edit the specification to make the assertion true, and have your answer checked.</p>
     <div style="text-align:center;">
-      <button id="runalloy">Check Specification</button>
+      <button id="run">Check Specification</button>
     </div>
-    <p id="feedback">
-      Status: <span id="status"></span>.
-    </p>
+    <p>Attempts Remaining: <span id="attempts"></span>.</p>
+    <p>Status: <span id="status"></span>.</p>
   </div>
 </div>
 <div id="scenarios">
-	<h1>Counterexamples</h1>
-	<div style="text-align:center;">
-		<button id="prev">prev</button>
-		<span id="num">1</span>
-		<span>of</span>
-		<span id="all">1</span>
-		<button id="next">next</button>
-	</div>
+	<h1>Counterexample</h1>
 	<div id="scenario">
 	</div>
 </div>
@@ -34,6 +26,7 @@
 </div>
 
 <script>
+var tid = "+GOM";
 /* SPEC */
   var specCM = CodeMirror(d3.select("#spec")[0][0], {
     value: 
@@ -52,6 +45,8 @@ sig Assignment { \n\
 pred PolicyAllowsGrading(s: Person, a: Assignment) { \n\
   s in a.associated_with.assistant_for or s in a.associated_with.instructor_of \n\
 }",
+lineNumbers: true,
+lineWrapping:true,
     mode: "text/x-java"
   });
 /* ASSERT */
@@ -63,29 +58,16 @@ pred PolicyAllowsGrading(s: Person, a: Assignment) { \n\
   | PolicyAllowsGrading[s, a] implies not s in a.assigned_to\n\
 }\n\
 check NoOneCanGradeTheirOwnAssignment",
+lineWrapping:true,
 mode : "text/x-java",
 readOnly: true 
   });
 /* SCENARIOS */
 var scenarioCM = CodeMirror(d3.select("#scenario")[0][0], {
     value: "",
-mode : "text/x-java",
-readOnly: true 
+    lineWrapping:true,
+    mode : "text/x-java",
+    readOnly: true 
   });
-
-  d3.select("#runalloy").on('click', runalloy);
-  function runalloy (){
-    var req = new XMLHttpRequest();
-    var url = "/alloy?spec="+specCM.getValue()+assertCM.getValue();
-    req.open("GET", url, false);
-    req.send();
-    var response = req.response.split('\n');
-    var status = response[0];
-    response.shift();
-    var info = response.join('\n');
-    d3.select("#status").text(status);
-    scenarioCM.setValue(info);
-  }
-  runalloy();
+init(tid);
 </script>
-
