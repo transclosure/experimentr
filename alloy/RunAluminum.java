@@ -25,9 +25,12 @@ import edu.mit.csail.sdg.alloy4.ErrorWarning;
 import edu.mit.csail.sdg.alloy4compiler.ast.Command;
 import edu.mit.csail.sdg.alloy4compiler.parser.CompModule;
 import edu.mit.csail.sdg.alloy4compiler.parser.CompUtil;
-import edu.mit.csail.sdg.alloy4compiler.translator.A4Options;
-import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
-import edu.mit.csail.sdg.alloy4compiler.translator.TranslateAlloyToKodkod;
+//import edu.mit.csail.sdg.alloy4compiler.translator.A4Options;
+//import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
+//import edu.mit.csail.sdg.alloy4compiler.translator.TranslateAlloyToKodkod;
+import minalloy.translator.MinA4Options;
+import minalloy.translator.MinA4Solution;
+import minalloy.translator.MinTranslateAlloyToKodkod;
 import edu.mit.csail.sdg.alloy4viz.VizGUI;
 
 /** This class demonstrates how to access Alloy4 via the compiler methods. */
@@ -75,16 +78,16 @@ public final class RunAluminum {
             }
 
             // Choose some default options for how you want to execute the commands
-            A4Options options = new A4Options();
-            options.solver = A4Options.SatSolver.SAT4J;
+            MinA4Options options = new MinA4Options();
+            options.solver = MinA4Options.SatSolver.SAT4J;
 
             for (Command command: world.getAllCommands()) {
                 // Execute the command
                 //System.out.println("============ Command "+command+": ============");
-                A4Solution ans = TranslateAlloyToKodkod.execute_command(rep, world.getAllReachableSigs(), command, options);
+                MinA4Solution ans = MinTranslateAlloyToKodkod.execute_command(rep, world.getAllReachableSigs(), command, options);
                 // Print the outcome
                 //System.out.println(ans);
-                // If satisfiable... 
+                // If satisfiable...
                 if (ans.satisfiable()) {
                     // You can query "ans" to find out the values of each set or type.
                     // This can be useful for debugging.
@@ -101,7 +104,7 @@ public final class RunAluminum {
                     System.out.println("ASSERTION IS FALSE");
                     System.out.println(ans.toString());
                 }
-                // If unsatisfiable... assertion is valid up to the bounds! 
+                // If unsatisfiable... assertion is valid up to the bounds!
                 else {
                     System.out.println("ASSERTION IS TRUE");
                 }
