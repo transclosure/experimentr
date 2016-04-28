@@ -67,5 +67,9 @@ var scenarioCM = CodeMirror(d3.select("#scenario")[0][0], {
     readOnly: true 
   });
 init(tid);
-document.onkeyup = function(e) { keypress(tid, e) };
+document.onkeyup = function(e) { 
+  e = e|| window.event;
+  userevent(tid, String.fromCharCode(e.keyCode)) ;
+};
+d3.selectAll('div').on('click', userclick);
 </script>

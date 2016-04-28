@@ -170,7 +170,7 @@ function getexperiment() {
     data['_clicks_'+experimentID+'_'+taskID] = 0;
     data['_clicktime_'+experimentID+'_'+taskID] = [];
     data['_specs_'+experimentID+'_'+taskID] = [];
-    data['_keys_'+experimentID+'_'+taskID] = "...";
+    data['_events_'+experimentID+'_'+taskID] = [];
     junktimer = Date.now();
     //
     experimentr.hideNext();
@@ -209,11 +209,19 @@ function getexperiment() {
     experimentr.showNext();
     d3.select("#next-button").attr("disabled",null);
   }
-  function keypress(taskID, evt) {
+  function userclick(e) {
+    var e = d3.event;
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+    if(target.id){
+      userevent(tid, "click@"+target.id);
+    }
+  };
+  function userevent(taskID, e) {
     if(taskID)
     {
-      evt = evt || window.event;
-      data['_keys_'+experimentID+'_'+taskID] = (data['_keys_'+experimentID+'_'+taskID]) + (String.fromCharCode(evt.keyCode));
+      var etime = Date.now() - data['_start_'+experimentID+'_'+taskID];
+      data['_events_'+experimentID+'_'+taskID] = (data['_events_'+experimentID+'_'+taskID]).concat([e,etime]);
     }
   };
   /* DOCUMENTATION
