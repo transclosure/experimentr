@@ -24,6 +24,12 @@
     <div id="assert">
     </div>
 </div>
+<div id="feedback" style="display:none;">
+  <h1>Feedback</h1>
+  <p>Why did you make your edits? How did you use the scenario output?</p>
+  <textarea id="comment"></textarea>
+  <button id="done">Submit</button>
+</div>
 
 <script>
 var tid = "+AOM";
@@ -73,5 +79,9 @@ document.onkeyup = function(e) {
   userevent(tid, String.fromCharCode(e.keyCode)) ;
 };
 d3.selectAll('div').on('click', userclick);
+d3.select('#done').on('click', finish);
+function finish(e){
+  done(tid, d3.select("#comment").text);
+}
 </script>
 

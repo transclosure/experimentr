@@ -58,18 +58,23 @@
     font-size: xx-large;
     font-weight: bold;
   }
-  #specification, #assertion, #question, #scenarios, #teacher {
+  #specification, #assertion, #question, #scenarios, #feedback {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     margin: 0px 0px 0px 0px;
     background: #CCC;
   }
-  #spec, #assert, #quest, #scenario, #teach {
+  #spec, #assert, #quest, #scenario, #comment {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     background: #FFF;
+  }
+  #comment {
+    width : 98%;
+    height : 98%;
+    resize: none;
   }
   #specification {
     width: 50%;
@@ -88,7 +93,7 @@
     float: right;
     margin: 15px 0px 15px 0px;
   }
-  #teacher {
+  #feedback {
     width: 45%;
     float: right;
   }
@@ -108,9 +113,9 @@ function getexperiment() {
   var junktimer;
   function getsequence() {
     var pre = ['modules/consent.html'];
-    var teach = [];
+    var comment = [];
     var post = ['modules/debrief.html'];
-    var tasks = teach.concat(experiment);
+    var tasks = comment.concat(experiment);
     return pre.concat(tasks).concat(post);
   }
 /* GENERIC TASK FUNCTIONS */
@@ -171,6 +176,7 @@ function getexperiment() {
     data['_clicktime_'+experimentID+'_'+taskID] = [];
     data['_specs_'+experimentID+'_'+taskID] = [];
     data['_events_'+experimentID+'_'+taskID] = [];
+    data['_feedback_'+experimentID+'_'+taskID] = "none";
     junktimer = Date.now();
     //
     experimentr.hideNext();
@@ -203,11 +209,15 @@ function getexperiment() {
     data['_end_'+experimentID+'_'+taskID] = Date.now();
     data['_result_'+experimentID+'_'+taskID] = result;
     data['_time_'+experimentID+'_'+taskID] = parseFloat(data['_end_'+experimentID+'_'+taskID]) - parseFloat(data['_start_'+experimentID+'_'+taskID]);
-    var diff = Date.now() - junktimer;
-    experimentr.addData(data);
-    experimentr.clearNext();
-    experimentr.showNext();
-    d3.select("#next-button").attr("disabled",null);
+    d3.select('#scenarios').style("display", "none");
+    d3.select('#feedback').style("display", null);
+    d3.select('#done').attr("disabled", null);
+  }
+  function done(taskID, text)
+  {
+     data['_feedback_'+experimentID+'_'+taskID] = text;
+     experimentr.addData(data);
+     experimentr.next();
   }
   function userclick(e) {
     var e = d3.event;
