@@ -20,17 +20,6 @@ Our records show that you have taken part in this study before, so we cannot all
 </span>
 </p>
 
-<div id="consentForm">
-<p class="placeholder">
-  I understand that the following task is voluntary, and I may stop at any time. 
-  I am aware that my personal information and/or response will not be used for any academic or other discrimination.
-</p>
-</div>
-
-<p>
-<button id="consentYes" disabled="true" type="button">I Agree</button>
-</p>
-
 <p>
 <strong>Note: this experiment requires a modern browser. If you are not using Chrome or Firefox, the "I Agree" button may not activate even after entering your student id.</strong>
 </p>
@@ -71,15 +60,13 @@ Our records show that you have taken part in this study before, so we cannot all
       .on('keypress', function() { data.workerId = this.value; })
       .on('blur', function() { data.workerId = this.value; });
 
-    d3.select('#consentYes').on('click', experimentr.next);
-
     d3.select('#checkId').on('click', validate);
   }
 
   function validate() {
     if( data.workerId ) {
       experimentr.addData(data);
-      d3.select('#consentYes').attr('disabled', null);
+      experimentr.next;
   }
 }
 
