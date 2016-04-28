@@ -14,9 +14,10 @@ function getFields() {
   for (taskID of [formerTask,latterTask]) {
     taskFields = taskFields.concat([  '_clicks_'+experimentID+'_'+taskID,
                                       '_time_'+experimentID+'_'+taskID,
-                                      '_clickorder_'+experimentID+'_'+taskID,
                                       '_clicktime_'+experimentID+'_'+taskID,
-                                      '_scenariotime_'+experimentID+'_'+taskID]);
+                                      '_specs_'+experimentID+'_'+taskID,
+				      '_result_'+experimentID+'_'+taskID,
+				      '_keys_'+experimentID+'_'+taskID]);
   }
   return experimentFields.concat(taskFields);
 }
@@ -33,7 +34,7 @@ fs.readFile(file, 'utf8', function (err, data) {
 
   // use 'debug' for your workerId when testing experiments, 
   //   comment out if you want to analyze data from yourself
-  data = filterDebug(data) 
+  //data = filterDebug(data) 
 
   if (data.length > 0) convert( data )
 })
