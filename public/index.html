@@ -98,9 +98,13 @@
 
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
+function getexperiment() {
+    if(Math.random() < .5) { return ['modules/+GOM.html','modules/+AOM.html'] }
+    else { return ['modules/+GOC.html','modules/+AOC.html'] }
+}
   var data = {};
-  var experimentID = "+GOM,+AOM,+GRC,+ARC"; // CHANGE IF EXPERIMENT IS CHANGED
-  var experiment = ['modules/+GOM.html','modules/+AOM.html','modules/+GRC.html','modules/+ARC.html'];
+  var experiment = getexperiment(); 
+  var experimentID = experiment.toString();
   var junktimer;
   function getsequence() {
     var pre = ['modules/consent.html'];
@@ -166,6 +170,7 @@
     data['_clicks_'+experimentID+'_'+taskID] = 0;
     data['_clicktime_'+experimentID+'_'+taskID] = [];
     data['_specs_'+experimentID+'_'+taskID] = [];
+    data['_keys_'+experimentID+'_'+taskID] = "...";
     junktimer = Date.now();
     //
     experimentr.hideNext();
@@ -204,6 +209,13 @@
     experimentr.showNext();
     d3.select("#next-button").attr("disabled",null);
   }
+  function keypress(taskID, evt) {
+    if(taskID)
+    {
+      evt = evt || window.event;
+      data['_keys_'+experimentID+'_'+taskID] = (data['_keys_'+experimentID+'_'+taskID]) + (String.fromCharCode(evt.keyCode));
+    }
+  };
   /* DOCUMENTATION
    all data is recorded in _<metric>_<experimentID><taskID> form
    the <experimentID><taskID> should denote the trial conditions (see example below)

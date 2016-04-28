@@ -26,21 +26,24 @@
 </div>
 
 <script>
-var tid = "+AOM";
-document.onkeyup = function(e) { keypress(tid, e) };
+var tid = "+GOC";
 /* SPEC */
   var specCM = CodeMirror(d3.select("#spec")[0][0], {
     value: 
-"abstract sig Target { }\n\
-sig Addr extends Target { }\n\
-sig Name extends Target { }\n\
+"abstract sig Person {} \n\
+sig Student extends Person {} \n\
+sig Professor extends Person {} \n\
+sig Class { \n\
+\tassistant_for: set Student, \n\
+\tinstructor_of: one Professor \n\
+} \n\
+sig Assignment { \n\
+\tassociated_with: one Class, \n\
+\tassigned_to: some Student \n\
+} \n\
 \n\
-sig Book {\n\
-\tentry_in: set Name,\n\
-\ttarget_of: entry_in->lone Target\n\
-} {\n\
-\tno n: Name | n in lookup[n]\n\
-\tall n,l: Name | l in lookup[n] implies l in entry_in\n\
+pred PolicyAllowsGrading(s: Person, a: Assignment) { \n\
+\ts in a.associated_with.assistant_for or s in a.associated_with.instructor_of \n\
 }",
 lineNumbers: true,
 lineWrapping:true,
@@ -49,13 +52,12 @@ lineWrapping:true,
 /* ASSERT */
   var assertCM = CodeMirror(d3.select("#assert")[0][0], {
     value:
-"fun lookup [b: Book, n: Name] : set Target { n.^(b.target_of)}\n\
-\n\
-assert lookupYields {\n\
-\tall b: Book, n: b.entry_in | some (lookup [b,n] & Addr)\n\
+"assert NoOneCanGradeTheirOwnAssignment {\n\
+\tall s : Person \n\
+\t| all a: Assignment \n\
+\t| PolicyAllowsGrading[s, a] implies not s in a.assigned_to\n\
 }\n\
-\n\
-check lookupYields",
+check NoOneCanGradeTheirOwnAssignment",
 lineWrapping:true,
 mode : "text/x-java",
 readOnly: true 

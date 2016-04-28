@@ -27,6 +27,7 @@
 
 <script>
 var tid = "+GOM";
+document.onkeyup = function(e) { keypress(tid, e) };
 /* SPEC */
   var specCM = CodeMirror(d3.select("#spec")[0][0], {
     value: 
@@ -34,16 +35,16 @@ var tid = "+GOM";
 sig Student extends Person {} \n\
 sig Professor extends Person {} \n\
 sig Class { \n\
-  assistant_for: set Student, \n\
-  instructor_of: one Professor \n\
+\tassistant_for: set Student, \n\
+\tinstructor_of: one Professor \n\
 } \n\
 sig Assignment { \n\
-  associated_with: one Class, \n\
-  assigned_to: some Student \n\
+\tassociated_with: one Class, \n\
+\tassigned_to: some Student \n\
 } \n\
 \n\
 pred PolicyAllowsGrading(s: Person, a: Assignment) { \n\
-  s in a.associated_with.assistant_for or s in a.associated_with.instructor_of \n\
+\ts in a.associated_with.assistant_for or s in a.associated_with.instructor_of \n\
 }",
 lineNumbers: true,
 lineWrapping:true,
@@ -53,9 +54,9 @@ lineWrapping:true,
   var assertCM = CodeMirror(d3.select("#assert")[0][0], {
     value:
 "assert NoOneCanGradeTheirOwnAssignment {\n\
-  all s : Person \n\
-  | all a: Assignment \n\
-  | PolicyAllowsGrading[s, a] implies not s in a.assigned_to\n\
+\tall s : Person \n\
+\t| all a: Assignment \n\
+\t| PolicyAllowsGrading[s, a] implies not s in a.assigned_to\n\
 }\n\
 check NoOneCanGradeTheirOwnAssignment",
 lineWrapping:true,
@@ -70,4 +71,5 @@ var scenarioCM = CodeMirror(d3.select("#scenario")[0][0], {
     readOnly: true 
   });
 init(tid);
+document.onkeyup = function(e) { keypress(tid, e) };
 </script>

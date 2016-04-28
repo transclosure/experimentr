@@ -3,10 +3,12 @@
 <h2 class="placeholder">Counterexample and Spec Tracing</h2>
 
 <p class="placeholder">
-  The experiment will have you complete several specification tracing tasks. In each task you will see a specification, an assertion intended to be true about the specification, and some counterexamples: scenarios that show why the assertion is not true. You will be asked to point out the part of the specification that, if changed, would make the assertion true.</p>
+  The experiment will have you complete several specification tracing tasks. In each task you will see an alloy specification, an assertion intended to be true about the specification, and some counterexamples: scenarios that show why the assertion is not true. You will be asked to point out the part of the specification that, if changed, would make the assertion true.<br/>
+  If you have any questions, concerns, or frustratons, you'll be able to let us know at the end of the experiment.
+</p>
 
 <p>
-Please enter your Amazon Worker Id. <strong>You may only complete this HIT once.</strong> Subsequent completions will not be accepted:
+Please enter your Brown student ID: 
 <br>
 
 <input type="text" id="workerId" name="workerId" disabled="true" size="30" />
@@ -21,10 +23,7 @@ Our records show that you have taken part in this study before, so we cannot all
 <div id="consentForm">
 <p class="placeholder">
   I understand that the following task is voluntary, and I may stop at any time. 
-  I am aware that my job will only be accepted if I complete the entire task and enter the confirmation code on Mechanical Turk.
-  I understand that this job is recommended for those with above average reading comprehension. 
-  My reading comprehension skills may result in a longer completion.
-  I acknowledge that the average completion time is well under 10 minutes. 
+  I am aware that my personal information and/or response will not be used for any academic or other discrimination.
 </p>
 </div>
 
@@ -33,7 +32,7 @@ Our records show that you have taken part in this study before, so we cannot all
 </p>
 
 <p>
-<strong>Note: this HIT requires a modern browser. If you are not using Chrome or Firefox, the "I Agree" button may not activate even after entering your workerId.</strong>
+<strong>Note: this experiment requires a modern browser. If you are not using Chrome or Firefox, the "I Agree" button may not activate even after entering your student id.</strong>
 </p>
 
 </div>
@@ -80,14 +79,9 @@ Our records show that you have taken part in this study before, so we cannot all
   function validate() {
     if( data.workerId ) {
       experimentr.addData(data);
-
-      if( workers.indexOf(data.workerId) == -1 ) {
-        d3.select('#consentYes').attr('disabled', null);
-      } else {
-        d3.select('#invalidMessage').style('display', 'inline');
-      }
-    }
+      d3.select('#consentYes').attr('disabled', null);
   }
+}
 
 }());
 </script>
