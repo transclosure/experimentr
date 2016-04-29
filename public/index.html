@@ -119,8 +119,8 @@ function getexperiment() {
     return pre.concat(tasks).concat(post);
   }
 /* GENERIC TASK FUNCTIONS */
-  function runalloy () run("alloy");
-  function runaluminum () run("aluminum");
+  function runalloy () {return run("alloy");}
+  function runaluminum () {return run("aluminum");}
   function run (url){
     var req = new XMLHttpRequest();
     var url = "/"+url+"?spec="+encodeURIComponent(specCM.getValue()+assertCM.getValue());
@@ -154,7 +154,7 @@ function getexperiment() {
     var pretty = "";
     for(line of info.split('\n'))
     {
-      if (line.startsWith("this") & line.contains("<:"))
+      if (line.startsWith("this") & line.indexOf("<:") > -1)
       {
         pretty = pretty + line.split("=")[0] + " :=\n";
         for (subline of (line.split("=")[1]).split(",")){
