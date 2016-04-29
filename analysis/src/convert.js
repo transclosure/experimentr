@@ -17,7 +17,8 @@ function getFields() {
                                       '_clicktime_'+experimentID+'_'+taskID,
                                       '_specs_'+experimentID+'_'+taskID,
 				      '_result_'+experimentID+'_'+taskID,
-				      '_keys_'+experimentID+'_'+taskID]);
+				      '_events_'+experimentID+'_'+taskID]);
+				    //  '_feedback_'+experimentID+'_'+taskID]);
   }
   return experimentFields.concat(taskFields);
 }

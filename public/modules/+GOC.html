@@ -76,13 +76,13 @@ var scenarioCM = CodeMirror(d3.select("#scenario")[0][0], {
     readOnly: true 
   });
 init(tid);
-document.onkeyup = function(e) { 
+document.onkeyup = function(e) {
   e = e|| window.event;
-  userevent(tid, String.fromCharCode(e.keyCode)) ;
+  userevent(tid, specCM.getValue()) ;
 };
-d3.selectAll('div').on('click', userclick);
 d3.select('#done').on('click', finish);
 function finish(e){
   done(tid, d3.select("#comment").text);
 }
 </script>
+
