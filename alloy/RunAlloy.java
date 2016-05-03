@@ -19,6 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.Throwable;
+
 import edu.mit.csail.sdg.alloy4.A4Reporter;
 import edu.mit.csail.sdg.alloy4.Err;
 import edu.mit.csail.sdg.alloy4.ErrorWarning;
@@ -86,20 +92,33 @@ public final class RunAlloy {
                 //System.out.println(ans);
                 // If satisfiable... 
                 if (ans.satisfiable()) {
-                    // You can query "ans" to find out the values of each set or type.
-                    // This can be useful for debugging.
-                    //
-                    // You can also write the outcome to an XML file
-                    //ans.writeXML("alloy_example_output.xml");
-                    //
-                    // You can then visualize the XML file by calling this:
-                    // if (viz==null) {
-                    //     viz = new VizGUI(false, "alloy_example_output.xml", null);
-                    // } else {
-                    //     viz.loadXML("alloy_example_output.xml", true);
-                    // }
+                    //                   You can query "ans" to find out the values of each set or type.
+                    //                   This can be useful for debugging.
+                    //                  
+                    //                   You can also write the outcome to an XML file
+                    //                  
+                    //                   You can then visualize the XML file by calling this:
+                try{
+                    ans.writeXML(filename+".xml");
+                    fixBitWidth(filename+".xml");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                    try {
+                        viz = new VizGUI(false, "", null);
+                        viz.loadXML(filename+".xml", true);
+                        String image = "../public/"+filename+".png";
+                        File imageFile = new File(image);
+                        if(!imageFile.exists()) {
+                            imageFile.createNewFile();
+                        } 
+                        viz.getViewer().alloySaveAsPNG(image, 1.0, 400, 300);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     System.out.println("ASSERTION IS FALSE");
                     System.out.println(ans.toString());
+                    System.exit(0);
                 }
                 // If unsatisfiable... assertion is valid up to the bounds! 
                 else {
@@ -107,5 +126,18 @@ public final class RunAlloy {
                 }
             }
         }
+    }
+    public static void fixBitWidth(String filename) throws Exception {
+        File file = new File(filename);
+        FileInputStream fis = new FileInputStream(file);
+        byte[] data = new byte[(int) file.length()];
+        fis.read(data);
+        fis.close();
+        String xmlstring = new String(data, "UTF-8");
+        xmlstring = xmlstring.replaceAll("bitwidth=\"0\"", "bitwidth=\"10\"");
+        FileOutputStream fop = new FileOutputStream(file);
+        fop.write(xmlstring.getBytes());
+        fop.flush();
+        fop.close();
     }
 }

@@ -122,12 +122,15 @@ function getexperiment() {
   function runalloy () {return run("alloy");}
   function runaluminum () {return run("aluminum");}
   function run (url){
+    d3.select("#graph").selectAll("*").remove();
     var req = new XMLHttpRequest();
     var url = "/"+url+"?spec="+encodeURIComponent(specCM.getValue()+assertCM.getValue());
     req.open("GET", url, false);
     req.send();
     var response = req.response.split('\n');
-    var status = response[0];
+    var filename = response[0];
+    var status = response[1];
+    response.shift();
     response.shift();
     var info = response.join('\n');
     d3.select("#status").text(status);
@@ -136,6 +139,7 @@ function getexperiment() {
     {
       foo(tid, specCM.getValue());
       scenarioCM.setValue(prettyScenario(info));
+      vizScenario(filename);
     }
     // pass
     else if (status=="ASSERTION IS TRUE")
@@ -149,6 +153,9 @@ function getexperiment() {
     {
       scenarioCM.setValue(info);
     }
+  }
+  function vizScenario(filename) {
+    d3.select("#graph").append("img").attr("src", filename + "?" + new Date().getTime()).attr("width", "100%").attr("height", "100%");
   }
   function prettyScenario(info) {
     var pretty = "";

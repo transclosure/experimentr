@@ -16,3 +16,4 @@ public/components/*
 
 *.jar
 /alloy/temp/*.*
+public/temp/*
