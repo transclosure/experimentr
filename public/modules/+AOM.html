@@ -36,7 +36,8 @@ var tid = "+AOM";
 /* SPEC */
   var specCM = CodeMirror(d3.select("#spec")[0][0], {
     value: 
-"abstract sig Target { }\n\
+"//The following specifies and addressbook which consists of Targets (Names or Addresses).\n\
+abstract sig Target { }\n\
 sig Addr extends Target { }\n\
 sig Name extends Target { }\n\
 \n\

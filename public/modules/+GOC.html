@@ -36,17 +36,21 @@ var tid = "+GOC";
 /* SPEC */
   var specCM = CodeMirror(d3.select("#spec")[0][0], {
     value: 
-"abstract sig Person {} \n\
+"//The following specifies a class grading policy consisting of Persons (Students or Professors), Classes, and Assignments.\n\
+abstract sig Person {} \n\
 sig Student extends Person {} \n\
 sig Professor extends Person {} \n\
 sig Class { \n\
+\tenrolled: set Student, \n\
 \tassistant_for: set Student, \n\
 \tinstructor_of: one Professor \n\
 } \n\
 sig Assignment { \n\
 \tassociated_with: one Class, \n\
 \tassigned_to: some Student \n\
-} \n\
+} {\n\
+\t assigned_to in associated_with.enrolled \n\
+}\n\
 \n\
 pred PolicyAllowsGrading(s: Person, a: Assignment) { \n\
 \ts in a.associated_with.assistant_for or s in a.associated_with.instructor_of \n\
