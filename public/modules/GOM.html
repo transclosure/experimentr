@@ -1,83 +1,125 @@
 <div id="specification">
-	<h1>Specification</h1>
+	<h1>We are attempting to specify a Allowed Grader Policy according to our desired goals. Using the dropdown menus below, make a single change so that all of our goals are satisfied.</h1>
   <div id="spec">
-  	<p>We consider 3 classes: <b>Persons, Classes, and Assignments.</b></p>
-  	<p>The class of <b>Persons</b> is partitioned into 2 non-overlapping subclasses: <b>Students, and Professors.</b></p>
-  	<p>We make the following assumptions:
-  		<ol>
-  			<li>For each <b>Class</b> there is <span id="ab1">a single</span> <b>Professor</b> who is the <i>instructor_of</i> it.</li>
-  			<li>For each <b>Class</b> there is <span id="ab2">a set of</span> <b>Students</b> who are the <i>assistants_for</i> it.</li>
-  			<li>For each <b>Assignment</b> there is <span id="ab3">a single</span> <b>Class</b> <i>associated_with</i> it.</li>
-  			<li>For each <b>Assignment</b> there is <span id="ab4">a set of</span> <b>Students</b> <i>assigned_to</i> it.</li>
-  			<li>A <b>Person</b> <u>can_grade</u> an <b>Assignment</b> only if either <span id="ab5a">the <b>Person</b> is an <i>assistant_for</i> the <b>Class</b> <i>associated_with</i> the <b>Assignment</b></span> <span id="ab5b">or</span><span id="ab5c"> the <b>Person</b> is the <b>Professor</b> who is the <i>instructor_of</i> that <b>Class</b>.</span></li>
-  		</ol>
-  	</p>
+    
+    <p>The Allowed Grader Policy consists of <b>Persons</b>, <b>Classes</b> and <b>Assignments</b>.</p>
+    
+    <p>A <b>Person</b> can be a <b>Student</b> or a <b>Professor</b>.</p>
+
+    <p>There is <select id="T1A"></select> <select id="T1B"></select> who is the <i>instructor of</i> each <b>Class</b>.</p>
+
+    <p>There is <select id="T2A"></select> <select id="T2B"></select> who are the <i>assistants for</i> each <b>Class</b>.</p>
+
+    <p>There is <select id="T3A"></select> <select id="T3B"></select> who are <i>enrolled in</i> each <b>Class</b>.</p>
+
+    <p>There is <select id="T4A"></select> <select id="T4B"></select> <i>associated with</i> each <b>Assignment</b>.</p>
+
+    <p>There is <select id="T5A"></select> <select id="T5B"></select> <i>assigned to</i> each <b>Assignment</b>.</p>
+
+    <p>Each Student <i>assigned to</i> an <b>Assignment</b> is <i>enrolled in</i> the <b>Class</b> <i>associated with</i> the <b>Assignment</b>.
+
+    <p>The <i>assistants for</i> and the <i>instructor of</i> a <b>Class</b> can <u>grade</u> <b>Assignments</b> <i>associated with</i> the <b>Class</b>. 
+
   </div>
 </div>
+
+
 <div id="assertion">
-	<h1>Assertion</h1>
+	<h1>Some of our goals are not satisfied.</h1>
   <div id="assert">
-  	Here is the assertion that we thought would be true:
-  	<p>There cannot exist a <b>Person</b> who <u>can_grade</u> an <b>Assignment</b> <i>assigned_to</i> them.</p>
+
+    <p id="N">There must be exactly one <i>instructor of</i> every <b>Class</b>.</p>   
+
+    <p id="N">There must be exactly one <b>Class</b> <i>associated with</i> each <b>Assignment</b>.</p>
+
+    <p id="N">Each Student <i>assigned to</i> an <b>Assignment</b> must be <i>enrolled in</i> the <b>Class</b> <i>associated with</i> the <b>Assignment</b>.</p>
+
+    <p id="N">The <i>assistants for</i> and the <i>instructor of</i> a <b>Class</b> must <u>grade</u> <b>Assignments</b> <i>associated with</i> the <b>Class</b>.</p>
+
+    <p id="A">There is no <b>Student</b> who can <u>grade</u> an <b>Assignment</b> they are <i>assigned to</i>.</p>
+    
   </div>
 </div>
+
+
 <div id="scenarios">
-	<h1>Counterexamples</h1>
-	<div style="text-align:center;">
-		<button id="prev">prev</button>
-		<span id="num">0</span>
-		<span>of</span>
-		<span id="all">1</span>
-		<button id="next">next</button>
-	</div>
+	<h1>Here is an example where our goals fail.</h1>
 	<div id="scenario">
-		<div id="s1" style="display:none;">
-      One way to see the failure of the assertion: <b>Student0</b> <u>can_grade</u> <b>Assignment0</b>.
-			<ul>
-				<li><b>Student0</b> is an <i>assistant_for</i> <b>Class0</b>.</li>
-				<li><b>Professor0</b> is the <i>instructor_of</i> <b>Class0</b>.</li>
-				<li><b>Assignment0</b> is <i>associated_with</i> <b>Class0</b>.</li>
-				<li><b>Assignment0</b> is <i>assigned_to</i> <b>Student0</b>.</li>
-			</ul>
-		</div>
+    <b>Student0</b> can <u>grade</u> their <b>Assignment0</b>.
+      <ul>
+        <li><b>Student0</b> is an <i>assistant for</i> <b>Class0</b>.</li>
+        <li><b>Professor0</b> is the <i>instructor of</i> <b>Class0</b>.</li>
+        <li><b>Assignment0</b> is <i>associated with</i> <b>Class0</b>.</li>
+        <li><b>Assignment0</b> is <i>assigned to</i> <b>Student0</b>.</li>
+      </ul>
 	</div>
-</div>
-<div id="question">
-	<h1>Question</h1>
-  <div id="quest">
-  	<p>Please select the part of the specification that, if changed, would make the assertion true.</p>
-  	<div style="text-align:center;">
-  		<button id="b1">1</button>
-  		<button id="b2">2</button>
-  		<button id="b3">3</button>
-  		<button id="b4">4</button>
-  		<button id="b5a">5a</button>
-      <button id="b5b">5b</button>
-      <button id="b5c">5c</button>
-      <button id="bb">nothing wrong with current spec; new assumption needed</button>
-  	</div>
-	  <p id="feedback"></p>
-  </div>
 </div>
 
 <script>
   var id = "GOM";
   function init2() {
-    init(id, 8);
-    d3.select('#prev').on('click', prev2);
-    d3.select('#next').on('click', next2);
-    d3.select('#b1').on('click', foo2);
-    d3.select('#b2').on('click', foo2);
-    d3.select('#b3').on('click', foo2);
-    d3.select('#b4').on('click', foo2);
-    d3.select('#b5a').on('click', bar2);
-    d3.select('#b5b').on('click', foo2);
-    d3.select('#b5c').on('click', foo2);
-    d3.select('#bb').on('click', foo2);
+    d3.select('#T1A')
+    .html("<option disabled='disabled' selected='selected'>exactly one</option> \
+      <option id='T1A1'>a set of</option> \
+      <option id='T1A2'>at most one</option> \
+      <option id='T1A3'>at least one</option>");
+    d3.select('#T1B')
+    .html("<option disabled='disabled' selected='selected'>Professor(s)</option> \
+      <option id='T1B1'>Student(s)</option> \
+      <option id='T1B2'>Person(s)</option>");
+
+    d3.select('#T2A')
+    .html("<option disabled='disabled' selected='selected'>a set of</option> \
+      <option id='T2A1'>at most one</option> \
+      <option id='T2A2'>exactly one</option> \
+      <option id='T2A3'>at least one</option>");
+    d3.select('#T2B')
+    .html("<option disabled='disabled' selected='selected'>Student(s)</option> \
+      <option id='T2B1'>Professor(s)</option> \
+      <option id='T2B2'>Student(s) THAT ARE instructors of the Class</option> \
+      <option id='T2B3'>Student(s) THAT ARE NOT instructors of the Class</option> \
+      <option id='T2B4'>Student(s) THAT ARE enrolled in the Class</option> \
+      <option id='T2B5'>Student(s) THAT ARE NOT enrolled in the Class</option> \
+      <option id='T2B6'>Person(s)</option>");
+
+    d3.select('#T3A')
+    .html("<option disabled='disabled' selected='selected'>a set of</option> \
+      <option id='T3A1'>at most one</option> \
+      <option id='T3A2'>exactly one</option> \
+      <option id='T3A3'>at least one</option>");
+    d3.select('#T3B')
+    .html("<option disabled='disabled' selected='selected'>Student(s)</option> \
+      <option id='T3B1'>Professor(s)</option> \
+      <option id='T3B2'>Student(s) THAT ARE instructors of the Class</option> \
+      <option id='T3B3'>Student(s) THAT ARE NOT instructors of the Class</option> \
+      <option id='T3B4'>Student(s) THAT ARE assistants for the Class</option> \
+      <option id='T3B5'>Student(s) THAT ARE NOT assistants for the Class</option> \
+      <option id='T3B6'>Person(s)</option>");
+
+    d3.select('#T4A')
+    .html("<option disabled='disabled' selected='selected'>exactly one</option> \
+      <option id='T4A1'>a set of</option> \
+      <option id='T4A2'>at most one</option> \
+      <option id='T4A3'>at least one</option>");
+    d3.select('#T4B')
+    .html("<option disabled='disabled' selected='selected'>Class(es)</option> \
+      <option id='T4B1'>Assignment(s)</option> \
+      <option id='T4B2'>Person(s)</option>");
+
+    d3.select('#T5A')
+    .html("<option disabled='disabled' selected='selected'>at least one</option> \
+      <option id='T5A1'>a set of</option> \
+      <option id='T5A2'>exactly one</option> \
+      <option id='T5A3'>at most one</option>");
+    d3.select('#T5B')
+    .html("<option disabled='disabled' selected='selected'>Student(s)</option> \
+      <option id='T5B1'>Person(s)</option> \
+      <option id='T5B3'>Professor(s)</option>");
+    init(id);
+    d3.select('#T2B5').on('click', pass2);
+    d3.select('#T3B5').on('click', pass2);
   }
-  function prev2() { prev(id); }
-  function next2() { next(id); }
-  function foo2()  { foo(id); }
-  function bar2()  { bar(id); }
+  function fail2() { fail(id); }
+  function pass2() { pass(id); }          
   init2();
 </script>

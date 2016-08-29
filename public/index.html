@@ -12,8 +12,8 @@
       font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     }
   body {
-    margin: 1em auto 4em auto;
-    width: 960px;
+    margin: auto auto auto auto;
+    width: 1080px;
   }
   button {
     font-size: large; 
@@ -34,7 +34,6 @@
     padding-left: 1.5em;
   }
   b{
-    font-weight: normal;
     text-shadow : 0 0 0 #333;
   }
   i {
@@ -43,9 +42,12 @@
   u {
     text-shadow : 0 0 0 #333;
   }
+  select {
+    width: 111px;
+  }
   #experimentr {
     margin: 0em auto 0em auto;
-    width: 720px;
+    width: 1080px;
   }
   #control {
     margin-top: 1em;
@@ -55,18 +57,23 @@
     font-size: xx-large;
     font-weight: bold;
   }
-  #specification, #assertion, #question, #scenarios, #teacher {
+  #specification, #assertion, #question, #scenarios, #feedback {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     margin: 0px 0px 0px 0px;
     background: #CCC;
   }
-  #spec, #assert, #quest, #post, #scenario, #teach {
+  #spec, #assert, #quest, #scenario, #comment {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     background: #FFF;
+  }
+  #comment {
+    width : 98%;
+    height : 98%;
+    resize: none;
   }
   #specification {
     width: 50%;
@@ -74,18 +81,14 @@
   }
   #assertion{
     width: 45%;
-    float: left;
-  }
-  #question{
-    width: 50%;
-    float: left;  
+    float: right;
   }
   #scenarios {
     width: 45%;
     float: right;
     margin: 15px 0px 15px 0px;
   }
-  #teacher {
+  #feedback {
     width: 45%;
     float: right;
   }
@@ -94,122 +97,73 @@
 <body></body>
 
 <script>
-/* OVERALL EXPERIMENT FUNCTIONS */
-  var data = {};
-  var experimentID = "walkthrough_prime,teach_prime,BOC,OOC,BRM,ORM"; // CHANGE IF EXPERIMENT IS CHANGED
-  var experiment = ['modules/BOC.html', 'modules/OOC.html', 'modules/BRM.html', 'modules/ORM.html'];
-  var junktimer;
-  function getsequence() {
-    var pre = ['modules/consent.html'];
-    var teach = ['modules/walkthrough_prime.html', 'modules/teach_prime.html'];
-    var post = ['modules/debrief.html'];
-    var tasks = teach.concat(experiment);
-    return pre.concat(tasks).concat(post);
-  }
-/* GENERIC TASK FUNCTIONS */
-  function init(taskID, numoptions) {
-    data = {};
-    data['experimentID'] = experimentID;
-    data['_start_'+experimentID+'_'+taskID] = Date.now();
-    data['_scale_'+experimentID+'_'+taskID] = numoptions;
-    data['_clicks_'+experimentID+'_'+taskID] = 0;
-    data['_clicktime_'+experimentID+'_'+taskID] = [];
-    data['_clickorder_'+experimentID+'_'+taskID] = [];
-    var all = Number(d3.select('#all').text());
-    data['_scenariotime_'+experimentID+'_'+taskID] = Array.apply(null, Array(all)).map(Number.prototype.valueOf,0);
-    junktimer = Date.now();
-    //
-    experimentr.hideNext();
-    next(taskID);
-    d3.selectAll('button').on('mouseover', fizz);
-    d3.selectAll('button').on('mouseout', buzz);
-  }
-  function prev(taskID) {
-    var num = Number(d3.select('#num').text());
-    var all = Number(d3.select('#all').text());
-    if(num > 1) {
-      d3.select('#s'+num).style('display', 'none');
-      num = num-1; 
-      d3.select('#s'+num).style('display', null);
-      d3.select('#num').text(""+num);
-      //
-      var diff = Date.now() - junktimer;
-      (data['_scenariotime_'+experimentID+'_'+taskID])[num] = ((data['_scenariotime_'+experimentID+'_'+taskID])[num]) + diff;
-      junktimer = Date.now();
-    }
-  }
-  function next(taskID) {
-    var num = Number(d3.select('#num').text());
-    var all = Number(d3.select('#all').text());
-    if(num < all) {
-      d3.select('#s'+num).style('display', 'none');
-      num = num+1;
-      d3.select('#s'+num).style('display', null);
-      d3.select('#num').text(""+num);
-      //
-      if(num-2 >= 0) {
-        var diff = Date.now() - junktimer;
-        (data['_scenariotime_'+experimentID+'_'+taskID])[num-2] = ((data['_scenariotime_'+experimentID+'_'+taskID])[num-2]) + diff;
-        junktimer = Date.now();
-      }
-    }
-  }
-  function fizz() {
-    d3.select('#a'+d3.event.target.id).style("background-color", "#FFA");
-  }
-  function buzz() {
-    d3.select('#a'+d3.event.target.id).style("background-color", null);
-  }
-  function foo(taskID) {
-    d3.select('#feedback').text("Your selection is not the part of the specification that requires changes. Please try again.");
-    d3.select('#'+d3.event.target.id).attr("disabled", true);
-    d3.select('#'+d3.event.target.id).on("mouseout", null);
-    d3.select('#'+d3.event.target.id).on("mouseover", null);
-    d3.select('#'+d3.event.target.id).style("background-color", "#FAA");
-    d3.select('#a'+d3.event.target.id).style("background-color", "#FAA");
-    //
-    data['_clicks_'+experimentID+'_'+taskID] = data['_clicks_'+experimentID+'_'+taskID] + 1;
-    var ctime = Date.now() - data['_start_'+experimentID+'_'+taskID];
-    data['_clicktime_'+experimentID+'_'+taskID] = (data['_clicktime_'+experimentID+'_'+taskID]).concat([ctime]);
-    data['_clickorder_'+experimentID+'_'+taskID] = (data['_clickorder_'+experimentID+'_'+taskID]).concat([d3.event.target.id]);
-  }
-  function bar(taskID) {
-    d3.select('#'+d3.event.target.id).attr("disabled", true);
-    d3.selectAll('button').attr("disabled", true);
-    d3.select('#'+d3.event.target.id).on("mouseout", null);
-    d3.select('#'+d3.event.target.id).on("mouseover", null);
-    d3.select('#'+d3.event.target.id).style("background-color", "#AFA");
-    d3.select('#a'+d3.event.target.id).style("background-color", "#AFA");
-    //
-    data['_clicks_'+experimentID+'_'+taskID] = data['_clicks_'+experimentID+'_'+taskID] + 1;
-    var ctime = Date.now() - data['_start_'+experimentID+'_'+taskID];
-    data['_clicktime_'+experimentID+'_'+taskID] = (data['_clicktime_'+experimentID+'_'+taskID]).concat([ctime]);
-    data['_clickorder_'+experimentID+'_'+taskID] = (data['_clickorder_'+experimentID+'_'+taskID]).concat([d3.event.target.id]);
-    data['_end_'+experimentID+'_'+taskID] = Date.now();
-    data['_time_'+experimentID+'_'+taskID] = parseFloat(data['_end_'+experimentID+'_'+taskID]) - parseFloat(data['_start_'+experimentID+'_'+taskID]);
-    var diff = Date.now() - junktimer;
-    var num = Number(d3.select('#num').text());
-    (data['_scenariotime_'+experimentID+'_'+taskID])[num-1] = ((data['_scenariotime_'+experimentID+'_'+taskID])[num-1]) + diff;
-    
-  }
-  function done(taskID, whyanswer, honestanswer) {
-    data['_why_'+experimentID+'_'+taskID] = "why:"+whyanswer;
-    data['_honestly_'+experimentID+'_'+taskID] = "honestly:"+honestanswer;
-    experimentr.addData(data);
-    experimentr.next();
-  }
   /* DOCUMENTATION
    all data is recorded in _<metric>_<experimentID><taskID> form
    the <experimentID><taskID> should denote the trial conditions (see example below)
    generic, parameterized code goes here. anything task specific goes in their module
    sorry for the obfuscated names. i did that to avoid quick CTRL+F to win cheaters.
-   */
+  */
   /*
    CONDITIONS
    experimentID     order of the tasks
    spec             G(gradebook), A(addressbook)
    phrasing         O(original), R(rephrase)
    scenario         M(minimal), C(control)
-   */
-   experimentr.sequence(getsequence()).start();
+  */
+  /* OVERALL EXPERIMENT FUNCTIONS */
+  function getexperiment() {
+    return ['modules/AOM.html', 'modules/GOM.html'];
+    /*
+    if(Math.random() < .5) { return ['modules/AOM.html'] }
+    else { return ['modules/AOC.html'] }
+    */
+  }
+  var data = {};
+  var experiment = getexperiment(); 
+  var experimentID = experiment.toString();
+  var junktimer;
+  function getsequence() {
+    var pre = ['modules/consent.html'];
+    var post = ['modules/debrief.html'];
+    var tasks = experiment;
+    return pre.concat(tasks).concat(post);
+  }
+  /* GENERIC TASK FUNCTIONS */
+  function init(taskID) {
+    data = {};
+    data['experimentID'] = experimentID;
+    data['_start_'+experimentID+'_'+taskID] = Date.now();
+    data['_attempts_'+experimentID+'_'+taskID] = 0;
+    data['_attempttime_'+experimentID+'_'+taskID] = [];
+    data['_attemptcode_'+experimentID+'_'+taskID] = [];
+    //
+    d3.selectAll('#N').style("background-color", "#afa");
+    d3.selectAll('#A').style("background-color", "#faa");
+    d3.selectAll('option').on('click', fail2);
+    experimentr.hideNext();
+  }
+  function fail(taskID) {
+    if(!d3.event.target.disabled) {
+      data['_attempts_'+experimentID+'_'+taskID] = data['_attempts_'+experimentID+'_'+taskID] + 1;
+      var atime = Date.now() - data['_start_'+experimentID+'_'+taskID];
+      var acode = d3.event.target.id;
+      data['_attempttime_'+experimentID+'_'+taskID] = (data['_attempttime_'+experimentID+'_'+taskID]).concat([atime]);
+      data['_attemptcode_'+experimentID+'_'+taskID] = (data['_attemptcode_'+experimentID+'_'+taskID]).concat([acode]);
+      //
+      var opt = d3.select(d3.event.target); 
+      opt.style("background-color", "#faa");
+      opt.style("text-decoration" , "line-through");
+      opt.attr("disabled", "disabled");
+      alert("This option does not satisfy all goals in a single change. The options have been reset for you. Please try again.");
+      d3.selectAll('select').property('selectedIndex', 0);
+    }
+  }
+  function pass(taskID) {
+    data['_end_'+experimentID+'_'+taskID] = Date.now();
+    data['_time_'+experimentID+'_'+taskID] = parseFloat(data['_end_'+experimentID+'_'+taskID]) - parseFloat(data['_start_'+experimentID+'_'+taskID]);
+    experimentr.addData(data);
+    alert("Correct! This option does satisfy all goals in a single change. Please continue to the next task.");
+    experimentr.next();
+  }
+  experimentr.sequence(getsequence()).start();
 </script>
