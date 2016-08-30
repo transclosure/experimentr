@@ -9,13 +9,15 @@ var j2c           = require('json2csv')
 
 function getFields() {
   var experimentFields = ['workerId','postId','experimentID','taskID'];
-  var taskFields = ['_clicks_'+experimentID+'_'+taskID,
-                    '_time_'+experimentID+'_'+taskID,
-                    '_clickorder_'+experimentID+'_'+taskID,
-                    '_clicktime_'+experimentID+'_'+taskID,
-                    '_scenariotime_'+experimentID+'_'+taskID,
-                    '_why_'+experimentID+'_'+taskID,
-                    '_honestly_'+experimentID+'_'+taskID];
+  var taskFields = ['_time_'+experimentID+'_'+taskID,
+                    '_attempts_'+experimentID+'_'+taskID,
+                    '_attempttime_'+experimentID+'_'+taskID,
+                    '_attemptcode_'+experimentID+'_'+taskID,
+                    '_q1_'+experimentID,
+                    '_q2_'+experimentID,
+		    '_q3_'+experimentID,
+		    '_q4_'+experimentID,
+		    '_q5_'+experimentID];
   return experimentFields.concat(taskFields);
 }
 
