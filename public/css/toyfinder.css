@@ -1,0 +1,74 @@
+button {
+    font-size: large; 
+  }
+  h1 {
+    font-size: 150%;
+    margin-top: 0em;
+    margin-bottom: .5em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: normal;
+  }
+  ul, ol {
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0em;
+    margin-right: 0em;
+    padding-left: 1.5em;
+  }
+  b{
+    text-shadow : 0 0 0 #333;
+  }
+  i {
+    text-shadow : 0 0 0 #333;
+  }
+  u {
+    text-shadow : 0 0 0 #333;
+  }
+  select {
+    width: 111px;
+  }
+  
+  
+  #next-button {
+    float: right;
+    font-size: xx-large;
+    font-weight: bold;
+  }
+  #specification, #assertion, #question, #scenarios, #feedback {
+    border: 1px solid #AAA;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0px 0px 0px 0px;
+    background: #CCC;
+  }
+  #spec, #assert, #quest, #scenario, #comment {
+    border: 1px solid #AAA;
+    border-radius: 5px;
+    padding: 5px;
+    background: #FFF;
+  }
+  #comment {
+    width : 98%;
+    height : 98%;
+    resize: none;
+  }
+  #specification {
+    width: 50%;
+    float:left;
+  }
+  #assertion{
+    width: 45%;
+    float: right;
+  }
+  #scenarios {
+    width: 45%;
+    float: right;
+    margin: 15px 0px 15px 0px;
+  }
+  #feedback {
+    width: 45%;
+    float: right;
+  }
+
+  
