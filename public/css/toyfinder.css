@@ -1,5 +1,5 @@
-button {
-    font-size: large; 
+  body {
+    background: whitesmoke; 
   }
   h1 {
     font-size: 150%;
@@ -9,7 +9,10 @@ button {
     margin-right: 0;
     font-weight: normal;
   }
-  ul, ol {
+  select {
+    max-width : 8em;
+  }
+  /*ul, ol {
     margin-top: 0em;
     margin-bottom: 0em;
     margin-left: 0em;
@@ -24,51 +27,33 @@ button {
   }
   u {
     text-shadow : 0 0 0 #333;
-  }
-  select {
-    width: 111px;
-  }
+  }*/
   
-  
-  #next-button {
-    float: right;
-    font-size: xx-large;
-    font-weight: bold;
-  }
-  #specification, #assertion, #question, #scenarios, #feedback {
+  #specification, #assertion, #scenarios {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     margin: 0px 0px 0px 0px;
     background: #CCC;
   }
-  #spec, #assert, #quest, #scenario, #comment {
+  #specification {
+    width: 53%;
+    float:right;
+  }
+  #assertion {
+    width: 43%;
+    float:left;
+  }
+  #scenarios {
+    width: 43%;
+    float:left;
+    margin: auto auto 2% auto;
+  }
+  #spec, #assert, #scenario {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     background: #FFF;
-  }
-  #comment {
-    width : 98%;
-    height : 98%;
-    resize: none;
-  }
-  #specification {
-    width: 50%;
-    float:left;
-  }
-  #assertion{
-    width: 45%;
-    float: right;
-  }
-  #scenarios {
-    width: 45%;
-    float: right;
-    margin: 15px 0px 15px 0px;
-  }
-  #feedback {
-    width: 45%;
-    float: right;
   }
 
   

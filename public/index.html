@@ -1,39 +1,30 @@
 <!DOCTYPE html>
-
 <meta charset="utf-8">
 <title>Survey</title>
-
 <script src="/scripts/d3/d3.min.js" charset="utf-8"></script>
 <script src="experimentr.js"></script>
-
 <link rel="stylesheet" type="text/css" href="css/main.css" />
 <link rel="stylesheet" type="text/css" href="css/toyfinder.css" />
 
 <body></body>
 
 <script>
-  /* TODOS
-  get rid of the experimentID in the data keys; only need task id
-  dont pass task name, keep track of the index and figure out the task name.
-  anything else than can be made generic easily?
-  clean up documentation
-  */
-  /* DOCUMENTATION
-   all data is recorded in _<metric>_<experimentID><taskID> form
-   the <experimentID><taskID> should denote the trial conditions (see example below)
-   generic, parameterized code goes here. anything task specific goes in their module
-   sorry for the obfuscated names. i did that to avoid quick CTRL+F to win cheaters.
-  */
-  /*
-   CONDITIONS
-   experimentID     order of the tasks
-   spec             G(gradebook), A(addressbook)
-   phrasing         O(original), R(rephrase)
-   scenario         M(minimal), C(control)
+  /* 
+  DOCUMENTATION
+  all data is recorded in _<taskID>_<metric> form
+  the <taskID> should denote the trial conditions (see example below)
+  generic, parameterized code goes here. anything task specific goes in their module
+
+  CONDITIONS
+  experimentID     order of the tasks
+  taskID           the task, which is composed of independent variables
+  spec            which specification (ex// G = gradebook spec)
+  phrasing        which phrasing      (ex// O = original phrasing)
+  model           which model         (ex// M = minimal model)
   */
   /* OVERALL EXPERIMENT FUNCTIONS */
   function getexperiment() {
-    return ['modules/AOM.html', 'modules/GOM.html'];
+    return ['modules/GOM.html'];
     /*
     if(Math.random() < .5) { return ['modules/AOM.html'] }
     else { return ['modules/AOC.html'] }
@@ -42,34 +33,81 @@
   var data = {};
   var experiment = getexperiment(); 
   var experimentID = experiment.toString();
-  var junktimer;
+  var task = 0;
+  var taskID = null;
   function getsequence() {
     var pre = ['modules/consent/'];
     var post = ['modules/debrief/'];
     var tasks = experiment;
+    //return tasks;
     return pre.concat(tasks).concat(post);
   }
   /* GENERIC TASK FUNCTIONS */
-  function init(taskID) {
+  function init() {
+    taskID = experiment[task];
     data = {};
     data['experimentID'] = experimentID;
-    data['_start_'+experimentID+'_'+taskID] = Date.now();
-    data['_attempts_'+experimentID+'_'+taskID] = 0;
-    data['_attempttime_'+experimentID+'_'+taskID] = [];
-    data['_attemptcode_'+experimentID+'_'+taskID] = [];
+    data[taskID+'_start'] = Date.now();
+    data[taskID+'_attempts'] = 0;
+    data[taskID+'_attempttime'] = [];
+    data[taskID+'_attemptcode'] = [];
     //
+    experimentr.hideNext();
     d3.selectAll('#N').style("background-color", "#afa");
     d3.selectAll('#A').style("background-color", "#faa");
-    d3.selectAll('option').on('click', fail2);
-    experimentr.hideNext();
+    d3.selectAll('option').on('click', fail);
+    d3.selectAll("#scenario, #assert, #spec").style("visibility","hidden");
+    meta0();
   }
-  function fail(taskID) {
+  function meta0() {
+    d3.select("#assert").style("display", "none");
+    d3.select("#metaassert")
+    .html("<p> \
+      Someone before you almost solved the logic puzzle. \
+      They left behind some notes about their partial solution, as well as the goals they were trying to satisfy. \
+      Click the show button and take a look at their notes and the goals before continuing. \
+      </p><button onclick='meta1()'>Show</button>");
+  }
+  function meta1() {
+    d3.select("#metaassert").style("display", "none");
+    d3.select("#assert").style("display", null).style("visibility", null);
+    d3.select("#scenario").style("display", "none");
+    d3.select("#metascenario")
+    .html("<p> \
+      Only one goal is unsatisfied: the one highlighted red below. \
+      They also left behind an example of this goal being unsatisfied. \
+      Click the show button and take a look at an example: it should help you solve the problem. \
+      </p><button onclick='meta2()'>Show</button>");
+  }
+  function meta2() {
+    d3.select("#metascenario").style("display", "none");
+    d3.select("#scenario").style("display", null).style("visibility", null);
+    d3.select("#spec").style("display", "none");
+    d3.select("#metaspec")
+    .html("<p> \
+      Their partial solution does not forbid the example on the left. \
+      The solution is only one change away from being complete. \
+      Using the example as insight, make a single change to the solution that: \
+      1. forbids the example 2. satisfies all the goals. \
+      </p><button onclick='meta3(true)'>I Understand What To Do</button> \
+      <button onclick='meta3(false)'>I Don't Understand What To Do</button> \
+      <p>If you do not understand what to do, you will be able to give feedback at the end. \
+      You are also welcome to opt-out if the puzzle is too confusing to complete in time.</p>");
+  }
+  function meta3(iknow) {
+    data[taskID+'_iunderstand'] = iknow;
+    //
+    d3.select("#metaspec").style("display", "none");
+    d3.select("#spec").style("display", null).style("visibility", null);
+  }
+  function fail() {
+    var taskID = experiment[task];
     if(!d3.event.target.disabled) {
-      data['_attempts_'+experimentID+'_'+taskID] = data['_attempts_'+experimentID+'_'+taskID] + 1;
-      var atime = Date.now() - data['_start_'+experimentID+'_'+taskID];
+      data[taskID+'_attempts'] = data[taskID+'_attempts'] + 1;
+      var atime = Date.now() - data[taskID+'_start'];
       var acode = d3.event.target.id;
-      data['_attempttime_'+experimentID+'_'+taskID] = (data['_attempttime_'+experimentID+'_'+taskID]).concat([atime]);
-      data['_attemptcode_'+experimentID+'_'+taskID] = (data['_attemptcode_'+experimentID+'_'+taskID]).concat([acode]);
+      data[taskID+'_attempttime'] = (data[taskID+'_attempttime']).concat([atime]);
+      data[taskID+'_attemptcode'] = (data[taskID+'_attemptcode']).concat([acode]);
       //
       var opt = d3.select(d3.event.target); 
       opt.style("background-color", "#faa");
@@ -79,11 +117,14 @@
       d3.selectAll('select').property('selectedIndex', 0);
     }
   }
-  function pass(taskID) {
-    data['_end_'+experimentID+'_'+taskID] = Date.now();
-    data['_time_'+experimentID+'_'+taskID] = parseFloat(data['_end_'+experimentID+'_'+taskID]) - parseFloat(data['_start_'+experimentID+'_'+taskID]);
+  function pass() {
+    var taskID = experiment[task];
+    data[taskID+'_end'] = Date.now();
+    data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
     experimentr.addData(data);
+    // 
     alert("Correct! This option does satisfy all goals in a single change. Please continue to the next task.");
+    task = task + 1;
     experimentr.next();
   }
   experimentr.sequence(getsequence()).start();

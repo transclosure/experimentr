@@ -48,7 +48,6 @@
 </div>
 
 <script>
-  var id = "AOM";
   function init2() {
     d3.select('#T1A')
     .html("<option disabled='disabled' selected='selected'>a set of</option> \
@@ -68,10 +67,8 @@
     .html("<option disabled='disabled' selected='selected'>Target(s)</option> \
       <option id='T2B1'>Name(s)</option> \
       <option id='T2B2'>Address(es)</option>");
-    init(id);
-    d3.select('#T2A2').on('click', pass2);
-  }
-  function fail2() { fail(id); }
-  function pass2() { pass(id); }          
+    init();
+    d3.select('#T2A2').on('click', pass);
+  }          
   init2();
 </script>

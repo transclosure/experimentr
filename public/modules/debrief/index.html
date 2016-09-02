@@ -1,23 +1,28 @@
 <div id="debrief">
-  <h1>Thank you again for your participation and providing feedback below.</h1>
+  <h1>
+    Thank you again for your participation and providing feedback below.
+    <strong>Your feedback below will not affect your approval. You will be paid regardless of your answers.</strong>
+  </h1>
+
+  <p>How many puzzles did you solve by randomly trying all the options?<input id="q1" type="number" min="0"/></p>
+
+  <p>Totalled across every puzzle, about how many of your answers were guesses? <input id="q2" type="number" min="0"/></p>
 
   <p>
-    Did you solve either problem by randomly trying each option?  
-      <input name="q1" id="q1y" type="radio">Yes</input>
-      <input name="q1" id="q1n" type="radio">No</input>
+    How helpful were the examples for solving the puzzles?
+    <select id="q3">
+      <option disabled='disabled' selected='selected'></option> 
+      <option>Not at all helpful</option> 
+      <option>A little helpful</option> 
+      <option>Somewhat helpful</option>
+      <option>Very helpful</option>
+      <option>Extremely helpful</option>
+    </select>
   </p>
 
-  <p>How many of your answers were guesses? <input id="q2" type="number" min="0"/></p>
+  <textarea id="q4" rows="10" cols="40"></textarea>
 
-  <p>
-    Did you use the examples to solve the problems?
-    <input name="q3" id="q3y" type="radio">Yes</input>
-    <input name="q3" id="q3n" type="radio">No</input>
-  </p>
-
-  <textarea id="q4" rows="10" cols="40">Was there a choice you made that you thought was correct, and you were suprised to find out it was wrong? If yes, explain why you were suprised."</textarea>
-
-  <textarea id="q5" rows="10" cols="40">Was there something you struggled with in this study? Is there something we could add that would have made the study easier to complete?</textarea>
+  <textarea id="q5" rows="10" cols="40"></textarea>
 
   <br>
   <button id="submitComments" type="button">Submit</button>
@@ -32,19 +37,27 @@
 <script>
 var postId  = experimentr.postId
     , data  = {}
-    , valid = false;
+    , q4text = "Was there a choice you made that you thought was correct, and you were suprised to find out it was wrong? If yes, explain why you were suprised."
+    , q5text = "Was there something you struggled with in this study? Is there something we could add that would have made the study easier to complete?"
+    , valid = false
 
 function validate() {
-    if(d3.select("#q1y").node().checked) data['_q1_'+experimentID] = "Yes";
-    if(d3.select("#q1n").node().checked) data['_q1_'+experimentID] = "No";
-    var q2 = parseInt(d3.select("#q2").property("value"), 10);
-    if(q2!=NaN) data['_q2_'+experimentID] = q2;
-    if(d3.select("#q3y").node().checked) data['_q3_'+experimentID] = "Yes";
-    if(d3.select("#q3n").node().checked) data['_q3_'+experimentID] = "No";
-    data['_q4_'+experimentID] = d3.select("#q4").property("value");
-    data['_q5_'+experimentID] = d3.select("#q5").property("value");
+    var q1 = parseInt(d3.select("#q1").property("value"), 10);
+    if(q1!=NaN) data['q1'] = q1;
 
-    valid = data['_q1_'+experimentID] && data['_q2_'+experimentID] && data['_q3_'+experimentID] && data['_q4_'+experimentID] && data['_q5_'+experimentID];
+    var q2 = parseInt(d3.select("#q2").property("value"), 10);
+    if(q2!=NaN) data['q2'] = q2;
+
+    var q3 = d3.select("#q3").property("value");
+    if(q3!="") data['q3'] = q3;
+
+    var q4 = d3.select("#q4").property("value");
+    if(q4!="" && q4!=q4text) data['q4'] = q4;
+
+    var q5 = d3.select("#q5").property("value"); 
+    if(q5!="" && q5!=q5text) data['q5'] = q5;
+
+    valid = data['q1']!=null && data['q2']!=null && data['q3']!=null && data['q4']!=null && data['q5']!=null;
     if( valid ) {
       data.finished = true;
       experimentr.addData(data);
@@ -57,10 +70,12 @@ function validate() {
     }
   }
 
-function init() {
+function init2() {
+  d3.select('#q4').text(q4text);
+  d3.select('#q5').text(q5text);
   d3.select('#q4').on('click', function(){d3.select('#q4').text("");});
   d3.select('#q5').on('click', function(){d3.select('#q5').text("");});
   d3.select('#submitComments').on('click', validate);
 }
-init();
+init2();
 </script>

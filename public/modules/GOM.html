@@ -1,125 +1,118 @@
-<div id="specification">
-	<h1>We are attempting to specify a Allowed Grader Policy according to our desired goals. Using the dropdown menus below, make a single change so that all of our goals are satisfied.</h1>
-  <div id="spec">
-    
-    <p>The Allowed Grader Policy consists of <b>Persons</b>, <b>Classes</b> and <b>Assignments</b>.</p>
-    
-    <p>A <b>Person</b> can be a <b>Student</b> or a <b>Professor</b>.</p>
-
-    <p>There is <select id="T1A"></select> <select id="T1B"></select> who is the <i>instructor of</i> each <b>Class</b>.</p>
-
-    <p>There is <select id="T2A"></select> <select id="T2B"></select> who are the <i>assistants for</i> each <b>Class</b>.</p>
-
-    <p>There is <select id="T3A"></select> <select id="T3B"></select> who are <i>enrolled in</i> each <b>Class</b>.</p>
-
-    <p>There is <select id="T4A"></select> <select id="T4B"></select> <i>associated with</i> each <b>Assignment</b>.</p>
-
-    <p>There is <select id="T5A"></select> <select id="T5B"></select> <i>assigned to</i> each <b>Assignment</b>.</p>
-
-    <p>Each Student <i>assigned to</i> an <b>Assignment</b> is <i>enrolled in</i> the <b>Class</b> <i>associated with</i> the <b>Assignment</b>.
-
-    <p>The <i>assistants for</i> and the <i>instructor of</i> a <b>Class</b> can <u>grade</u> <b>Assignments</b> <i>associated with</i> the <b>Class</b>. 
-
+<div id="scenarios">
+  <h1>Unsatisfied Goal Example</h1>
+  <div id="metascenario"></div>
+  <div id="scenario">
+    <p>Student0 can grade Assignment0 they are assigned to, which violates the red goal.</p>
+    <p><ul>
+      <li>Student0 is an assistant for Class0.</li>
+      <li>Professor0 is the instructor of Class0.</li>
+      <li>Assignment0 is associated with Class0.</li>
+      <li>Assignment0 is assigned to Student0.</li>
+    </ul></p>
   </div>
 </div>
 
+<div id="specification">
+  <h1>Partial Solution</h1>
+  <div id="metaspec"></div>
+  <div id="spec">
+    <p>There is <select id="T1M"></select> instructor(s) of each class.</p>
+    <p>There is <select id="T2M"></select> assistant(s) for each class.</p>
+    <p>There is <select id="T3M"></select> student(s) enrolled_in each class.</p>
+    <p>There is <select id="T4M"></select> class(es) associated with each assignment.</p>
+    <p>There is <select id="T5M"></select> student(s) assigned to each assignment.</p>
+    <p>For each class, <select id="T1R"></select> can be instructors.</p>
+    <p>For each class, <select id="T2R"></select> can be assistants.</p>
+    <p>For each class, <select id="T3R"></select> can be enrolled.</p>
+    <p>For each assignment, <select id="T4R"></select> can be associated with it.</p>
+    <p>For each assignment, <select id="T5R"></select> can be assigned to it.</p>
+    <p>Each student enrolled in a class is assigned to every assignment associated with it.</p>
+  </div>
+</div>
 
 <div id="assertion">
-	<h1>Some of our goals are not satisfied.</h1>
+  <h1>Notes and Goals</h1>
+  <div id="metaassert"></div>
   <div id="assert">
-
-    <p id="N">There must be exactly one <i>instructor of</i> every <b>Class</b>.</p>   
-
-    <p id="N">There must be exactly one <b>Class</b> <i>associated with</i> each <b>Assignment</b>.</p>
-
-    <p id="N">Each Student <i>assigned to</i> an <b>Assignment</b> must be <i>enrolled in</i> the <b>Class</b> <i>associated with</i> the <b>Assignment</b>.</p>
-
-    <p id="N">The <i>assistants for</i> and the <i>instructor of</i> a <b>Class</b> must <u>grade</u> <b>Assignments</b> <i>associated with</i> the <b>Class</b>.</p>
-
-    <p id="A">There is no <b>Student</b> who can <u>grade</u> an <b>Assignment</b> they are <i>assigned to</i>.</p>
-    
+    <p>This puzzle involves creating a Grading Policy. The Grading Policy involves persons, classes and assignments.</p>
+    <p>A person is either a student or a professor.</p>
+    <p>Professors can be instructors of classes.</p>
+    <p>Students can be assistants for classes.</p>
+    <p>Students can be enrolled in classes.</p>
+    <p>Classes can be associated with assignments.</p>
+    <p>Students can be assigned to assignments.</p>
+    <p>Instructors and assistants can grade assignments.</p> 
+    <p id="N">There is exactly one instructor of each class.</p>
+    <p id="N">There is exactly one class associated with each assignment.</p>
+    <p id="N">There is at least one student assigned to each assignment.</p>
+    <p id="N">Each student enrolled in a class is assigned to every assignment associated with it.</p>
+    <p id="A">There is no student who can grade an assignment they are assigned to.</p>
   </div>
 </div>
 
 
-<div id="scenarios">
-	<h1>Here is an example where our goals fail.</h1>
-	<div id="scenario">
-    <b>Student0</b> can <u>grade</u> their <b>Assignment0</b>.
-      <ul>
-        <li><b>Student0</b> is an <i>assistant for</i> <b>Class0</b>.</li>
-        <li><b>Professor0</b> is the <i>instructor of</i> <b>Class0</b>.</li>
-        <li><b>Assignment0</b> is <i>associated with</i> <b>Class0</b>.</li>
-        <li><b>Assignment0</b> is <i>assigned to</i> <b>Student0</b>.</li>
-      </ul>
-	</div>
-</div>
+
+
 
 <script>
-  var id = "GOM";
   function init2() {
-    d3.select('#T1A')
+    d3.select('#T1M')
     .html("<option disabled='disabled' selected='selected'>exactly one</option> \
-      <option id='T1A1'>a set of</option> \
-      <option id='T1A2'>at most one</option> \
-      <option id='T1A3'>at least one</option>");
-    d3.select('#T1B')
-    .html("<option disabled='disabled' selected='selected'>Professor(s)</option> \
-      <option id='T1B1'>Student(s)</option> \
-      <option id='T1B2'>Person(s)</option>");
+      <option id='T1M1'>a set of</option> \
+      <option id='T1M2'>at most one</option> \
+      <option id='T1M3'>at least one</option>");
+    d3.select('#T1R')
+    .html("<option disabled='disabled' selected='selected'>all professors</option> \
+      <option id='T1R1'>professors that are not instructor of another class</option>");
 
-    d3.select('#T2A')
+    d3.select('#T2M')
     .html("<option disabled='disabled' selected='selected'>a set of</option> \
-      <option id='T2A1'>at most one</option> \
-      <option id='T2A2'>exactly one</option> \
-      <option id='T2A3'>at least one</option>");
-    d3.select('#T2B')
-    .html("<option disabled='disabled' selected='selected'>Student(s)</option> \
-      <option id='T2B1'>Professor(s)</option> \
-      <option id='T2B2'>Student(s) THAT ARE instructors of the Class</option> \
-      <option id='T2B3'>Student(s) THAT ARE NOT instructors of the Class</option> \
-      <option id='T2B4'>Student(s) THAT ARE enrolled in the Class</option> \
-      <option id='T2B5'>Student(s) THAT ARE NOT enrolled in the Class</option> \
-      <option id='T2B6'>Person(s)</option>");
+      <option id='T2M1'>at most one</option> \
+      <option id='T2M2'>exactly one</option> \
+      <option id='T2M3'>at least one</option>");
+    d3.select('#T2R')
+    .html("<option disabled='disabled' selected='selected'>all students</option> \
+      <option id='T2R1'>students who are assistants</option> \
+      <option id='T2R2'>students who are not assistants</option> \
+      <option id='T2R3'>students who are enrolled</option> \
+      <option id='T2R4'>students who are not enrolled</option>");
 
-    d3.select('#T3A')
+    d3.select('#T3M')
     .html("<option disabled='disabled' selected='selected'>a set of</option> \
-      <option id='T3A1'>at most one</option> \
-      <option id='T3A2'>exactly one</option> \
-      <option id='T3A3'>at least one</option>");
-    d3.select('#T3B')
-    .html("<option disabled='disabled' selected='selected'>Student(s)</option> \
-      <option id='T3B1'>Professor(s)</option> \
-      <option id='T3B2'>Student(s) THAT ARE instructors of the Class</option> \
-      <option id='T3B3'>Student(s) THAT ARE NOT instructors of the Class</option> \
-      <option id='T3B4'>Student(s) THAT ARE assistants for the Class</option> \
-      <option id='T3B5'>Student(s) THAT ARE NOT assistants for the Class</option> \
-      <option id='T3B6'>Person(s)</option>");
+      <option id='T3M1'>at most one</option> \
+      <option id='T3M2'>exactly one</option> \
+      <option id='T3M3'>at least one</option>");
+    d3.select('#T3R')
+    .html("<option disabled='disabled' selected='selected'>all students</option> \
+      <option id='T3R1'>students who are enrolled</option> \
+      <option id='T3R2'>students who are not enrolled</option> \
+      <option id='T3R3'>students who are assistants</option> \
+      <option id='T3R4'>students who are not assistants</option>");
 
-    d3.select('#T4A')
+    d3.select('#T4M')
     .html("<option disabled='disabled' selected='selected'>exactly one</option> \
-      <option id='T4A1'>a set of</option> \
-      <option id='T4A2'>at most one</option> \
-      <option id='T4A3'>at least one</option>");
-    d3.select('#T4B')
-    .html("<option disabled='disabled' selected='selected'>Class(es)</option> \
-      <option id='T4B1'>Assignment(s)</option> \
-      <option id='T4B2'>Person(s)</option>");
+      <option id='T4M1'>a set of</option> \
+      <option id='T4M2'>at most one</option> \
+      <option id='T4M3'>at least one</option>");
+    d3.select('#T4R')
+    .html("<option disabled='disabled' selected='selected'>all classes</option> \
+      <option id='T4R1'>classes that are not associated with another assignment</option>");
 
-    d3.select('#T5A')
+    d3.select('#T5M')
     .html("<option disabled='disabled' selected='selected'>at least one</option> \
-      <option id='T5A1'>a set of</option> \
-      <option id='T5A2'>exactly one</option> \
-      <option id='T5A3'>at most one</option>");
-    d3.select('#T5B')
-    .html("<option disabled='disabled' selected='selected'>Student(s)</option> \
-      <option id='T5B1'>Person(s)</option> \
-      <option id='T5B3'>Professor(s)</option>");
-    init(id);
-    d3.select('#T2B5').on('click', pass2);
-    d3.select('#T3B5').on('click', pass2);
-  }
-  function fail2() { fail(id); }
-  function pass2() { pass(id); }          
+      <option id='T5M1'>a set of</option> \
+      <option id='T5M2'>exactly one</option> \
+      <option id='T5M3'>at most one</option>");
+    d3.select('#T5R')
+    .html("<option disabled='disabled' selected='selected'>all students</option> \
+      <option id='T5R1'>students who are enrolled</option> \
+      <option id='T5R2'>students who are not enrolled</option> \
+      <option id='T5R3'>students who are assistants</option> \
+      <option id='T5R4'>students who are not assistants</option>");
+
+    init();
+    d3.select('#T2R4').on('click', pass);
+    d3.select('#T3R4').on('click', pass);
+  }         
   init2();
 </script>
