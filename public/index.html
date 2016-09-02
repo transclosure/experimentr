@@ -55,6 +55,7 @@
     experimentr.hideNext();
     d3.selectAll('#N').style("background-color", "#afa");
     d3.selectAll('#A').style("background-color", "#faa");
+    d3.selectAll('select').on('change', check);
     d3.selectAll('option').on('click', fail);
     d3.selectAll("#scenario, #assert, #spec").style("visibility","hidden");
     meta0();
@@ -99,6 +100,11 @@
     //
     d3.select("#metaspec").style("display", "none");
     d3.select("#spec").style("display", null).style("visibility", null);
+  }
+  function check() {
+    var select = d3.event.target;
+    var option = select.options[select.selectedIndex];
+    option.click();
   }
   function fail() {
     var taskID = experiment[task];
