@@ -1,23 +1,23 @@
 var j2c           = require('json2csv')
   , fs            = require('fs')
   , file          = process.argv[2]
-  , experimentID  = process.argv[3]
-  , taskID        = process.argv[4]
+  , taskID        = process.argv[3]
   , _             = require('underscore')
   , fields        = getFields()
   , data;
 
 function getFields() {
   var experimentFields = ['workerId','postId','experimentID','taskID'];
-  var taskFields = ['_time_'+experimentID+'_'+taskID,
-                    '_attempts_'+experimentID+'_'+taskID,
-                    '_attempttime_'+experimentID+'_'+taskID,
-                    '_attemptcode_'+experimentID+'_'+taskID,
-                    '_q1_'+experimentID,
-                    '_q2_'+experimentID,
-		    '_q3_'+experimentID,
-		    '_q4_'+experimentID,
-		    '_q5_'+experimentID];
+  var taskFields = [taskID+'_iunderstand',
+		    taskID+'_time',
+                    taskID+'_attempts',
+                    taskID+'_attempttime',
+                    taskID+'_attemptcode',
+                    'q1',
+                    'q2',
+		    'q3',
+		    'q4',
+		    'q5'];
   return experimentFields.concat(taskFields);
 }
 
