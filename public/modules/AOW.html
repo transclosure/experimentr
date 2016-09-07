@@ -4,6 +4,7 @@
   <div id="scenario">
     The <span id="H">lookup</span> of <span id="H">name</span>1 in <span id="H">book</span>0 lists no <span id="H">address</span>es, which violates the red goal.
     <ul>
+      <li><span id="H">name</span>0 is an <span id="H">entry</span> in <span id="H">book</span>0.</li>
       <li><span id="H">name</span>1 is an <span id="H">entry</span> in <span id="H">book</span>0.</li>
       <li><span id="H">name</span>0 is the <span id="H">listing</span> of <span id="H">name</span>1 in <span id="H">book</span>0.</li>
     </ul>
@@ -17,7 +18,7 @@
     <p>There is <select id="T1M">a set of</select> entry(ies) in each book.</p>
     <p>There is <select id="T2M">at most one</select> listing for each entry in each book.</p>    
     <p>For each book, all names can be an entry.</p>
-    <p>For each book, <select id="T2R"></select> can be listed for an entry.</p>
+    <p>For each book, <select id="T2R"></select> can be a listing for an entry.</p>
     <p>Every name in a lookup is an entry in the book.</p>
     <p>No name is in its own lookup.</p> 
   </div>
@@ -38,6 +39,11 @@
     <p id="N">No name is in its own lookup.</p> 
     <p id="A">Every lookup of every name in every book lists at least one address.</p>
   </div>
+</div>
+
+<div id="helper">
+  <h1>Walkthrough Help</h1>
+  <div id="help"></div>
 </div>
 
 
@@ -61,8 +67,33 @@
       <option id='T2R1'>all listings that are addresses</option> \
       <option id='T2R2'>all listings that are names</option>");
     
-    init();
-    d3.select('#T2M2').on('click', pass);
-  }          
+    init("#T2M2");
+    walk0();
+  } 
+  function walk0() {
+    d3.selectAll('select').attr("disabled", "disabled");
+    d3.select("#help")
+    .html("<p>We are providing you a walkthrough for the first task. Please read the general instructions and click the show buttons. Then, follow the walkthrough help to complete this task. \
+      </p><button onclick='walk1()'>I'm ready</button>");
+  }     
+  function walk1() {
+    d3.select("#help")
+    .html("<p>Let's use the example to help guide our thinking on how to solve the puzzle. Looking at the example, name0 seems to be missing a listing. We should try and change the partial solution so that listings are no longer able to be missing. But what part of the solution does not forbid missing listings? Hover over the bolded 'listing' word in the example, and see what is highlighted in the solution to help you figure out what to change.\
+      </p><button onclick='walk2()'>I looked at the 'listing' highlights</button>");
+  }    
+  function walk2() {
+    d3.select("#T2R").attr("disabled", null);
+    d3.select("#T2R2").attr("disabled", "disabled");
+    d3.select("#help")
+    .html("<p>It looks like there are two places in the partial solution that are related to listings. The solution most likely involves changing one of those. You know, the fact that a listing can be a name is strange. Why not just directly list to the address, instead of making people follow names through the book? Try restricting the listings to just addresses using the only enabled dropdown in the partial solution. \
+      </p><button onclick='walk3()'>I tried it</button>");
+  }
+  function walk3() {
+    d3.select("#T2M").attr("disabled", null);
+    d3.select("#T2M1").attr("disabled", "disabled");
+    d3.select("#T2M3").attr("disabled", "disabled");
+    d3.select("#help")
+    .html("<p>Without the indirection of names, lookups and listings do not really work anymore. That causes a lot of those green goals to fail. By process of elimination, the solution should be in the dropdown related to listings. Oh, of course, specifying 'at most one' listing allows there to be 0 listings for entires, like we see for name0 in the example! We want that to be 'exactly one' so listings cannot be missing anymore. Select that option and you're done with the walkthrough. You will be on your own for the rest of the tasks. Hopefully this helped you understand how to approach and solve the problem; if not, you can provide feedback at the end.</p>");
+  }
   init2();
 </script>

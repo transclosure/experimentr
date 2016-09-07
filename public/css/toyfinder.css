@@ -29,7 +29,7 @@
     text-shadow : 0 0 0 #333;
   }*/
   
-  #specification, #assertion, #scenarios {
+  #specification, #assertion, #scenarios, #helper {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
@@ -40,6 +40,11 @@
     width: 53%;
     float:right;
   }
+  #helper {
+    width: 53%;
+    float:right;
+    margin: 2% auto auto auto;
+  }
   #assertion {
     width: 43%;
     float:left;
@@ -49,7 +54,7 @@
     float:left;
     margin: auto auto 2% auto;
   }
-  #spec, #assert, #scenario {
+  #spec, #assert, #scenario, #help {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;

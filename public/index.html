@@ -36,16 +36,18 @@
   var task = 0;
   var taskID = null;
   var lasthover = null;
+  var passes = null;
   function getsequence() {
     var pre = ['modules/consent/'];
     var post = ['modules/debrief/'];
     var tasks = experiment;
-    return tasks;
-    //return pre.concat(tasks).concat(post);
+    //return tasks;
+    return pre.concat(tasks).concat(post);
   }
   /* GENERIC TASK FUNCTIONS */
-  function init() {
+  function init(taskpasses) {
     taskID = experiment[task];
+    passes = taskpasses;
     data = {};
     data['experimentID'] = experimentID;
     data[taskID+'_start'] = Date.now();
@@ -56,8 +58,6 @@
     experimentr.hideNext();
     d3.selectAll('#N').style("background-color", "#afa");
     d3.selectAll('#A').style("background-color", "#faa");
-    d3.selectAll('select').on('change', check);
-    d3.selectAll('option').on('click', fail);
     d3.selectAll('#H').on('mouseover', starthover);
     d3.selectAll('#H').on('mouseout', stophover);
     d3.selectAll('#H').style("font-weight", "bold");
@@ -80,6 +80,7 @@
     var regex = new RegExp(find, "ig");
     d3.select("#spec").html(d3.select("#spec").html().replace(regex, replace));
     d3.select("#assert").html(d3.select("#assert").html().replace(regex, replace));
+    activate();
   }
   function meta0() {
     d3.select("#assert").style("display", "none");
@@ -122,6 +123,12 @@
     //
     d3.select("#metaspec").style("display", "none");
     d3.select("#spec").style("display", null).style("visibility", null);
+    activate();
+  }
+  function activate() {
+    d3.selectAll('select').on('change', check);
+    d3.selectAll('option').on('click', fail);
+    d3.selectAll(passes).on('click', pass);
   }
   function check() {
     var select = d3.event.target;
