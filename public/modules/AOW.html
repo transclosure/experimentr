@@ -1,0 +1,68 @@
+<div id="scenarios">
+  <h1>Unsatisfied Goal Example</h1>
+  <div id="metascenario"></div>
+  <div id="scenario">
+    The <span id="H">lookup</span> of <span id="H">name</span>1 in <span id="H">book</span>0 lists no <span id="H">address</span>es, which violates the red goal.
+    <ul>
+      <li><span id="H">name</span>1 is an <span id="H">entry</span> in <span id="H">book</span>0.</li>
+      <li><span id="H">name</span>0 is the <span id="H">listing</span> of <span id="H">name</span>1 in <span id="H">book</span>0.</li>
+    </ul>
+  </div>
+</div>
+
+<div id="specification">
+	<h1>Partial Solution</h1>
+  <div id="metaspec"></div>
+  <div id="spec">
+    <p>There is <select id="T1M">a set of</select> entry(ies) in each book.</p>
+    <p>There is <select id="T2M">at most one</select> listing for each entry in each book.</p>    
+    <p>For each book, all names can be an entry.</p>
+    <p>For each book, <select id="T2R"></select> can be listed for an entry.</p>
+    <p>Every name in a lookup is an entry in the book.</p>
+    <p>No name is in its own lookup.</p> 
+  </div>
+</div>
+
+
+<div id="assertion">
+	<h1>Notes and Goals</h1>
+  <div id="metaassert"></div>
+  <div id="assert">
+    <p>This puzzle involves creating ContactRecords. The ContactRecords involve books, and listings.</p>
+    <p>A listing is either an address or a name.</p>
+    <p>Only names can be an entry in a book.</p>
+    <p>Only listings can be listed under an entry in a book.</p>
+    <p>We can lookup the listings of a name in a book by: successively finding the listing under the entry names in the lookup.</p>
+    <p id="N">There is at most one listing for every entry in every book.</p>
+    <p id="N">Every name in a lookup is an entry in the book.</p>
+    <p id="N">No name is in its own lookup.</p> 
+    <p id="A">Every lookup of every name in every book lists at least one address.</p>
+  </div>
+</div>
+
+
+
+
+<script>
+  function init2() {
+    d3.select('#T1M')
+    .html("<option disabled='disabled' selected='selected'>a set of</option> \
+      <option id='T1M1'>exactly one</option> \
+      <option id='T1M2'>at most one</option> \
+      <option id='T1M3'>at least one</option>");
+
+    d3.select('#T2M')
+    .html("<option disabled='disabled' selected='selected'>at most one</option> \
+      <option id='T2M1'>a set of</option> \
+      <option id='T2M2'>exactly one</option> \
+      <option id='T2M3'>at least one</option>");
+    d3.select('#T2R')
+    .html("<option disabled='disabled' selected='selected'>all listings</option> \
+      <option id='T2R1'>all listings that are addresses</option> \
+      <option id='T2R2'>all listings that are names</option>");
+    
+    init();
+    d3.select('#T2M2').on('click', pass);
+  }          
+  init2();
+</script>

@@ -20,9 +20,39 @@
     </select>
   </p>
 
-  <textarea id="q4" rows="10" cols="40"></textarea>
+  <div>
+    Was there a choice you made that you thought was correct, and you were suprised to find out it was wrong? If yes, explain why you were suprised.
+    <textarea id="q4" rows="10" cols="40"></textarea>
+  </div>
 
-  <textarea id="q5" rows="10" cols="40"></textarea>
+  <div>
+    Was there something you struggled with in this study? Is there something we could add that would have made the study easier to complete?
+    <textarea id="q5" rows="10" cols="40"></textarea>
+  </div>
+
+  <p>
+    How helpful was the blue hover highlighting between the example, goals and partial solution for solving the puzzles?
+    <select id="q6">
+      <option disabled='disabled' selected='selected'></option> 
+      <option>Not at all helpful</option> 
+      <option>A little helpful</option> 
+      <option>Somewhat helpful</option>
+      <option>Very helpful</option>
+      <option>Extremely helpful</option>
+    </select>
+  </p>
+
+  <p>
+    How helpful was the initial walkthrough in understanding how to approach the puzzles and make them easier to solve?
+    <select id="q7">
+      <option disabled='disabled' selected='selected'></option> 
+      <option>Not at all helpful</option> 
+      <option>A little helpful</option> 
+      <option>Somewhat helpful</option>
+      <option>Very helpful</option>
+      <option>Extremely helpful</option>
+    </select>
+  </p>
 
   <br>
   <button id="submitComments" type="button">Submit</button>
@@ -37,8 +67,6 @@
 <script>
 var postId  = experimentr.postId
     , data  = {}
-    , q4text = "Was there a choice you made that you thought was correct, and you were suprised to find out it was wrong? If yes, explain why you were suprised."
-    , q5text = "Was there something you struggled with in this study? Is there something we could add that would have made the study easier to complete?"
     , valid = false
 
 function validate() {
@@ -52,12 +80,18 @@ function validate() {
     if(q3!="") data['q3'] = q3;
 
     var q4 = d3.select("#q4").property("value");
-    if(q4!="" && q4!=q4text) data['q4'] = q4;
+    if(q4!="") data['q4'] = q4;
 
     var q5 = d3.select("#q5").property("value"); 
-    if(q5!="" && q5!=q5text) data['q5'] = q5;
+    if(q5!="") data['q5'] = q5;
 
-    valid = data['q1']!=null && data['q2']!=null && data['q3']!=null && data['q4']!=null && data['q5']!=null;
+    var q6 = d3.select("#q6").property("value");
+    if(q6!="") data['q6'] = q6;
+
+    var q7 = d3.select("#q7").property("value");
+    if(q7!="") data['q7'] = q7;
+
+    valid = data['q1']!=null && data['q2']!=null && data['q3']!=null && data['q4']!=null && data['q5']!=null && data['q6']!=null && data['q7']!=null;
     if( valid ) {
       data.finished = true;
       experimentr.addData(data);
@@ -71,10 +105,6 @@ function validate() {
   }
 
 function init2() {
-  d3.select('#q4').text(q4text);
-  d3.select('#q5').text(q5text);
-  d3.select('#q4').on('click', function(){d3.select('#q4').text("");});
-  d3.select('#q5').on('click', function(){d3.select('#q5').text("");});
   d3.select('#submitComments').on('click', validate);
 }
 init2();

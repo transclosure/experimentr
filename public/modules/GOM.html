@@ -2,12 +2,13 @@
   <h1>Unsatisfied Goal Example</h1>
   <div id="metascenario"></div>
   <div id="scenario">
-    <p>Student0 can grade Assignment0 they are assigned to, which violates the red goal.</p>
+    <p><span id="H">student</span>0 can <span id="H">grade</span> <span id="H">assignment</span>0 that they are <span id="H">assigned</span> to, which violates the red goal.</p>
     <p><ul>
-      <li>Student0 is an assistant for Class0.</li>
-      <li>Professor0 is the instructor of Class0.</li>
-      <li>Assignment0 is associated with Class0.</li>
-      <li>Assignment0 is assigned to Student0.</li>
+      <li><span id="H">student</span>0 is an <span id="H">assistant</span> for <span id="H">class</span>0.</li>
+      <li><span id="H">professor</span>0 is the <span id="H">instructor</span> of <span id="H">class</span>0.</li>
+      <li><span id="H">assignment</span>0 is <span id="H">associated</span> with <span id="H">class</span>0.</li>
+      <li><span id="H">assignment</span>0 is <span id="H">assigned</span> to <span id="H">student</span>0.</li>
+      <li><span id="H">student</span>0 is <span id="H">enrolled</span> in <span id="H">class</span>0.</li>
     </ul></p>
   </div>
 </div>
@@ -18,7 +19,7 @@
   <div id="spec">
     <p>There is <select id="T1M"></select> instructor(s) of each class.</p>
     <p>There is <select id="T2M"></select> assistant(s) for each class.</p>
-    <p>There is <select id="T3M"></select> student(s) enrolled_in each class.</p>
+    <p>There is <select id="T3M"></select> student(s) enrolled in each class.</p>
     <p>There is <select id="T4M"></select> class(es) associated with each assignment.</p>
     <p>There is <select id="T5M"></select> student(s) assigned to each assignment.</p>
     <p>For each class, <select id="T1R"></select> can be instructors.</p>
@@ -36,12 +37,12 @@
   <div id="assert">
     <p>This puzzle involves creating a Grading Policy. The Grading Policy involves persons, classes and assignments.</p>
     <p>A person is either a student or a professor.</p>
-    <p>Professors can be instructors of classes.</p>
-    <p>Students can be assistants for classes.</p>
-    <p>Students can be enrolled in classes.</p>
-    <p>Classes can be associated with assignments.</p>
-    <p>Students can be assigned to assignments.</p>
-    <p>Instructors and assistants can grade assignments.</p> 
+    <p>Only professors can be instructors of classes.</p>
+    <p>Only students can be assistants for classes.</p>
+    <p>Only students can be enrolled in classes.</p>
+    <p>Only classes can be associated with assignments.</p>
+    <p>Only students can be assigned to assignments.</p>
+    <p>Only instructors and assistants can grade assignments.</p> 
     <p id="N">There is exactly one instructor of each class.</p>
     <p id="N">There is exactly one class associated with each assignment.</p>
     <p id="N">There is at least one student assigned to each assignment.</p>

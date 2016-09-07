@@ -24,7 +24,7 @@
   */
   /* OVERALL EXPERIMENT FUNCTIONS */
   function getexperiment() {
-    return ['modules/GOM.html'];
+    return ['modules/AOW.html', 'modules/GOM.html'];
     /*
     if(Math.random() < .5) { return ['modules/AOM.html'] }
     else { return ['modules/AOC.html'] }
@@ -35,12 +35,13 @@
   var experimentID = experiment.toString();
   var task = 0;
   var taskID = null;
+  var lasthover = null;
   function getsequence() {
     var pre = ['modules/consent/'];
     var post = ['modules/debrief/'];
     var tasks = experiment;
-    //return tasks;
-    return pre.concat(tasks).concat(post);
+    return tasks;
+    //return pre.concat(tasks).concat(post);
   }
   /* GENERIC TASK FUNCTIONS */
   function init() {
@@ -57,8 +58,28 @@
     d3.selectAll('#A').style("background-color", "#faa");
     d3.selectAll('select').on('change', check);
     d3.selectAll('option').on('click', fail);
+    d3.selectAll('#H').on('mouseover', starthover);
+    d3.selectAll('#H').on('mouseout', stophover);
+    d3.selectAll('#H').style("font-weight", "bold");
     d3.selectAll("#scenario, #assert, #spec").style("visibility","hidden");
     meta0();
+  }
+  function starthover() {
+    var span = d3.select(d3.event.target);
+    findAndReplace(span.text(), "<span style=\"background-color:#aaf\">"+span.text()+"</span>");
+    span.style("background-color", "#aaf");
+    lasthover = span;
+  }
+  function stophover() {
+    if(lasthover!=null) {
+      findAndReplace("<span style=\"background-color:#aaf\">"+lasthover.text()+"</span>", lasthover.text());
+      lasthover.style("background-color", null);
+    }
+  }
+  function findAndReplace(find, replace) {
+    var regex = new RegExp(find, "ig");
+    d3.select("#spec").html(d3.select("#spec").html().replace(regex, replace));
+    d3.select("#assert").html(d3.select("#assert").html().replace(regex, replace));
   }
   function meta0() {
     d3.select("#assert").style("display", "none");
@@ -90,6 +111,7 @@
       The solution is only one change away from being complete. \
       Using the example as insight, make a single change to the solution that: \
       1. forbids the example 2. satisfies all the goals. \
+      Hover over the bold portions of the example to highlight relevant pieces of the goals and partial solution. This should help narrow your focus as you solve the problem. \
       </p><button onclick='meta3(true)'>I Understand What To Do</button> \
       <button onclick='meta3(false)'>I Don't Understand What To Do</button> \
       <p>If you do not understand what to do, you will be able to give feedback at the end. \
