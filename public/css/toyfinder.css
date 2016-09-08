@@ -28,7 +28,12 @@
   u {
     text-shadow : 0 0 0 #333;
   }*/
-  
+
+  #topbar {
+    margin-top: 1em;
+    text-align: center;
+    font-weight: bold;
+  }
   #specification, #assertion, #scenarios, #helper {
     border: 1px solid #AAA;
     border-radius: 5px;

@@ -4,9 +4,21 @@
     <strong>Your feedback below will not affect your approval. You will be paid regardless of your answers.</strong>
   </h1>
 
-  <p>How many puzzles did you solve by randomly trying all the options?<input id="q1" type="number" min="0"/></p>
+  <p>
+    How helpful was the initial walkthrough in understanding how to approach the puzzles and make them easier to solve?
+    <select id="q6">
+      <option disabled='disabled' selected='selected'></option> 
+      <option>Not at all helpful</option> 
+      <option>A little helpful</option> 
+      <option>Somewhat helpful</option>
+      <option>Very helpful</option>
+      <option>Extremely helpful</option>
+    </select>
+  </p>
 
-  <p>Totalled across every puzzle, about how many of your answers were guesses? <input id="q2" type="number" min="0"/></p>
+  <p>How many puzzles did you solve by randomly trying all the options?<input id="q1" type="number" min="0" max="1"/></p>
+
+  <p>Totalled across every puzzle, about how many of your answers were guesses? <input id="q2" type="number" min="0" max="50"/></p>
 
   <p>
     How helpful were the examples for solving the puzzles?
@@ -22,37 +34,13 @@
 
   <div>
     Was there a choice you made that you thought was correct, and you were suprised to find out it was wrong? If yes, explain why you were suprised.<br/>
-    <textarea id="q4" rows="10" cols="40"></textarea>
+    <textarea id="q4" rows="5" cols="80"></textarea>
   </div>
 
   <div>
     Was there something you struggled with in this study? Is there something we could add that would have made the study easier to complete?<br/>
-    <textarea id="q5" rows="10" cols="40"></textarea>
+    <textarea id="q5" rows="5" cols="80"></textarea>
   </div>
-
-  <p>
-    How helpful was the blue hover highlighting between the example, goals and partial solution for solving the puzzles?
-    <select id="q6">
-      <option disabled='disabled' selected='selected'></option> 
-      <option>Not at all helpful</option> 
-      <option>A little helpful</option> 
-      <option>Somewhat helpful</option>
-      <option>Very helpful</option>
-      <option>Extremely helpful</option>
-    </select>
-  </p>
-
-  <p>
-    How helpful was the initial walkthrough in understanding how to approach the puzzles and make them easier to solve?
-    <select id="q7">
-      <option disabled='disabled' selected='selected'></option> 
-      <option>Not at all helpful</option> 
-      <option>A little helpful</option> 
-      <option>Somewhat helpful</option>
-      <option>Very helpful</option>
-      <option>Extremely helpful</option>
-    </select>
-  </p>
 
   <br>
   <button id="submitComments" type="button">Submit</button>
@@ -77,21 +65,18 @@ function validate() {
     if(q2!=NaN) data['q2'] = q2;
 
     var q3 = d3.select("#q3").property("value");
-    if(q3!="") data['q3'] = q3;
+    if(/\S/.test(q3)) data['q3'] = q3;
 
     var q4 = d3.select("#q4").property("value");
-    if(q4!="") data['q4'] = q4;
+    if(/\S/.test(q4)) data['q4'] = q4;
 
     var q5 = d3.select("#q5").property("value"); 
-    if(q5!="") data['q5'] = q5;
+    if(/\S/.test(q5)) data['q5'] = q5;
 
     var q6 = d3.select("#q6").property("value");
-    if(q6!="") data['q6'] = q6;
+    if(/\S/.test(q6)) data['q6'] = q6;
 
-    var q7 = d3.select("#q7").property("value");
-    if(q7!="") data['q7'] = q7;
-
-    valid = data['q1']!=null && data['q2']!=null && data['q3']!=null && data['q4']!=null && data['q5']!=null && data['q6']!=null && data['q7']!=null;
+    valid = data['q1']!=null && data['q2']!=null && data['q3']!=null && data['q4']!=null && data['q5']!=null && data['q6']!=null;
     if( valid ) {
       data.finished = true;
       experimentr.addData(data);
