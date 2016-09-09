@@ -34,10 +34,10 @@
     <p>Only names can be an entry in a book.</p>
     <p>Only listings can be listed under an entry in a book.</p>
     <p>We can lookup the listings of a name in a book by: successively finding the listing under the entry names in the lookup.</p>
-    <p id="N">There is at most one listing for every entry in every book.</p>
-    <p id="N">Every name in a lookup is an entry in the book.</p>
-    <p id="N">No name is in its own lookup.</p> 
-    <p id="A">Every lookup of every name in every book lists at least one address.</p>
+    <p style="background-color:#afa">There is at most one listing for every entry in every book.</p>
+    <p style="background-color:#afa">Every name in a lookup is an entry in the book.</p>
+    <p style="background-color:#afa">No name is in its own lookup.</p> 
+    <p style="background-color:#faa">Every lookup of every name in every book lists at least one address.</p>
   </div>
 </div>
 
@@ -56,7 +56,6 @@
       <option id='T1M1'>exactly one</option> \
       <option id='T1M2'>at most one</option> \
       <option id='T1M3'>at least one</option>");
-
     d3.select('#T2M')
     .html("<option disabled='disabled' selected='selected'>at most one</option> \
       <option id='T2M1'>a set of</option> \
@@ -66,8 +65,9 @@
     .html("<option disabled='disabled' selected='selected'>all listings</option> \
       <option id='T2R1'>all listings that are addresses</option> \
       <option id='T2R2'>all listings that are names</option>");
-    
-    init("#T2M2");
+    var edits = {};
+    edits.T2M2 = "";
+    init(edits);
     walk0();
   } 
   function walk0() {

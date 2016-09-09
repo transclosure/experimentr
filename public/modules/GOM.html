@@ -43,11 +43,12 @@
     <p>Only classes can be associated with assignments.</p>
     <p>Only students can be assigned to assignments.</p>
     <p>Only instructors and assistants can grade assignments.</p> 
-    <p id="N">There is exactly one instructor of each class.</p>
-    <p id="N">There is exactly one class associated with each assignment.</p>
-    <p id="N">There is at least one student assigned to each assignment.</p>
-    <p id="N">Each student enrolled in a class is assigned to every assignment associated with it.</p>
-    <p id="A">There is no student who can grade an assignment they are assigned to.</p>
+    <p style="background-color:#afa" id="SAT">There can be at least one class, assignment, and person.</p>
+    <p style="background-color:#afa" id="T1L1">There is exactly one instructor of each class.</p>
+    <p style="background-color:#afa" id="T4L1">There is exactly one class associated with each assignment.</p>
+    <p style="background-color:#afa" id="T5L1">There is at least one student assigned to each assignment.</p>
+    <p style="background-color:#afa" id="F1L1">Each student enrolled in a class is assigned to every assignment associated with it.</p>
+    <p style="background-color:#faa" id="A">There is no student who can grade an assignment they are assigned to.</p>
   </div>
 </div>
 
@@ -57,61 +58,86 @@
 
 <script>
   function init2() {
+    var edit = {};
     d3.select('#T1M')
     .html("<option disabled='disabled' selected='selected'>exactly one</option> \
-      <option id='T1M1'>a set of</option> \
-      <option id='T1M2'>at most one</option> \
-      <option id='T1M3'>at least one</option>");
+      <option id='T1Mset'>a set of</option> \
+      <option id='T1Mlone'>at most one</option> \
+      <option id='T1Msome'>at least one</option>");
+    edit.T1Mset = "#A,#T1L1";
+    edit.T1Mlone = "#A,#T1L1";
+    edit.T1Msome = "#A,#T1L1";
     d3.select('#T1R')
     .html("<option disabled='disabled' selected='selected'>all professors</option> \
-      <option id='T1R1'>professors that are not instructor of another class</option>");
-
+      <option id='T1R1'>professors that are not instructor of a class</option>");
+    edit.T1R1 = "#SAT";
     d3.select('#T2M')
     .html("<option disabled='disabled' selected='selected'>a set of</option> \
-      <option id='T2M1'>at most one</option> \
-      <option id='T2M2'>exactly one</option> \
-      <option id='T2M3'>at least one</option>");
+      <option id='T2Mlone'>at most one</option> \
+      <option id='T2Mone'>exactly one</option> \
+      <option id='T2Msome'>at least one</option>");
+    edit.T2Mlone = "#A";
+    edit.T2Mone = "#A";
+    edit.T2Msome = "#A";
     d3.select('#T2R')
     .html("<option disabled='disabled' selected='selected'>all students</option> \
       <option id='T2R1'>students who are assistants</option> \
       <option id='T2R2'>students who are not assistants</option> \
       <option id='T2R3'>students who are enrolled</option> \
       <option id='T2R4'>students who are not enrolled</option>");
-
+    edit.T2R1 = "#A";
+    edit.T2R2 = "#SAT";
+    edit.T2R3 = "#A";
+    edit.T2R4 = "";
     d3.select('#T3M')
     .html("<option disabled='disabled' selected='selected'>a set of</option> \
-      <option id='T3M1'>at most one</option> \
-      <option id='T3M2'>exactly one</option> \
-      <option id='T3M3'>at least one</option>");
+      <option id='T3Mlone'>at most one</option> \
+      <option id='T3Mone'>exactly one</option> \
+      <option id='T3Msome'>at least one</option>");
+    edit.T3Mlone = "#A";
+    edit.T3Mone = "#A";
+    edit.T3Msome = "#A";
     d3.select('#T3R')
     .html("<option disabled='disabled' selected='selected'>all students</option> \
       <option id='T3R1'>students who are enrolled</option> \
       <option id='T3R2'>students who are not enrolled</option> \
       <option id='T3R3'>students who are assistants</option> \
       <option id='T3R4'>students who are not assistants</option>");
-
+    edit.T3R1 = "#A";
+    edit.T3R2 = "#SAT";
+    edit.T3R3 = "#A";
+    edit.T3R4 = "";
     d3.select('#T4M')
     .html("<option disabled='disabled' selected='selected'>exactly one</option> \
-      <option id='T4M1'>a set of</option> \
-      <option id='T4M2'>at most one</option> \
-      <option id='T4M3'>at least one</option>");
+      <option id='T4Mset'>a set of</option> \
+      <option id='T4Mlone'>at most one</option> \
+      <option id='T4Msome'>at least one</option>");
+    edit.T4Mset = "#A,#T4L1";
+    edit.T4Msome = "#A,#T4L1";
+    edit.T4Mlone = "#A"; 
     d3.select('#T4R')
     .html("<option disabled='disabled' selected='selected'>all classes</option> \
-      <option id='T4R1'>classes that are not associated with another assignment</option>");
-
+      <option id='T4R1'>classes that are not associated with an assignment</option>");
+    edit.T4R1 = "#SAT";
     d3.select('#T5M')
     .html("<option disabled='disabled' selected='selected'>at least one</option> \
-      <option id='T5M1'>a set of</option> \
-      <option id='T5M2'>exactly one</option> \
-      <option id='T5M3'>at most one</option>");
+      <option id='T5Mset'>a set of</option> \
+      <option id='T5Mone'>exactly one</option> \
+      <option id='T5Mlone'>at most one</option>");
+    edit.T5Mset = "#A,#T5L1";
+    edit.T5Mone = "#A";
+    edit.T5Mlone = "#A,#T5L1";
     d3.select('#T5R')
     .html("<option disabled='disabled' selected='selected'>all students</option> \
-      <option id='T5R1'>students who are enrolled</option> \
-      <option id='T5R2'>students who are not enrolled</option> \
-      <option id='T5R3'>students who are assistants</option> \
-      <option id='T5R4'>students who are not assistants</option>");
-
-    init("#T2R4, #T3R4");
+      <option id='T5R1'>students who are enrolled in the class</option> \
+      <option id='T5R2'>students who are not enrolled in the class</option> \
+      <option id='T5R3'>students who are assistants in the class</option> \
+      <option id='T5R4'>students who are not assistants in the class</option>");
+    edit.T5R1 = "#A";
+    edit.T5R2 = "#SAT";
+    edit.T5R3 = "#A";
+    edit.T5R4 = "";
+    init(edit);
   }         
   init2();
 </script>
