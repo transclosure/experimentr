@@ -1,54 +1,56 @@
 <h1 id="topbar"></h1>
 <div id="fixed">
-  <div class="placeholder">You will be designing a building map. A building map keeps track of where people are located on each floor. The statements on the left describe the world the building map is designed for: these statements are always true and cannot be changed. There is an example on the right that shows what each statement means. Please read each statement/example carefully.</div>
+  <div class="placeholder">
+    You will be designing a building map. A building map keeps track of where people are located. The statements on the left describe the world the building map is designed for: these statements are always true and cannot be changed. There is an example on the right that shows what each statement means. Please read each statement/example carefully.</div>
   <div class="I">
-      <p class="S">A building map consists of floors and locations.</p>
-      <p class="E">Example: n/a</p>
+      <p class="S">A building map consists of a single directory and locations.</p>
+      <p class="E">&nbsp;</p>
   </div>
   <div class="I">
       <p class="S">A location is either a room or a name.</p>
-      <p class="E">Example: Room 404 is a room, Alice is a name.</p>
+      <p class="E">Example: Room 404 is a room. Alice is a name.</p>
   </div>
   <div class="I">
-      <p class="S">Only names can be an entry for a floor.</p>
-      <p class="E">Example: Room 404 cannot be an entry. Alice can be an entry.</p>
+      <p class="S">Only names can have an entry in the directory.</p>
+      <p class="E">Example: Room 404 cannot have an entry. Alice can have an entry.</p>
   </div>
   <div class="I">
-      <p class="S">Only locations can be listed under an entry for a floor.</p>
+      <p class="S">Only locations can be listed under an entry in the directory.</p>
       <p class="E">Example: Room 404 can be listed under Alice. Bob can be listed under Alice (meaning Alice has moved to Bob's listed location).</p>
   </div>
   <div class="I">
-      <p class="S">We can lookup the locations of a name on a floor by successively finding the location under the entry names in the lookup.</p>
+      <p class="S">We can lookup the locations of a name the directory by successively finding the location under the entry names in the lookup.</p>
       <p class="E">Example: Alice is listed under Bob. Bob is listed under Room 404. A lookup of Alice goes from Alice to Bob, then Bob to Room 404.</p>
   </div>
-  <div class="placeholder" id="understand">Understanding the each statement/example is crucial to complete the following logic puzzle: did they make sense to you?
+  <div class="placeholder" id="understand">Understanding the each statement/example is crucial to complete the following puzzle: did they make sense to you?
     <button onclick='understand(false)'>I did not understand them. They did not make sense to me.</button>
     <button onclick='understand(true)'>Yes, they made sense. I am ready to read the puzzle.</button>
   </div>
 </div>
 <div id="free">
-  <div class="placeholder" id="ready">An almost complete building map has been designed below. The design satisfies some of logic puzzle goals (green statements on the right), but not all of them (red ones). Each unsatisfied goal comes with an example of why it is unsatisfied by the current design. The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the solution that: 1. forbids the example 2. satisfies all the goals. Do you feel prepared to solve the logic puzzle?
+  <div class="placeholder" id="ready">An almost complete building map has been designed below. The design satisfies some of the goals (green statements on the right), but not all of them (red ones). Each unsatisfied goal comes with an example of why it is unsatisfied by the current design. The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the building map that: 1. forbids the example 2. satisfies all the goals. Do you feel prepared to solve the puzzle?
     <button onclick='ready(false)'>I am not ready. I do not understand what to do.</button>
     <button onclick='ready(true)'>Yes, I am prepared. I am ready to solve the puzzle.</button>
   </div>
   <div class="S">
-      <p>There is <select id="T1M">a set of</select> entry(ies) on each floor.</p>
-      <p>There is <select id="T2M">at most one</select> location for each entry in each floor.</p>    
-      <p>For each floor, all names can be an entry.</p>
-      <p>For each floor, <select id="T2R"></select> can be a location for an entry.</p>
-      <p>Every name in a lookup is an entry on the floor.</p>
+      <p>There is <select id="T1M">a set of</select> entry(ies) in the directory.</p>
+      <p>There is <select id="T2M">at most one</select> location for each entry in the directory.</p>    
+      <p>All names can be an entry in the directory.</p>
+      <p>In the directory, <select id="T2R"></select> can be a location for an entry.</p>
+      <p>Every name in a lookup is an entry in the directory.</p>
       <p>No name is in its own lookup.</p> 
   </div>
   <div class="E">
-    <p style="background-color:#afa">There is at most one location for every entry in every floor.</p>
-    <p style="background-color:#afa">Every name in a lookup is an entry in the floor.</p>
+    <p style="background-color:#afa">There is at most one location for every entry in the directory.</p>
+    <p style="background-color:#afa">Every name in a lookup is an entry in the directory.</p>
     <p style="background-color:#afa">No name is in its own lookup.</p> 
     <div style="background-color:#faa">
-      <p>Every lookup of every name in every floor lists at least one room. Example: The lookup of Joe on floor 2 lists no rooms.</p>
+      <p>Every lookup of every name in the directory lists at least one room.</p> 
+      Example: The lookup of Joe lists no rooms.
       <ul>
-        <li>Nick is an entry on floor 2.</li>
-        <li>Joe is an entry on floor 2.</li>
-        <li>Nick is the location of Joe on floor 2.</li>
+        <li>Nick is an entry.</li>
+        <li>Joe is an entry.</li>
+        <li>Nick is listed under the location of Joe.</li>
       </ul>
     </div>
   </div>
@@ -57,22 +59,29 @@
 
 <script>
   function init2() {
+    var edits = {};
     d3.select('#T1M')
     .html("<option disabled='disabled' selected='selected'>a set of</option> \
       <option id='T1M1'>exactly one</option> \
       <option id='T1M2'>at most one</option> \
       <option id='T1M3'>at least one</option>");
+    edits.T1M1 = "Changing the number of entries in the directory will not forbid the missing entry in the example.";
+    edits.T1M2 = "Changing the number of entries in the directory will not forbid the missing entry in the example.";
+    edits.T1M3 = "Changing the number of entries in the directory will not forbid the missing entry in the example.";
     d3.select('#T2M')
     .html("<option disabled='disabled' selected='selected'>at most one</option> \
       <option id='T2M1'>a set of</option> \
       <option id='T2M2'>exactly one</option> \
       <option id='T2M3'>at least one</option>");
+    edits.T2M1 = "A set can be any size.";
+    edits.T2M2 = "";
+    edits.T2M3 = "Having multiple locations for a name would not be a very useful building map.";
     d3.select('#T2R')
     .html("<option disabled='disabled' selected='selected'>all locations</option> \
-      <option id='T2R1'>all locations that are roomes</option> \
+      <option id='T2R1'>all locations that are rooms</option> \
       <option id='T2R2'>all locations that are names</option>");
-    var edits = {};
-    edits.T2M2 = "";
+    edits.T2R1 = "Restricting locations to just rooms may solve the problem, but the name redirection is a useful part of the building map. Try to solve the problem without removing this feature.";
+    edits.T2R2 = "Restricting locations to just names means a room will never show up in a lookup.";
     init(edits);
   } 
   init2();

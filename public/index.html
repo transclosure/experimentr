@@ -23,7 +23,7 @@
   model           which model         (ex// M = minimal model)
   */
   function getexperiment() {
-    return ['modules/AOW.html'/*, 'modules/GOM.html'*/];
+    return ['modules/AOW.html', 'modules/GOM.html'];
     /*
     if(Math.random() < .5) { return ['modules/AOM.html'] }
     else { return ['modules/AOC.html'] }
@@ -40,8 +40,8 @@
     var pre = ['modules/consent/'];
     var post = ['modules/debrief/'];
     var tasks = experiment;
-    return tasks;
-    //return pre.concat(tasks).concat(post);
+    //return tasks;
+    return pre.concat(tasks).concat(post);
   }
   /* GENERIC TASK FUNCTIONS */
   function init(edits) {
@@ -91,26 +91,30 @@
       if (taskEdits[acode]=="") {
         pass();
       } 
-      else if(taskEdits[acode]==null || d3.selectAll(taskEdits[acode])==null) {
+      else if(taskEdits[acode]==null) {
         fail(null);
       }
-      else {
+      else if(!taskEdits[acode].startsWith("#")) {
         fail(taskEdits[acode]);
+      }
+      else {
+        var feedback = "The following goals are unsatisfied:<br/>";
+        d3.selectAll(taskEdits[acode]).each(function() {
+          feedback = feedback+"  "+d3.select(this).text()+"<br/>";
+        });
+        fail(feedback);
       }
     }
   }
-  function fail(ids) {
+  function fail(feedback) {
     var opt = d3.select(d3.event.target); 
     var id = opt.attr("id");
     opt.style("background-color", "#faa");
     opt.style("text-decoration" , "line-through");
     opt.attr("disabled", "disabled");
-    var msg = "This option does not satisfy all goals in a single change. The options have been reset for you. Please try again.";
-    if(ids!=null) {
-      msg = "This option does not satisfy all goals in a single change. The following goals are unsatisfied:<br/>";
-      d3.selectAll(ids).each(function() {
-        msg = msg+"  "+d3.select(this).text()+"<br/>";
-      });
+    var msg = "This option does not satisfy all goals in a single change. ";
+    if(feedback!=null) {
+      msg = msg+feedback+"<br/>";
     }
     d3.selectAll('select').attr("disabled", "disabled");
     d3.select("#feedback").html(msg+"<button onclick='reset()'>Okay. Reset the options and I'll try again.</button>");
@@ -132,6 +136,7 @@
   function done() {
     task = task + 1;
     d3.select("#topbar").text("");
+    experimentr.addData(data);
     experimentr.next();
   }
   experimentr.sequence(getsequence()).start();

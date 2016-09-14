@@ -5,41 +5,48 @@
   </h1>
 
   <p>
-    How helpful was the initial walkthrough in understanding how to approach the puzzles and make them easier to solve?
-    <select id="q6">
+    Did the first task help you understand and complete the second task?
+    <select id="q1">
       <option disabled='disabled' selected='selected'></option> 
-      <option>Not at all helpful</option> 
-      <option>A little helpful</option> 
-      <option>Somewhat helpful</option>
-      <option>Very helpful</option>
-      <option>Extremely helpful</option>
+      <option>Not at all</option> 
+      <option>A little</option> 
+      <option>Somewhat</option>
+      <option>Very</option>
+      <option>Extremely</option>
     </select>
   </p>
 
-  <p>How many puzzles did you solve by randomly trying all the options?<input id="q1" type="number" min="0" max="1"/></p>
+  <p>How many puzzles did you solve by randomly trying all the options?<input id="q2" type="number" min="0" max="1"/></p>
 
-  <p>Totalled across every puzzle, about how many of your answers were guesses? <input id="q2" type="number" min="0" max="50"/></p>
+  <p>Totalled across every task, about how many of your answers were guesses? <input id="q3" type="number" min="0" max="50"/></p>
 
   <p>
-    How helpful were the examples for solving the puzzles?
-    <select id="q3">
+    Did the initial white statements/examples help you understand the puzzles?
+    <select id="q4">
       <option disabled='disabled' selected='selected'></option> 
-      <option>Not at all helpful</option> 
-      <option>A little helpful</option> 
-      <option>Somewhat helpful</option>
-      <option>Very helpful</option>
-      <option>Extremely helpful</option>
+      <option>Not at all</option> 
+      <option>A little</option> 
+      <option>Somewhat</option>
+      <option>Very</option>
+      <option>Extremely</option>
     </select>
   </p>
 
-  <div>
-    Was there a choice you made that you thought was correct, and you were suprised to find out it was wrong? If yes, explain why you were suprised.<br/>
-    <textarea id="q4" rows="5" cols="80"></textarea>
-  </div>
+  <p>
+    Did the red examples help you solve the puzzles?
+    <select id="q5">
+      <option disabled='disabled' selected='selected'></option> 
+      <option>Not at all</option> 
+      <option>A little</option> 
+      <option>Somewhat</option>
+      <option>Very</option>
+      <option>Extremely</option>
+    </select>
+  </p>
 
   <div>
     Was there something you struggled with in this study? Is there something we could add that would have made the study easier to complete?<br/>
-    <textarea id="q5" rows="5" cols="80"></textarea>
+    <textarea id="q6" rows="5" cols="80"></textarea>
   </div>
 
   <br>
@@ -58,36 +65,36 @@ var postId  = experimentr.postId
     , valid = false
 
 function validate() {
-    var q1 = parseInt(d3.select("#q1").property("value"), 10);
-    if(q1!=NaN) data['q1'] = q1;
+  var q1 = d3.select("#q1").property("value");
+  if(/\S/.test(q1)) data['q1'] = q1;
+  
+  var q2 = parseInt(d3.select("#q2").property("value"), 10);
+  if(q2!=NaN) data['q2'] = q2;
 
-    var q2 = parseInt(d3.select("#q2").property("value"), 10);
-    if(q2!=NaN) data['q2'] = q2;
+  var q3 = parseInt(d3.select("#q3").property("value"), 10);
+  if(q3!=NaN) data['q3'] = q3;
 
-    var q3 = d3.select("#q3").property("value");
-    if(/\S/.test(q3)) data['q3'] = q3;
+  var q4 = d3.select("#q4").property("value");
+  if(/\S/.test(q4)) data['q4'] = q4;
 
-    var q4 = d3.select("#q4").property("value");
-    if(/\S/.test(q4)) data['q4'] = q4;
+  var q5 = d3.select("#q5").property("value");
+  if(/\S/.test(q5)) data['q5'] = q5;
 
-    var q5 = d3.select("#q5").property("value"); 
-    if(/\S/.test(q5)) data['q5'] = q5;
+  var q6 = d3.select("#q6").property("value"); 
+  if(/\S/.test(q6)) data['q6'] = q6;
 
-    var q6 = d3.select("#q6").property("value");
-    if(/\S/.test(q6)) data['q6'] = q6;
-
-    valid = data['q1']!=null && data['q2']!=null && data['q3']!=null && data['q4']!=null && data['q5']!=null && data['q6']!=null;
-    if( valid ) {
-      data.finished = true;
-      experimentr.addData(data);
-      d3.select('#submitComments').attr('disabled', 'true');
-      d3.select('#submitFeedback').text('Submit Successful');
-      d3.select("#postId").text(postId);
-    }
-    else {
-      d3.select('#submitFeedback').text('Please answer all questions before submitting.');
-    }
+  valid = data['q1']!=null && data['q2']!=null && data['q3']!=null && data['q4']!=null && data['q5']!=null && data['q6']!=null;
+  if( valid ) {
+    data.finished = true;
+    experimentr.addData(data);
+    d3.select('#submitComments').attr('disabled', 'true');
+    d3.select('#submitFeedback').text('Submit Successful');
+    d3.select("#postId").text(postId);
   }
+  else {
+    d3.select('#submitFeedback').text('Please answer all questions before submitting.');
+  }
+}
 
 function init2() {
   d3.select('#submitComments').on('click', validate);

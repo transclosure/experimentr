@@ -1,22 +1,51 @@
-<div id="scenarios">
-  <h1>Unsatisfied Goal Example</h1>
-  <div id="metascenario"></div>
-  <div id="scenario">
-    <p><span id="H">student</span>0 can <span id="H">grade</span> <span id="H">assignment</span>0 that they are <span id="H">assigned</span> to, which violates the red goal.</p>
-    <p><ul>
-      <li><span id="H">student</span>0 is an <span id="H">assistant</span> for <span id="H">class</span>0.</li>
-      <li><span id="H">professor</span>0 is the <span id="H">instructor</span> of <span id="H">class</span>0.</li>
-      <li><span id="H">assignment</span>0 is <span id="H">associated</span> with <span id="H">class</span>0.</li>
-      <li><span id="H">assignment</span>0 is <span id="H">assigned</span> to <span id="H">student</span>0.</li>
-      <li><span id="H">student</span>0 is <span id="H">enrolled</span> in <span id="H">class</span>0.</li>
-    </ul></p>
+<h1 id="topbar"></h1>
+<div id="fixed">
+  <div class="placeholder">
+    You will be designing a grading policy. A grading policy defines who can grade what assignments for particular classes. The statements on the left describe the world the grading policy is designed for: these statements are always true and cannot be changed. There is an example on the right that shows what each statement means. Please read each statement/example carefully.
+  </div>
+  <div class="I">
+      <p class="S">The grading policy involves persons, classes and assignments.</p>
+      <p class="E">&nbsp;</p>
+  </div>
+  <div class="I">
+      <p class="S">A person is either a student or a professor.</p>
+      <p class="E">Example: Bob is a student. Prof. Smith is a professor.</p>
+  </div>
+  <div class="I">
+      <p class="S">Only professors can be instructors of classes.</p>
+      <p class="E">Example: Bob cannot be an instructor for Art. Prof. Smith can be an instructor for Art.</p>
+  </div>
+  <div class="I">
+      <p class="S">Only students can be assistants for classes.</p>
+      <p class="E">Example: Bob can be an assistant for Physics. Prof. Smith cannot be an assistant for Physics.</p>
+  </div>
+  <div class="I">
+      <p class="S">Only students can be enrolled in classes.</p>
+      <p class="E">Example: Bob can be enrolled in History. Prof. Smith cannot be enrolled in History.</p>
+  </div>
+  <div class="I">
+      <p class="S">Only classes can be associated with assignments.</p>
+      <p class="E">Example: Physics can be associated with Homework#2.</p>
+  </div>
+  <div class="I">
+      <p class="S">Only students can be assigned to assignments.</p>
+      <p class="E">Example: Bob can be assigned Homework#2. Prof. Smith cannot be assigned Homework#2.</p>
+  </div>
+  <div class="I">
+      <p class="S">Only instructors and assistants can grade assignments.</p>
+      <p class="E">Example: Prof. Smith can grade Art assignments. Bob can grade Art assignments only if he is an assistant.</p>
+  </div>
+  <div class="placeholder" id="understand">Understanding the each statement/example is crucial to complete the following puzzle: did they make sense to you?
+    <button onclick='understand(false)'>I did not understand them. They did not make sense to me.</button>
+    <button onclick='understand(true)'>Yes, they made sense. I am ready to read the puzzle.</button>
   </div>
 </div>
-
-<div id="specification">
-  <h1>Partial Solution</h1>
-  <div id="metaspec"></div>
-  <div id="spec">
+<div id="free">
+  <div class="placeholder" id="ready">An almost complete grading policy has been designed below. The design satisfies some of the goals (green statements on the right), but not all of them (red ones). Each unsatisfied goal comes with an example of why it is unsatisfied by the current design. The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the grading policy that: 1. forbids the example 2. satisfies all the goals. Do you feel prepared to solve the puzzle?
+    <button onclick='ready(false)'>I am not ready. I do not understand what to do.</button>
+    <button onclick='ready(true)'>Yes, I am prepared. I am ready to solve the puzzle.</button>
+  </div>
+  <div class="S">
     <p>There is <select id="T1M"></select> instructor(s) of each class.</p>
     <p>There is <select id="T2M"></select> assistant(s) for each class.</p>
     <p>There is <select id="T3M"></select> student(s) enrolled in each class.</p>
@@ -29,32 +58,26 @@
     <p>For each assignment, <select id="T5R"></select> can be assigned to it.</p>
     <p>Each student enrolled in a class is assigned to every assignment associated with it.</p>
   </div>
-</div>
-
-<div id="assertion">
-  <h1>Notes and Goals</h1>
-  <div id="metaassert"></div>
-  <div id="assert">
-    <p>This puzzle involves creating a Grading Policy. The Grading Policy involves persons, classes and assignments.</p>
-    <p>A person is either a student or a professor.</p>
-    <p>Only professors can be instructors of classes.</p>
-    <p>Only students can be assistants for classes.</p>
-    <p>Only students can be enrolled in classes.</p>
-    <p>Only classes can be associated with assignments.</p>
-    <p>Only students can be assigned to assignments.</p>
-    <p>Only instructors and assistants can grade assignments.</p> 
+  <div class="E">
     <p style="background-color:#afa" id="SAT">There can be at least one class, assignment, and person.</p>
     <p style="background-color:#afa" id="T1L1">There is exactly one instructor of each class.</p>
-    <p style="background-color:#afa" id="T4L1">There is exactly one class associated with each assignment.</p>
+    <p style="background-color:#afa" id="T4L1">There is exactly one class associated with each assignment.</p> 
     <p style="background-color:#afa" id="T5L1">There is at least one student assigned to each assignment.</p>
     <p style="background-color:#afa" id="F1L1">Each student enrolled in a class is assigned to every assignment associated with it.</p>
-    <p style="background-color:#faa" id="A">There is no student who can grade an assignment they are assigned to.</p>
+    <div style="background-color:#faa">
+      <p id="A">There is no student who can grade an assignment they are assigned to.</p> 
+      Example: Alice can grade Homework#1, which they are assigned to.
+      <ul>
+        <li>Alice is an assistant for Calculus.</li>
+        <li>Prof. Ward is the instructor of Calculus.</li>
+        <li>Calculus is associated with Homework#1.</li>
+        <li>Homework#1 is assigned to Alice.</li>
+        <li>Alice is enrolled in Calculus.</li>
+      </ul>
+    </div>
   </div>
+  <div class="placeholder" id="feedback"></div>
 </div>
-
-
-
-
 
 <script>
   function init2() {
