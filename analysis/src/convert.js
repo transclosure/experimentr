@@ -9,6 +9,7 @@ var j2c           = require('json2csv')
 function getFields() {
   var experimentFields = ['workerId','postId','userAgent','experimentID','taskID'];
   var taskFields = [taskID+'_iunderstand',
+		    taskID+'_iready',
 		    taskID+'_time',
                     taskID+'_attempts',
                     taskID+'_attempttime',
