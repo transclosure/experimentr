@@ -2,57 +2,63 @@
 <div id="fixed">
   <div class="placeholder">
     You will be designing a building map. A building map keeps track of where people are located. The statements on the left describe the world the building map is designed for: these statements are always true and cannot be changed. There is an example on the right that shows what each statement means. Please read each statement/example carefully.</div>
-  <div class="I">
-      <p class="S">A building map consists of a single directory and locations.</p>
-      <p class="E">&nbsp;</p>
-  </div>
-  <div class="I">
-      <p class="S">A location is either a room or a name.</p>
-      <p class="E">Example: Room 404 is a room. Alice is a name.</p>
-  </div>
-  <div class="I">
-      <p class="S">Only names can have an entry in the directory.</p>
-      <p class="E">Example: Room 404 cannot have an entry. Alice can have an entry.</p>
-  </div>
-  <div class="I">
-      <p class="S">Only locations can be listed under an entry in the directory.</p>
-      <p class="E">Example: Room 404 can be listed under Alice. Bob can be listed under Alice (meaning Alice has moved to Bob's listed location).</p>
-  </div>
-  <div class="I">
-      <p class="S">We can lookup the locations of a name the directory by successively finding the location under the entry names in the lookup.</p>
-      <p class="E">Example: Alice is listed under Bob. Bob is listed under Room 404. A lookup of Alice goes from Alice to Bob, then Bob to Room 404.</p>
-  </div>
-  <div class="placeholder" id="understand">Understanding the each statement/example is crucial to complete the following puzzle: did they make sense to you?
-    <button onclick='understand(false)'>I did not understand them. They did not make sense to me.</button>
-    <button onclick='understand(true)'>Yes, they made sense. I am ready to read the puzzle.</button>
+  <ul>
+    <li class="I">
+        <div class="S">A building map consists of a single directory and locations.</div>
+        <div class="E">&nbsp;</div>
+    </li>
+    <li class="I">
+        <div class="S">A location is either a room or a name.</div>
+        <div class="E">Example: Room 404 is a room. Alice is a name. Both are locations.</div>
+    </li>
+    <li class="I">
+        <div class="S">Only names can have an entry in the directory.</div>
+        <div class="E">Example: Room 404 cannot have an entry. Alice can have an entry.</div>
+    </li>
+    <li class="I">
+        <div class="S">Only locations can be listed under an entry in the directory.</div>
+        <div class="E">Example: Room 404 can be listed under Alice. Bob can be listed under Alice (meaning Alice has moved to Bob's listed location).</div>
+    </li>
+    <li class="I">
+        <div class="S">We can lookup the locations of a name in the directory by successively finding the location under the entry names in the lookup.</div>
+        <div class="E">Example: Alice is listed under Bob. Bob is listed under Room 404. A lookup of Alice goes from Alice to Bob, then Bob to Room 404.</div>
+    </li>
+  </ul>
+  <div class="placeholder" id="understand">
+    Understanding the each statement/example is crucial to complete the following puzzle: did they make sense to you?<br/>
+    <button onclick='understand(false)'>No, they did not make sense.</button>
+    <button onclick='understand(true)'>Yes, they made sense.</button>
   </div>
 </div>
 <div id="free">
-  <div class="placeholder" id="ready">An almost complete building map has been designed below. The design satisfies some of the goals (green statements on the right), but not all of them (red ones). Each unsatisfied goal comes with an example of why it is unsatisfied by the current design. The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the building map that: 1. forbids the example 2. satisfies all the goals. Do you feel prepared to solve the puzzle?
-    <button onclick='ready(false)'>I am not ready. I do not understand what to do.</button>
-    <button onclick='ready(true)'>Yes, I am prepared. I am ready to solve the puzzle.</button>
+  <div class="placeholder" id="ready">
+    An almost complete building map has been designed below. The design satisfies some of the goals (green statements on the right), but not all of them (red ones). Each unsatisfied goal comes with an example of why it is unsatisfied by the current design. 
+    <b>The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the solution that: 1. forbids the example 2. satisfies all the goals. Do you understand how to solve the puzzle? If you do not understand the instructions, you can return the HIT, or complete it and provide feedback at the end.</b><br/>
+    <button onclick='ready(false)'>No, I do not understand what to do.</button>
+    <button onclick='ready(true)'>Yes, I understand what to do.</button>
   </div>
-  <div class="S">
-      <p>There is <select id="T1M">a set of</select> entry(ies) in the directory.</p>
-      <p>There is <select id="T2M">at most one</select> location for each entry in the directory.</p>    
-      <p>All names can be an entry in the directory.</p>
-      <p>In the directory, <select id="T2R"></select> can be a location for an entry.</p>
-      <p>Every name in a lookup is an entry in the directory.</p>
-      <p>No name is in its own lookup.</p> 
-  </div>
-  <div class="E">
-    <p style="background-color:#afa">There is at most one location for every entry in the directory.</p>
-    <p style="background-color:#afa">Every name in a lookup is an entry in the directory.</p>
-    <p style="background-color:#afa">No name is in its own lookup.</p> 
-    <div style="background-color:#faa">
-      <p>Every lookup of every name in the directory lists at least one room.</p> 
-      Example: The lookup of Joe lists no rooms.
-      <ul>
-        <li>Nick is an entry.</li>
-        <li>Joe is an entry.</li>
-        <li>Nick is listed under the location of Joe.</li>
-      </ul>
-    </div>
+  <div class="I">
+    <ul class="S">
+        <li>There is <select id="T1M">a set of</select> entry(ies) in the directory.</li>
+        <li>There is <select id="T2M">at most one</select> location for each entry in the directory.</li>    
+        <li>All names can be an entry in the directory.</li>
+        <li>In the directory, <select id="T2R"></select> can be a location for an entry.</li>
+        <li>Every name in a lookup is an entry in the directory.</li>
+        <li>No name is in its own lookup.</li> 
+    </ul>
+    <ul class="E">
+      <li style="background-color:#afa">There is at most one location for every entry in the directory.</li>
+      <li style="background-color:#afa">Every name in a lookup is an entry in the directory.</li>
+      <li style="background-color:#afa">No name is in its own lookup.</li> 
+      <li style="background-color:#faa">Every lookup of every name in the directory lists at least one room.<br/>
+        Example of this failing: the lookup of Joe lists no rooms.
+        <ul>
+          <li>Nick is an entry.</li>
+          <li>Joe is an entry.</li>
+          <li>Nick is listed under the location of Joe.</li>
+        </ul>
+      </li>
+    </ul>
   </div>
   <div class="placeholder" id="feedback"></div>
 </div>
