@@ -1,53 +1,59 @@
-<div id="scenarios">
-  <h1>Unsatisfied Goal Example</h1>
-  <div id="metascenario"></div>
-  <div id="scenario">
-    The <span id="H">lookup</span> of <span id="H">name</span>1 in <span id="H">book</span>0 lists no <span id="H">address</span>es, which violates the red goal.
-    <ul>
-      <li><span id="H">name</span>0 is an <span id="H">entry</span> in <span id="H">book</span>0.</li>
-      <li><span id="H">name</span>1 is an <span id="H">entry</span> in <span id="H">book</span>0.</li>
-      <li><span id="H">name</span>0 is the <span id="H">listing</span> of <span id="H">name</span>1 in <span id="H">book</span>0.</li>
-    </ul>
+<h1 id="topbar"></h1>
+<div id="fixed">
+  <div class="placeholder">You will be designing a building map. A building map keeps track of where people are located on each floor. The statements on the left describe the world the building map is designed for: these statements are always true and cannot be changed. There is an example on the right that shows what each statement means. Please read each statement/example carefully.</div>
+  <div class="I">
+      <p class="S">A building map consists of floors and locations.</p>
+      <p class="E">Example: n/a</p>
+  </div>
+  <div class="I">
+      <p class="S">A location is either a room or a name.</p>
+      <p class="E">Example: Room 404 is a room, Alice is a name.</p>
+  </div>
+  <div class="I">
+      <p class="S">Only names can be an entry for a floor.</p>
+      <p class="E">Example: Room 404 cannot be an entry. Alice can be an entry.</p>
+  </div>
+  <div class="I">
+      <p class="S">Only locations can be listed under an entry for a floor.</p>
+      <p class="E">Example: Room 404 can be listed under Alice. Bob can be listed under Alice (meaning Alice has moved to Bob's listed location).</p>
+  </div>
+  <div class="I">
+      <p class="S">We can lookup the locations of a name on a floor by successively finding the location under the entry names in the lookup.</p>
+      <p class="E">Example: Alice is listed under Bob. Bob is listed under Room 404. A lookup of Alice goes from Alice to Bob, then Bob to Room 404.</p>
+  </div>
+  <div class="placeholder" id="understand">Understanding the each statement/example is crucial to complete the following logic puzzle: did they make sense to you?
+    <button onclick='understand(false)'>I did not understand them. They did not make sense to me.</button>
+    <button onclick='understand(true)'>Yes, they made sense. I am ready to read the puzzle.</button>
   </div>
 </div>
-
-<div id="specification">
-	<h1>Partial Solution</h1>
-  <div id="metaspec"></div>
-  <div id="spec">
-    <p>There is <select id="T1M">a set of</select> entry(ies) in each book.</p>
-    <p>There is <select id="T2M">at most one</select> listing for each entry in each book.</p>    
-    <p>For each book, all names can be an entry.</p>
-    <p>For each book, <select id="T2R"></select> can be a listing for an entry.</p>
-    <p>Every name in a lookup is an entry in the book.</p>
-    <p>No name is in its own lookup.</p> 
+<div id="free">
+  <div class="placeholder" id="ready">An almost complete building map has been designed below. The design satisfies some of logic puzzle goals (green statements on the right), but not all of them (red ones). Each unsatisfied goal comes with an example of why it is unsatisfied by the current design. The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the solution that: 1. forbids the example 2. satisfies all the goals. Do you feel prepared to solve the logic puzzle?
+    <button onclick='ready(false)'>I am not ready. I do not understand what to do.</button>
+    <button onclick='ready(true)'>Yes, I am prepared. I am ready to solve the puzzle.</button>
   </div>
-</div>
-
-
-<div id="assertion">
-	<h1>Notes and Goals</h1>
-  <div id="metaassert"></div>
-  <div id="assert">
-    <p>This puzzle involves creating ContactRecords. The ContactRecords involve books, and listings.</p>
-    <p>A listing is either an address or a name.</p>
-    <p>Only names can be an entry in a book.</p>
-    <p>Only listings can be listed under an entry in a book.</p>
-    <p>We can lookup the listings of a name in a book by: successively finding the listing under the entry names in the lookup.</p>
-    <p style="background-color:#afa">There is at most one listing for every entry in every book.</p>
-    <p style="background-color:#afa">Every name in a lookup is an entry in the book.</p>
+  <div class="S">
+      <p>There is <select id="T1M">a set of</select> entry(ies) on each floor.</p>
+      <p>There is <select id="T2M">at most one</select> location for each entry in each floor.</p>    
+      <p>For each floor, all names can be an entry.</p>
+      <p>For each floor, <select id="T2R"></select> can be a location for an entry.</p>
+      <p>Every name in a lookup is an entry on the floor.</p>
+      <p>No name is in its own lookup.</p> 
+  </div>
+  <div class="E">
+    <p style="background-color:#afa">There is at most one location for every entry in every floor.</p>
+    <p style="background-color:#afa">Every name in a lookup is an entry in the floor.</p>
     <p style="background-color:#afa">No name is in its own lookup.</p> 
-    <p style="background-color:#faa">Every lookup of every name in every book lists at least one address.</p>
+    <div style="background-color:#faa">
+      <p>Every lookup of every name in every floor lists at least one room. Example: The lookup of Joe on floor 2 lists no rooms.</p>
+      <ul>
+        <li>Nick is an entry on floor 2.</li>
+        <li>Joe is an entry on floor 2.</li>
+        <li>Nick is the location of Joe on floor 2.</li>
+      </ul>
+    </div>
   </div>
+  <div class="placeholder" id="feedback"></div>
 </div>
-
-<div id="helper">
-  <h1>Walkthrough Help</h1>
-  <div id="help"></div>
-</div>
-
-
-
 
 <script>
   function init2() {
@@ -62,38 +68,12 @@
       <option id='T2M2'>exactly one</option> \
       <option id='T2M3'>at least one</option>");
     d3.select('#T2R')
-    .html("<option disabled='disabled' selected='selected'>all listings</option> \
-      <option id='T2R1'>all listings that are addresses</option> \
-      <option id='T2R2'>all listings that are names</option>");
+    .html("<option disabled='disabled' selected='selected'>all locations</option> \
+      <option id='T2R1'>all locations that are roomes</option> \
+      <option id='T2R2'>all locations that are names</option>");
     var edits = {};
     edits.T2M2 = "";
     init(edits);
-    walk0();
   } 
-  function walk0() {
-    d3.selectAll('select').attr("disabled", "disabled");
-    d3.select("#help")
-    .html("<p>We are providing you a walkthrough for the first task. Please read the general instructions and click the show buttons. Then, follow the walkthrough help to complete this task. \
-      </p><button onclick='walk1()'>I'm ready</button>");
-  }     
-  function walk1() {
-    d3.select("#help")
-    .html("<p>Let's use the example to help guide our thinking on how to solve the puzzle. Looking at the example, name0 seems to be missing a listing. We should try and change the partial solution so that listings are no longer able to be missing. But what part of the solution does not forbid missing listings? Try and figure it out yourself before continuing.\
-      </p><button onclick='walk2()'>I tried to figure it out</button>");
-  }    
-  function walk2() {
-    d3.select("#T2R").attr("disabled", null);
-    d3.select("#T2R2").attr("disabled", "disabled");
-    d3.select("#help")
-    .html("<p>It looks like there are two places in the partial solution that are related to listings: the second and third dropdown menus. The solution most likely involves changing one of those. You know, the fact that a listing can be a name is strange. Why not just directly list to the address, instead of making people follow names through the book? Try restricting the listings to just addresses using the only enabled dropdown in the partial solution. \
-      </p><button onclick='walk3()'>I tried making that change</button>");
-  }
-  function walk3() {
-    d3.select("#T2M").attr("disabled", null);
-    d3.select("#T2M1").attr("disabled", "disabled");
-    d3.select("#T2M3").attr("disabled", "disabled");
-    d3.select("#help")
-    .html("<p>Without the indirection of names, lookups and listings do not really work anymore. That causes a lot of those green goals to fail. By process of elimination, the solution should be in the dropdown related to listings. Oh, of course, specifying 'at most one' listing allows there to be 0 listings for entires, like we see for name0 in the example! We want that to be 'exactly one' so listings cannot be missing anymore. Select that option and you're done with the walkthrough. You will be on your own for the rest of the tasks. Hopefully this helped you understand how to approach and solve the problem; if not, you can provide feedback at the end.</p>");
-  }
   init2();
 </script>

@@ -8,6 +8,7 @@
 body {
   margin: auto auto auto auto;
   width: 960px;
+  background: whitesmoke; 
 }
 
 #experimentr {
@@ -25,5 +26,7 @@ body {
 
 .placeholder {
   color: steelblue;
+  clear: both;
   font-weight: bold;
+  background: whitesmoke;
 }

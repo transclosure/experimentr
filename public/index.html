@@ -7,7 +7,6 @@
 <link rel="stylesheet" type="text/css" href="css/toyfinder.css" />
 
 <body>
-  <div id="topbar" style="clear:both;"></div>
 </body>
 
 <script>
@@ -24,7 +23,7 @@
   model           which model         (ex// M = minimal model)
   */
   function getexperiment() {
-    return ['modules/AOW.html', 'modules/GOM.html'];
+    return ['modules/AOW.html'/*, 'modules/GOM.html'*/];
     /*
     if(Math.random() < .5) { return ['modules/AOM.html'] }
     else { return ['modules/AOC.html'] }
@@ -41,8 +40,8 @@
     var pre = ['modules/consent/'];
     var post = ['modules/debrief/'];
     var tasks = experiment;
-    //return tasks;
-    return pre.concat(tasks).concat(post);
+    return tasks;
+    //return pre.concat(tasks).concat(post);
   }
   /* GENERIC TASK FUNCTIONS */
   function init(edits) {
@@ -58,55 +57,20 @@
     //
     experimentr.hideNext();
     d3.select("#topbar").text("Task "+(task+1)+" of "+experiment.length);
-    d3.selectAll("#scenario, #assert, #spec").style("visibility","hidden");
-    meta0();
-    //d3.selectAll('#H').on('mouseover', starthover);
-    //d3.selectAll('#H').on('mouseout', stophover);
-    //d3.selectAll('#H').style("font-weight", "bold");
+    d3.selectAll('select').attr("disabled", "disabled");
+    d3.select("#ready").selectAll("button").attr("disabled", "disabled");
   }
-  function meta0() {
-    d3.select("#assert").style("display", "none");
-    d3.select("#metaassert")
-    .html("<p> \
-      Someone before you almost solved the logic puzzle. \
-      They left behind some notes about their partial solution, as well as the goals they were trying to satisfy. \
-      Click the show button and take a look at their notes and the goals before continuing. \
-      </p><button onclick='meta1()'>Show</button>");
-  }
-  function meta1() {
-    d3.select("#metaassert").style("display", "none");
-    d3.select("#assert").style("display", null).style("visibility", null);
-    d3.select("#scenario").style("display", "none");
-    d3.select("#metascenario")
-    .html("<p> \
-      Only one goal is unsatisfied: the one highlighted red below. \
-      They also left behind an example of this goal being unsatisfied. \
-      Click the show button and take a look at an example: it should help you solve the problem. \
-      </p><button onclick='meta2()'>Show</button>");
-  }
-  function meta2() {
-    d3.select("#metascenario").style("display", "none");
-    d3.select("#scenario").style("display", null).style("visibility", null);
-    d3.select("#spec").style("display", "none");
-    d3.select("#metaspec")
-    .html("<p> \
-      Their partial solution does not forbid the example on the left. \
-      The solution is only one change away from being complete. \
-      Using the example as insight, make a single change to the solution that: \
-      1. forbids the example 2. satisfies all the goals. \
-      </p><button onclick='meta3(true)'>I Understand What To Do</button> \
-      <button onclick='meta3(false)'>I Don't Understand What To Do</button> \
-      <p>If you do not understand what to do, you will be able to give feedback at the end. \
-      You are also welcome to opt-out if the puzzle is too confusing to complete in time.</p>");
-  }
-  function meta3(iknow) {
+  function understand(iknow) {
     data[taskID+'_iunderstand'] = iknow;
     //
-    d3.select("#metaspec").style("display", "none");
-    d3.select("#spec").style("display", null).style("visibility", null);
-    activate();
+    d3.select("#understand").selectAll("button").attr("disabled", "disabled");
+    d3.select("#ready").selectAll("button").attr("disabled", null);
   }
-  function activate() {
+  function ready(gotit) {
+    data[taskID+'_iready'] = gotit;
+    //
+    d3.select("#ready").selectAll("button").attr("disabled", "disabled");
+    d3.selectAll('select').attr("disabled", null);
     d3.selectAll('select').on('change', check);
     d3.selectAll('option').on('click', attempt);
   }
@@ -141,44 +105,34 @@
     opt.style("background-color", "#faa");
     opt.style("text-decoration" , "line-through");
     opt.attr("disabled", "disabled");
-    var msg = "This option does not satisfy all goals in a single change.\nThe options have been reset for you. Please try again.";
+    var msg = "This option does not satisfy all goals in a single change. The options have been reset for you. Please try again.";
     if(ids!=null) {
-      msg = "This option does not satisfy all goals in a single change.\nThe following goals are unsatisfied:\n";
+      msg = "This option does not satisfy all goals in a single change. The following goals are unsatisfied:<br/>";
       d3.selectAll(ids).each(function() {
-        msg = msg+"\t"+d3.select(this).text()+"\n";
+        msg = msg+"  "+d3.select(this).text()+"<br/>";
       });
     }
-    alert(msg);
+    d3.selectAll('select').attr("disabled", "disabled");
+    d3.select("#feedback").html(msg+"<button onclick='reset()'>Okay. Reset the options and I'll try again.</button>");
+  }
+  function reset() {
+    d3.select("#feedback").html("");
     d3.selectAll('select').property('selectedIndex', 0);
+    d3.selectAll('select').attr("disabled", null);
   }
   function pass() {
     data[taskID+'_end'] = Date.now();
     data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
     experimentr.addData(data);
     // 
-    alert("Correct! This option satisfies all goals in a single change.\nPlease continue to the next task.");
+    var msg = "Correct! This option satisfies all goals in a single change.<br/>"
+    d3.selectAll('select').attr("disabled", "disabled");
+    d3.select("#feedback").html(msg+"<button onclick='done()'>Continue to next task.</button>");
+  }
+  function done() {
     task = task + 1;
     d3.select("#topbar").text("");
     experimentr.next();
-  }
-  /* HOVER HIGHLIGHTING */
-  function starthover() {
-    var span = d3.select(d3.event.target);
-    findAndReplace(span.text(), "<span style=\"background-color:#aaf\">"+span.text()+"</span>");
-    span.style("background-color", "#aaf");
-    lasthover = span;
-  }
-  function stophover() {
-    if(lasthover!=null) {
-      findAndReplace("<span style=\"background-color:#aaf\">"+lasthover.text()+"</span>", lasthover.text());
-      lasthover.style("background-color", null);
-    }
-  }
-  function findAndReplace(find, replace) {
-    var regex = new RegExp(find, "ig");
-    d3.select("#spec").html(d3.select("#spec").html().replace(regex, replace));
-    d3.select("#assert").html(d3.select("#assert").html().replace(regex, replace));
-    activate();
   }
   experimentr.sequence(getsequence()).start();
 </script>

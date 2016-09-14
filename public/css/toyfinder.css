@@ -1,6 +1,3 @@
-  body {
-    background: whitesmoke; 
-  }
   h1 {
     font-size: 150%;
     margin-top: 0em;
@@ -9,61 +6,49 @@
     margin-right: 0;
     font-weight: normal;
   }
+  p {
+    background: inherit;
+  }
   select {
     max-width : 8em;
   }
-  /*ul, ol {
-    margin-top: 0em;
-    margin-bottom: 0em;
-    margin-left: 0em;
-    margin-right: 0em;
-    padding-left: 1.5em;
-  }
-  b{
-    text-shadow : 0 0 0 #333;
-  }
-  i {
-    text-shadow : 0 0 0 #333;
-  }
-  u {
-    text-shadow : 0 0 0 #333;
-  }*/
-
-  #topbar {
-    margin-top: 1em;
-    text-align: center;
-    font-weight: bold;
-  }
-  #specification, #assertion, #scenarios, #helper {
-    border: 1px solid #AAA;
-    border-radius: 5px;
-    padding: 5px;
+  ul, ol {
     margin: 0px 0px 0px 0px;
-    background: #CCC;
+    padding-left: 1.5em;
+    background: inherit;
   }
-  #specification {
-    width: 53%;
-    float:right;
+  #topbar {
+    padding-top: .5em;
+    text-align: center;
+    clear:both;
   }
-  #helper {
-    width: 53%;
-    float:right;
-    margin: 2% auto auto auto;
+  .I {
+    margin: 0em 0em 0em 0em;
+    padding: 0em 0em 0em 0em;
+    clear:both;
+    background: white;
   }
-  #assertion {
-    width: 43%;
-    float:left;
+  .S, .E {
+    width: 48%;
+    padding: 0em 1% 0em 1%;
+    background: inherit;
   }
-  #scenarios {
-    width: 43%;
-    float:left;
-    margin: auto auto 2% auto;
+  .S {
+    float: left;
   }
-  #spec, #assert, #scenario, #help {
-    border: 1px solid #AAA;
+  .E {
+    float: right;
+  }
+  #fixed, #free {
+    border: 5px solid lightgray;
     border-radius: 5px;
-    padding: 5px;
-    background: #FFF;
+    margin: 2%;
+    padding: 1%;
   }
-
+  #fixed {
+    background: whitesmoke;
+  }
+  #free {
+    background: white;
+  }
   
