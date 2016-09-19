@@ -14,6 +14,7 @@ function getFields() {
                     taskID+'_attempts',
                     taskID+'_attempttime',
                     taskID+'_attemptcode',
+		    taskID+'_exitq',
                     'q1',
                     'q2',
 		    'q3',
