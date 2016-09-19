@@ -9,19 +9,19 @@
     </li>
     <li class="I">
         <div class="S">A location is either a room or a name.</div>
-        <div class="E">Example: Room 404 is a room. Alice is a name. Both are locations.</div>
+        <div class="E">Example: Room 503 is a room. Alice is a name. Both are locations.</div>
     </li>
     <li class="I">
         <div class="S">Only names can have an entry in the directory.</div>
-        <div class="E">Example: Room 404 cannot have an entry. Alice can have an entry.</div>
+        <div class="E">Example: Room 503 cannot have an entry. Alice can have an entry.</div>
     </li>
     <li class="I">
         <div class="S">Only locations can be listed under an entry in the directory.</div>
-        <div class="E">Example: Room 404 can be listed under Alice. Bob can be listed under Alice (meaning Alice has moved to Bob's listed location).</div>
+        <div class="E">Example: Room 503 can be listed under Alice. Bob can be listed under Alice (meaning Alice has moved to Bob's listed location).</div>
     </li>
     <li class="I">
         <div class="S">We can lookup the locations of a name in the directory by successively finding the location under the entry names in the lookup.</div>
-        <div class="E">Example: Alice is listed under Bob. Bob is listed under Room 404. A lookup of Alice goes from Alice to Bob, then Bob to Room 404.</div>
+        <div class="E">Example: Alice is listed under Bob. Bob is listed under Room 503. A lookup of Alice goes from Alice to Bob, then Bob to Room 503.</div>
     </li>
   </ul>
   <div class="placeholder" id="understand">
@@ -88,7 +88,7 @@
       <option id='T2R2'>all locations that are names</option>");
     edits.T2R1 = "Restricting locations to just rooms may solve the problem, but the name redirection is a useful part of the building map. Try to solve the problem without removing this feature.";
     edits.T2R2 = "Restricting locations to just names means a room will never show up in a lookup.";
-    init(edits);
+    init(edits, "Given the failing example in red, did you realize it was possible for a name to listed under a name, which is listed under a room?");
   } 
   init2();
 </script>

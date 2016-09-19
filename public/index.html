@@ -23,7 +23,7 @@
   model           which model         (ex// M = minimal model)
   */
   function getexperiment() {
-    return ['modules/AOW.html', 'modules/GOM.html'];
+    return ['modules/AOW.html', 'modules/HOM.html'];
     /*
     if(Math.random() < .5) { return ['modules/AOM.html'] }
     else { return ['modules/AOC.html'] }
@@ -36,6 +36,7 @@
   var taskID = null;
   var lasthover = null;
   var taskEdits = null;
+  var taskExit = null;
   function getsequence() {
     var pre = ['modules/consent/'];
     var post = ['modules/debrief/'];
@@ -44,9 +45,10 @@
     return pre.concat(tasks).concat(post);
   }
   /* GENERIC TASK FUNCTIONS */
-  function init(edits) {
+  function init(edits, exit) {
     taskID = experiment[task];
     taskEdits = edits;
+    taskExit = exit; 
     data = {};
     data['userAgent'] = navigator.userAgent;
     data['experimentID'] = experimentID;
@@ -129,13 +131,14 @@
     data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
     experimentr.addData(data);
     // 
-    var msg = "Correct! This option satisfies all goals in a single change.<br/>"
+    var msg = "Correct! This option satisfies all goals in a single change.<br/><b>Before continuing, please answer the following question: "+taskExit+"</b><br/>";
     d3.selectAll('select').attr("disabled", "disabled");
-    d3.select("#feedback").html(msg+"<button onclick='done()'>Continue to next task.</button>");
+    d3.select("#feedback").html(msg+"<button onclick='done(false)'>No</button><button onclick='done(true)'>Yes</button>");
   }
-  function done() {
+  function done(gotit) {
     task = task + 1;
     d3.select("#topbar").text("");
+    data[taskID+'_exitq'] = gotit;
     experimentr.addData(data);
     experimentr.next();
   }
