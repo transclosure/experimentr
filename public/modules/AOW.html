@@ -2,6 +2,8 @@
 <div id="fixed">
   <div class="placeholder">
     You will be designing a building map. A building map keeps track of where people are located. The statements on the left describe the world the building map is designed for: these statements are always true and cannot be changed. There is an example on the right that shows what each statement means. Please read each statement/example carefully.</div>
+  <div class="S"><h3>Fixed Statements</h3></div>
+  <div class="E"><h3>Examples of Statements</h3></div>
   <ul>
     <li class="I">
         <div class="S">A building map consists of a single directory and locations.</div>
@@ -33,10 +35,12 @@
 <div id="free">
   <div class="placeholder" id="ready">
     An almost complete building map has been designed below. The design satisfies some of the goals (green statements on the right), but not all of them (red ones). Each unsatisfied goal comes with an example of why it is unsatisfied by the current design. 
-    <b>The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the solution that: 1. forbids the example 2. satisfies all the goals. Do you understand how to solve the puzzle? If you do not understand the instructions, you can return the HIT, or complete it and provide feedback at the end.</b><br/>
+    <br/>The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the solution that: 1. forbids the example 2. satisfies all the goals. Do you understand how to solve the puzzle? If you do not understand the instructions, you can return the HIT, or complete it and provide feedback at the end.<br/>
     <button onclick='ready(false)'>No, I do not understand what to do.</button>
     <button onclick='ready(true)'>Yes, I understand what to do.</button>
   </div>
+  <div class="S"><h3>Free Statements</h3></div>
+  <div class="E"><h3>Goals and Examples of Statements+Goals Failing</h3></div>
   <div class="I">
     <ul class="S">
         <li>There is <select id="T1M">a set of</select> entry(ies) in the directory.</li>
@@ -51,12 +55,12 @@
       <li style="background-color:#afa">Every name in a lookup is an entry in the directory.</li>
       <li style="background-color:#afa">No name is in its own lookup.</li> 
       <li style="background-color:#faa">Every lookup of every name in the directory lists at least one room.<br/>
-        Example of this failing: the lookup of Joe lists no rooms.
+        <b>Example of this failing: the lookup of Joe lists no rooms.
         <ul>
           <li>Nick is an entry.</li>
           <li>Joe is an entry.</li>
           <li>Nick is listed under the location of Joe.</li>
-        </ul>
+        </ul></b>
       </li>
     </ul>
   </div>

@@ -6,6 +6,15 @@
     margin-right: 0;
     font-weight: normal;
   }
+  h3 {
+    font-size: 125%;
+    text-decoration: underline;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: normal;
+  }
   select {
     max-width : 8em;
   }
@@ -24,7 +33,7 @@
     clear:both;
   }
   .I {
-    margin-top: 1em;
+    margin-top: 0em;
     clear:both;
     background: white;
   }
@@ -38,6 +47,9 @@
   }
   .E {
     float: right;
+  }
+  div.E {
+    font-weight: bold;
   }
   #fixed, #free {
     border: 5px solid lightgray;

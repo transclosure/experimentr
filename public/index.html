@@ -23,7 +23,7 @@
   model           which model         (ex// M = minimal model)
   */
   function getexperiment() {
-    return ['modules/AOW.html', 'modules/HOM.html'];
+    return ['modules/AOW.html', 'modules/GOM.html'];
     /*
     if(Math.random() < .5) { return ['modules/AOM.html'] }
     else { return ['modules/AOC.html'] }
@@ -131,7 +131,7 @@
     data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
     experimentr.addData(data);
     // 
-    var msg = "Correct! This option satisfies all goals in a single change.<br/><b>Before continuing, please answer the following question: "+taskExit+"</b><br/>";
+    var msg = "Correct! This option satisfies all goals in a single change.<br/>Before continuing, please answer the following question: "+taskExit+"<br/>";
     d3.selectAll('select').attr("disabled", "disabled");
     d3.select("#feedback").html(msg+"<button onclick='done(false)'>No</button><button onclick='done(true)'>Yes</button>");
   }
