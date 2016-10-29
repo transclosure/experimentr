@@ -1,10 +1,10 @@
 <h1 id="topbar"></h1>
 <div id="fixed">
   <div class="placeholder">
-    You will be designing a grading policy. A grading policy defines who can grade what assignments for particular classes. The statements on the left describe the world the grading policy is designed for: these statements are always true and cannot be changed. Please read each statement carefully.
+    You will be designing a grading policy. A grading policy defines who can grade what assignments for particular classes. The statements on the left describe the world the grading policy is designed for: these statements are always true and cannot be changed. There is an example on the right that shows what each statement means. Please read each statement/example carefully.
   </div>
   <div class="S"><h3>Fixed Statements</h3></div>
-  <div class="E"><h3>&nbsp;</h3></div>
+  <div class="E"><h3>Examples of Statements</h3></div>
   <ul>
     <li class="I">
         <div class="S">The grading policy involves persons, classes and assignments.</div>
@@ -12,31 +12,31 @@
     </li>
     <li class="I">
         <div class="S">A person is either a student or a professor.</div>
-        <div class="E">&nbsp;</div>
+        <div class="E">Example: Bob is a student. Prof. Smith is a professor.</div>
     </li>
     <li class="I">
         <div class="S">Only professors can be instructors of classes.</div>
-        <div class="E">&nbsp;</div>
+        <div class="E">Example: Bob cannot be an instructor for Art. Prof. Smith can be an instructor for Art.</div>
     </li>
     <li class="I">
         <div class="S">Only students can be assistants for classes.</div>
-        <div class="E">&nbsp;</div>
+        <div class="E">Example: Bob can be an assistant for Physics. Prof. Smith cannot be an assistant for Physics.</div>
     </li>
     <li class="I">
         <div class="S">Only students can be enrolled in classes.</div>
-        <div class="E">&nbsp;</div>
+        <div class="E">Example: Bob can be enrolled in History. Prof. Smith cannot be enrolled in History.</div>
     </li>
     <li class="I">
         <div class="S">Only classes can be associated with assignments.</div>
-        <div class="E">&nbsp;</div>
+        <div class="E">Example: Physics can be associated with Homework#2.</div>
     </li>
     <li class="I">
         <div class="S">Only students can be assigned to assignments.</div>
-        <div class="E">&nbsp;</div>
+        <div class="E">Example: Bob can be assigned Homework#2. Prof. Smith cannot be assigned Homework#2.</div>
     </li>
     <li class="I">
         <div class="S">Only instructors and assistants can grade assignments.</div>
-        <div class="E">&nbsp;</div>
+        <div class="E">Example: Prof. Smith can grade Art assignments (if he is an instructor of Art). Bob can grade Art assignments (if he is an assistant for Art).</div>
     </li>
   </ul>
   <div class="placeholder" id="understand">
@@ -70,16 +70,20 @@
       <li style="background-color:#afa" id="T1L1">There is exactly one instructor of each class.</li>
       <li style="background-color:#afa" id="T4L1">There is exactly one class associated with each assignment.</li> 
       <li style="background-color:#afa" id="T5L1">There is at least one student assigned to each assignment.</li>
-      <li style="background-color:#afa" id="HARD">There can be at least one student enrolled in a class that they are an assistant for.</li>
       <div style="background-color:#faa">
         <li id="A">There is no student who can grade an assignment they are assigned to.</li> 
         <b>Example of this failing: Alice can grade Homework#1, which they are assigned to.
         <ul>
           <li>Alice is an assistant for Calculus.</li>
+          <li>Bob is an assistant for Calculus.</li>
+          <li>John is an assistant for Art.</li>
           <li>Prof. Ward is the instructor of Calculus.</li>
+          <li>Prof. Hughes is the instructor of Art.</li>
           <li>Calculus is associated with Homework#1.</li>
           <li>Homework#1 is assigned to Alice.</li>
           <li>Alice is enrolled in Calculus.</li>
+          <li>Bob is enrolled in Calculus.</li>
+          <li>John is enrolled in Art.</li>
         </ul></b>
       </div>
     </ul>
@@ -119,7 +123,7 @@
     edit.T2R1 = "#A";
     edit.T2R2 = "#SAT";
     edit.T2R3 = "#A";
-    edit.T2R4 = "#HARD";
+    edit.T2R4 = "";
     d3.select('#T3M')
     .html("<option disabled='disabled' selected='selected'>a set of</option> \
       <option id='T3Mlone'>at most one</option> \
@@ -137,7 +141,7 @@
     edit.T3R1 = "#A";
     edit.T3R2 = "#SAT";
     edit.T3R3 = "#A";
-    edit.T3R4 = "#HARD";
+    edit.T3R4 = "";
     d3.select('#T4M')
     .html("<option disabled='disabled' selected='selected'>exactly one</option> \
       <option id='T4Mset'>a set of</option> \
@@ -168,7 +172,7 @@
     edit.T5R2 = "#SAT";
     edit.T5R3 = "#A";
     edit.T5R4 = "";
-    init(edit, "Given the failing example in red, did you realize it was possible for student to be enrolled in and an assistant for the same class?");
+    init(edit, "Given the failing example in red, did you think it is possible for student to be enrolled in and an assistant for the same class?");
   }         
   init2();
 </script>

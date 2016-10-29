@@ -23,7 +23,7 @@
   model           which model         (ex// M = minimal model)
   */
   function getexperiment() {
-    return ['modules/AOW.html', 'modules/gEC.html'];
+    return ['modules/AOW.html', 'modules/GEM.html'];
     /*
     if(Math.random() < .5) { return ['modules/AOM.html'] }
     else { return ['modules/AOC.html'] }
@@ -41,8 +41,8 @@
     var pre = ['modules/consent/'];
     var post = ['modules/debrief/'];
     var tasks = experiment;
-    return tasks;
-    //return pre.concat(tasks).concat(post);
+    //return tasks;
+    return pre.concat(tasks).concat(post);
   }
   /* GENERIC TASK FUNCTIONS */
   function init(edits, exit) {

@@ -40,7 +40,7 @@
     </li>
   </ul>
   <div class="placeholder" id="understand">
-    Understanding the each statement/example is crucial to complete the following puzzle: did they make sense to you?<br/>
+    Understanding the each statement is crucial to complete the following puzzle: did they make sense to you?<br/>
     <button onclick='understand(false)'>I did not understand them. They did not make sense to me.</button>
     <button onclick='understand(true)'>Yes, they made sense. I am ready to read the puzzle.</button>
   </div>
@@ -70,16 +70,20 @@
       <li style="background-color:#afa" id="T1L1">There is exactly one instructor of each class.</li>
       <li style="background-color:#afa" id="T4L1">There is exactly one class associated with each assignment.</li> 
       <li style="background-color:#afa" id="T5L1">There is at least one student assigned to each assignment.</li>
-      <li style="background-color:#afa" id="HARD">There can be at least one student enrolled in a class that they are an assistant for.</li>
       <div style="background-color:#faa">
         <li id="A">There is no student who can grade an assignment they are assigned to.</li> 
         <b>Example of this failing: Alice can grade Homework#1, which they are assigned to.
         <ul>
           <li>Alice is an assistant for Calculus.</li>
+          <li>Bob is an assistant for Calculus.</li>
+          <li>John is an assistant for Art.</li>
           <li>Prof. Ward is the instructor of Calculus.</li>
+          <li>Prof. Hughes is the instructor of Art.</li>
           <li>Calculus is associated with Homework#1.</li>
           <li>Homework#1 is assigned to Alice.</li>
           <li>Alice is enrolled in Calculus.</li>
+          <li>Bob is enrolled in Calculus.</li>
+          <li>John is enrolled in Art.</li>
         </ul></b>
       </div>
     </ul>
@@ -119,7 +123,7 @@
     edit.T2R1 = "#A";
     edit.T2R2 = "#SAT";
     edit.T2R3 = "#A";
-    edit.T2R4 = "#HARD";
+    edit.T2R4 = "";
     d3.select('#T3M')
     .html("<option disabled='disabled' selected='selected'>a set of</option> \
       <option id='T3Mlone'>at most one</option> \
@@ -137,7 +141,7 @@
     edit.T3R1 = "#A";
     edit.T3R2 = "#SAT";
     edit.T3R3 = "#A";
-    edit.T3R4 = "#HARD";
+    edit.T3R4 = "";
     d3.select('#T4M')
     .html("<option disabled='disabled' selected='selected'>exactly one</option> \
       <option id='T4Mset'>a set of</option> \
@@ -168,7 +172,7 @@
     edit.T5R2 = "#SAT";
     edit.T5R3 = "#A";
     edit.T5R4 = "";
-    init(edit, "Given the failing example in red, did you realize it was possible for student to be enrolled in and an assistant for the same class?");
+    init(edit, "Given the failing example in red, did you think it is possible for student to be enrolled in and an assistant for the same class?");
   }         
   init2();
 </script>
