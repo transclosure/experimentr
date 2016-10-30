@@ -1,2 +1,9 @@
 node src/convert.js results/data.json modules/AOW.html  >> results/data.csv
-node src/convert.js results/data.json modules/HOM.html  >> results/data.csv
+node src/convert.js results/data.json modules/gOC.html  >> results/data.csv
+node src/convert.js results/data.json modules/gOM.html  >> results/data.csv
+node src/convert.js results/data.json modules/gEC.html  >> results/data.csv
+node src/convert.js results/data.json modules/gEM.html  >> results/data.csv
+node src/convert.js results/data.json modules/GOC.html  >> results/data.csv
+node src/convert.js results/data.json modules/GOM.html  >> results/data.csv
+node src/convert.js results/data.json modules/GEC.html  >> results/data.csv
+node src/convert.js results/data.json modules/GEM.html  >> results/data.csv
