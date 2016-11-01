@@ -78,7 +78,7 @@ var experimentr = (function() {
 
   // The HTTP POST code for saving experiment data.
   experimentr.save = function(d) {
-    d3.xhr('/')
+    d3.xhr("https://dev.codementum.org/toyfinder/")
       .header("Content-Type", "application/json")
       .post(JSON.stringify(data), function(err, res) {
         if(err) console.log(err);
