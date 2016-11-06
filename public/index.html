@@ -83,6 +83,8 @@
     task = task + 1;
     d3.select("#topbar").text("");
     data[taskID+'_exitq'] = gotit;
+    data[taskID+'_answers'] = JSON.stringify(data[taskID+'_answers']);
+    data[taskID+'_responses'] = JSON.stringify(data[taskID+'_responses']);
     experimentr.addData(data);
     experimentr.next();
   }
