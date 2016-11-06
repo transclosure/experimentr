@@ -9,11 +9,11 @@
   h3 {
     font-size: 125%;
     text-decoration: underline;
-    margin-top: 0em;
     margin-bottom: 0em;
-    margin-left: 0;
-    margin-right: 0;
     font-weight: normal;
+  }
+  table {
+    width: 100%;
   }
   select {
     max-width : 8em;

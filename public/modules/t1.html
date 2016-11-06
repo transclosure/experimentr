@@ -1,0 +1,33 @@
+<h1 id="topbar"></h1>
+
+<h3>Instructions</h3>
+<div id="info" class="placeholder I">
+  You will be analyzing parts of a grading policy. A grading policy defines who can grade what assignments for particular classes. The grading policy involves persons, classes and assignments. A sentence from a grading policy is shown below, along with some examples. Some of the examples are consistent with the sentence's meaning. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.
+</div>
+
+<h3>Sentence</h3>
+<div class="I">A person is either a student or a professor.</div>
+
+<h3>Examples</h3>
+<div class="I">
+  <div id="e1" class="S">Jill is a student.</div><div class="E" style="background-color:#afa">Correct Answer: Consistent</div>
+</div>
+<div class="I">
+  <div id="e2" class="S">Bob is a professor.</div><div class="E" style="background-color:#faa">Correct Answer: Inconsistent</div>
+</div>
+<div class="I">
+  <div id="e3" class="S">Prof. Smith is a professor.</div><div class="E" style="background-color:#afa">Correct Answer: Consistent</div>
+</div>
+
+<p id="feedback" class="placeholder"><button onclick="submit()">Submit Answers</button></p>
+
+<script>
+  function init2() {
+    answers = {};
+    answers["e1"] = true;
+    answers["e2"] = false;
+    answers["e3"] = true;
+    init(answers);
+  }         
+  init2();
+</script>

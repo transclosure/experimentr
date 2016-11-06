@@ -1,0 +1,53 @@
+<div id="consent">
+
+<h2 class="placeholder">Logical Statement Analysis</h2>
+
+<p class="placeholder">
+  The experiment will have you analyze logical statement about a particular topic. For each task, you will decide whether the provided examples are consistent or inconsistent with the meaning of the statement.</p>
+
+<p>
+Please enter your Amazon Worker Id. <strong>You may only complete this HIT once.</strong> Subsequent completions will not be accepted:
+<br>
+
+<input type="text" id="workerId" name="workerId" disabled="true" size="30" />
+<button id="checkId" type="button">Check ID</button>
+<br>
+
+<span id="invalidMessage">
+Our records show that you have taken part in this study before, so we cannot allow you to take this HIT again at this time. Please contact us if you feel this is in error.
+</span>
+</p>
+
+<div id="consentForm">
+<p class="placeholder">
+  I understand that the following task is voluntary, and I may stop at any time. 
+  I am aware that my job will only be accepted if I complete the entire task and enter the confirmation code on Mechanical Turk. 
+  I understand this study should take less than the time allotted in the HIT. I know I can contact the requesters if it took much longer than the estimated time and I do not feel adequately compensated. 
+</p>
+</div>
+
+<p>
+<button id="consentYes" disabled="true" type="button">I Agree</button>
+</p>
+
+<p>
+<strong>Note: this HIT requires a modern browser. If you are not using Chrome or Firefox, the "I Agree" button may not activate even after entering your Worker Id.</strong>
+</p>
+
+</div>
+
+<style>
+  #invalidMessage {
+    display: none;
+    color: red;
+  }
+  #consentForm {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 200px;
+    overflow-y: scroll;
+    padding: 15px;
+  }
+</style>
+
+<script src="modules/consent/index.js"></script>

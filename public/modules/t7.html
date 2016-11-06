@@ -1,0 +1,55 @@
+<h1 id="topbar"></h1>
+
+<h3>Instructions</h3>
+<div id="info" class="placeholder I">
+  You will be analyzing parts of a grading policy. A grading policy defines who can grade what assignments for particular classes. The grading policy involves persons, classes and assignments. A sentence from a grading policy is shown below, along with some examples. Some of the examples are consistent with the sentence's meaning. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.
+</div>
+
+<h3>Sentence</h3>
+<div class="I">Only instructors and assistants can grade assignments.</div>
+
+<h3>Examples</h3>
+<div class="I">
+  <div id="e1" class="S">
+    Prof. Smith is an instructor of Art.<br/>
+    Prof. Smith is an instructor of Music.<br/>
+    Assignment #1 is associated with Art.<br/>
+    Assignment #2 is associated with Music.<br/>
+    Prof. Smith can grade Assignment #1.<br/>
+    Prof. Smith can grade Assignment #2.
+  </div>
+  <div class="E" style="background-color:#afa">Correct Answer: Consistent</div>
+</div>
+<div class="I">
+  <div id="e2" class="S">
+    Prof. Jones is an instructor of Math.<br/>
+    Assignment #3 is associated with Math.<br/>
+    Assignment #4 is associated with History.<br/>
+    Prof. Smith can grade Assignment #3.<br/>
+    Prof. Smith cannot grade Assignment #4.
+  </div>
+  <div class="E" style="background-color:#afa">Correct Answer: Consistent</div>
+</div>
+<div class="I">
+  <div id="e3" class="S">
+    Alice is an assistant for Physics.<br/>
+    Assignment A is associated with Physics.<br/>
+    Assignment B is assoicated with Geology.<br/> 
+    Alice can grade Assignment #1.<br/>
+    Alice can grade Assignment #2.<br/>
+  </div>
+  <div class="E" style="background-color:#faa">Correct Answer: Inconsistent</div>
+</div>
+
+<p id="feedback" class="placeholder"><button onclick="submit()">Submit Answers</button></p>
+
+<script>
+  function init2() {
+    answers = {};
+    answers["e1"] = true;
+    answers["e2"] = true;
+    answers["e3"] = false;
+    init(answers);
+  }         
+  init2();
+</script>
