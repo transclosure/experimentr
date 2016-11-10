@@ -2,32 +2,51 @@
 
 <h3>Instructions</h3>
 <div id="info" class="placeholder I">
-  You will be analyzing parts of a grading policy. A grading policy defines who can grade what assignments for particular classes. The grading policy involves persons, classes and assignments. A sentence from a grading policy is shown below, along with some examples. Some of the examples are consistent with the sentence's meaning. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.
+  You will be analyzing parts of a grading policy. A grading policy defines who can grade what assignments for particular classes. Statements from a grading policy are shown below, along with some examples. Some of the examples are consistent with the statements' meanings. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.
 </div>
 
-<h3>Sentence</h3>
-<div class="I">Only classes can be associated with assignments.</div>
+<h3>Statements</h3>
+<div class="I">
+  The grading policy involves persons, classes and assignments.<br/>
+  A person is either a student (has no title) or a professor (has a Dr. title).<br/>
+  Exactly one professor is the instructor of each class.<br/>
+  At least one student is the assistant for each class.<br/>
+  At least one student is enrolled in each class.<br/>
+  Each assignment is associated with exactly one class.
+</div>
 
 <h3>Examples</h3>
 <div class="I">
-  <div id="e1" class="S">Physics can be associated with Assignment #1.</div><div class="E" style="background-color:#afa">Correct Answer: Consistent</div>
+  <div id="e1" class="S">
+    Dr. Richards is a professor.<br/>
+    Vanessa is a student.<br/>
+    Josh is a student.<br/>
+    Spanish is a class.<br/>
+    Homework #1 is an assignment.<br/>
+    Dr. Richards is the instructor of Spanish.<br/>
+    Vanessa is an assistant for Spanish.<br/>
+    Josh is enrolled in Spanish.
+  </div>
+  <div class="E" style="background-color:#faa">Correct Answer: Inconsistent</div>
 </div>
 <div class="I">
-  <div id="e2" class="S">George can be associated with Assignment #8.</div><div class="E" style="background-color:#faa">Correct Answer: Inconsistent</div>
+  <div id="e2" class="S">
+    Dr. Wills is a professor.<br/>
+    Peter is a student.<br/>
+    PhysEd is a class.<br/>
+    Trial #1 is an assignment.<br/>
+    Dr. Wills is the instructor of PhysEd.<br/>
+    Peter is an assistant for PhysEd.<br/>
+    Peter is enrolled in PhysEd.<br/>
+    Trail #1 is associated with PhysEd.
+  </div>
+  <div class="E" style="background-color:#afa">Correct Answer: Consistent</div>
 </div>
-<div class="I">
-  <div id="e3" class="S">Biology cannot be associated with Assignment #4.</div><div class="E" style="background-color:#faa">Correct Answer: Inconsistent</div>
-</div>
+
+
 
 <p id="feedback" class="placeholder"><button onclick="submit()">Submit Answers</button></p>
 
-<script>
-  function init2() {
-    answers = {};
-    answers["e1"] = true;
-    answers["e2"] = false;
-    answers["e3"] = false;
-    init(answers);
-  }         
-  init2();
+<script>       
+  init();
 </script>

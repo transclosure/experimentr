@@ -34,21 +34,21 @@
   var experimentID = experiment.toString();
   var task = 0;
   var taskID = null;
+  var answered;
   function getsequence() {
     var pre = ['modules/consent/training.html'];
     var post = ['modules/debrief/training.html'];
     var tasks = experiment;
-    //return tasks;
-    return pre.concat(tasks).concat(post);
+    return tasks;
+    //return pre.concat(tasks).concat(post);
   }
-  function init(answers) {
+  function init() {
     taskID = experiment[task];
+    answered = 0;
     data = {};
     data['userAgent'] = navigator.userAgent;
     data['experimentID'] = experimentID;
     data[taskID+'_start'] = Date.now();
-    data[taskID+'_answers'] = answers;
-    data[taskID+'_responses'] = {};
     //
     experimentr.hideNext();
     d3.select("#topbar").text("Task "+(task+1)+" of "+experiment.length);
@@ -59,14 +59,15 @@
   function toggleAnswer() {
     var target = d3.event.target;
     var e = d3.select(target); 
-    if((data[taskID+'_responses'])[target.id] == true) {
-      (data[taskID+'_responses'])[target.id] = false;
-      e.attr("style", "background-color:#faa");
+    if(e.style("background-color") == "rgb(170, 255, 170)") {
+      e.style("background-color","#faa");
+    } else if(e.style("background-color") == "rgb(255, 170, 170)") {
+      e.style("background-color","#afa");
     } else {
-      (data[taskID+'_responses'])[target.id] = true;
-      e.attr("style", "background-color:#afa");
+      answered = answered+1;
+      e.style("background-color","#afa");
     }
-    if(Object.keys(data[taskID+'_responses']).length == Object.keys(data[taskID+'_answers']).length) {
+    if(answered == ((d3.selectAll(".S"))[0]).length) {
       d3.selectAll("button").attr("disabled", null);
     }
   }
@@ -74,7 +75,7 @@
     data[taskID+'_end'] = Date.now();
     data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
     // 
-    var msg = "The correct answers are now shown to the right of your answers. Before continuing, please answer the following question:<br/>Did the correct answers help you understand the meaning of this sentence?<br/>";
+    var msg = "The correct answers are now shown to the right of your answers. Before continuing, please answer the following question (your response will not affect your pay):<br/>Up to this point, do you understand the statements and examples?<br/>";
     d3.selectAll(".S").on("click", null);
     d3.selectAll(".E").style("visibility", "visible");
     d3.select("#feedback").html(msg+"<button onclick='done(false)'>No</button><button onclick='done(true)'>Yes</button>");
@@ -82,11 +83,32 @@
   function done(gotit) {
     task = task + 1;
     d3.select("#topbar").text("");
+    //
     data[taskID+'_exitq'] = gotit;
-    data[taskID+'_answers'] = JSON.stringify(data[taskID+'_answers']);
-    data[taskID+'_responses'] = JSON.stringify(data[taskID+'_responses']);
+    data[taskID+'_responses'] = html2dic(d3.selectAll(".S")[0]);
+    data[taskID+'_answers'] = html2dic(d3.selectAll(".E")[0]);
+    data[taskID+'_grade'] = 0;
+    for(e in Object.keys(data[taskID+'_responses'])) {
+      if((data[taskID+'_responses'])[e] == (data[taskID+'_answers'])[e]) {
+        data[taskID+'_grade'] = data[taskID+'_grade'] + 1;
+      }
+    }
+    data[taskID+'_grade'] =  data[taskID+'_grade'] / Object.keys(data[taskID+'_responses']).length
     experimentr.addData(data);
     experimentr.next();
+  }
+  function html2dic(divs) {
+    var dic = {};
+    for(i=0;i<divs.length;i++) {
+      var e = divs[i];
+      var bgc = d3.select(e).style("background-color");
+      if(bgc == "rgb(170, 255, 170)") {
+        dic[e] = true;
+      } else if(bgc == "rgb(255, 170, 170)") {
+        dic[e] = false;
+      }
+    }
+    return dic;
   }
   experimentr.sequence(getsequence()).start();
 </script>
