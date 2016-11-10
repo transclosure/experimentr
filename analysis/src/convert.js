@@ -11,6 +11,7 @@ function getFields() {
   var taskFields = [taskID+'_time',
 		    taskID+'_answers',
                     taskID+'_responses',
+		    taskID+'_grade',
 		    taskID+'_exitq',
                     'q1'];
   return experimentFields.concat(taskFields);

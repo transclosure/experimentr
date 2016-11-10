@@ -39,8 +39,8 @@
     var pre = ['modules/consent/training.html'];
     var post = ['modules/debrief/training.html'];
     var tasks = experiment;
-    return tasks;
-    //return pre.concat(tasks).concat(post);
+    //return tasks;
+    return pre.concat(tasks).concat(post);
   }
   function init() {
     taskID = experiment[task];
@@ -85,27 +85,29 @@
     d3.select("#topbar").text("");
     //
     data[taskID+'_exitq'] = gotit;
-    data[taskID+'_responses'] = html2dic(d3.selectAll(".S")[0]);
-    data[taskID+'_answers'] = html2dic(d3.selectAll(".E")[0]);
+    data[taskID+'_responses'] = html2arr(d3.selectAll(".S")[0]);
+    data[taskID+'_answers'] = html2arr(d3.selectAll(".E")[0]);
     data[taskID+'_grade'] = 0;
-    for(e in Object.keys(data[taskID+'_responses'])) {
-      if((data[taskID+'_responses'])[e] == (data[taskID+'_answers'])[e]) {
+    for(i=0;i<(data[taskID+'_responses']).length;i++) {
+      if((data[taskID+'_responses'])[i] == (data[taskID+'_answers'])[i]) {
         data[taskID+'_grade'] = data[taskID+'_grade'] + 1;
       }
     }
     data[taskID+'_grade'] =  data[taskID+'_grade'] / Object.keys(data[taskID+'_responses']).length
+    data[taskID+'_responses'] = JSON.stringify(data[taskID+'_responses']);
+    data[taskID+'_answers'] = JSON.stringify(data[taskID+'_answers']);
     experimentr.addData(data);
     experimentr.next();
   }
-  function html2dic(divs) {
-    var dic = {};
+  function html2arr(divs) {
+    var dic = [];
     for(i=0;i<divs.length;i++) {
       var e = divs[i];
       var bgc = d3.select(e).style("background-color");
       if(bgc == "rgb(170, 255, 170)") {
-        dic[e] = true;
+        dic[i] = true;
       } else if(bgc == "rgb(255, 170, 170)") {
-        dic[e] = false;
+        dic[i] = false;
       }
     }
     return dic;
