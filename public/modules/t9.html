@@ -14,44 +14,51 @@
   At least one person is the assistant for each class.<br/>
   At least one person is enrolled in each class.<br/>
   Each assignment is associated with exactly one class.<br/>
-  <div style="background-color:#aaf">For each class, only students can be assistants.</div>
+  For each class, only students can be assistants.<br/>
+  For each class, only students can be enrolled.<br/>
+  Every student enrolled in a class must be assigned to every assignment associated with that class.<br/>
+  <div style="background-color:#aaf">Only instructors of and assistants for a class can grade assigments associated with that class.</div>
 </div>
 
 <h3>Examples</h3>
 <div class="I">
   <div id="e1" class="S">
-    Dr. Johnson is a professor.<br/>
-    Lily is a student.<br/>
-    English is a class.<br/>
-    Quiz #1 is an assignment.<br/>
-    Dr. Johnson is the instructor of English.<br/>
-    Lily is an assistant for English.<br/>
-    Dr. Johnson is enrolled in English.<br/>
-    Quiz #1 is associated with English.
+    Dr. Ramos is a professor.<br/>
+    Phil is a student.<br/>
+    Statics is a class.<br/>
+    Homework #1 is an assignment.<br/>
+    Dr. Ramos is the instructor of Statics.<br/>
+    Phil is an assistant for Statics.<br/>
+    Phil is enrolled in Statics.<br/>
+    Homework #1 is associated with Statics.<br/>
+    Homework #1 is assigned to Phil.<br/>
+    Dr. Ramos can grade Homework #1.<br/>
+    Phil can grade Homework #1.
   </div>
   <div class="E" style="background-color:#afa">
-    Correct Answer: Consistent<br/>
+    Correct Answer: Consistent
     This example does not violate any of the statements above.
   </div>
 </div>
 <div class="I">
   <div id="e2" class="S">
-    Dr. Stevens is a professor.<br/>
-    Dr. Green is a professor.<br/>
-    Ryan is a student.<br/>
-    Sewing is a class.<br/>
-    Project #1 is an assignment.<br/>
-    Dr. Stevens is the instructor of Sewing.<br/>
-    Dr. Green is an assistant for Sewing.<br/>
-    Ryan is enrolled in Sewing.
-    Project #1 is associated with Sewing.
+    Dr. Bauer is a professor.<br/>
+    Alice is a student.<br/>
+    Eve is a student.<br/>
+    Psychology is a class.<br/>
+    Quiz #1 is an assignment.<br/>
+    Dr. Bauer is the instructor of Psychology.<br/>
+    Alice is an assistant for Psychology.<br/>
+    Eve is enrolled in Psychology.<br/>
+    Quiz #1 is associated with Psychology.<br/>
+    Quiz #1 is assigned to Psychology.<br/>
+    Dr. Bauer can grade Quiz #1.
   </div>
   <div class="E" style="background-color:#faa">
-    Correct Answer: Inconsistent<br/>
-    Dr. Green cannot be an assistant.
+    Correct Answer: Inconsistent
+    Alice cannot grade Quiz #1.
   </div>
 </div>
-
 
 
 
@@ -60,3 +67,5 @@
 <script>       
    init_training();
 </script>
+
+

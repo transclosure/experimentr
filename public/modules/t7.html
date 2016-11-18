@@ -6,56 +6,53 @@
 </div>
 
 <h3>Statements</h3>
+<b>Changes since the last task have been highlighted</b>
 <div class="I">
   The grading policy involves persons, classes and assignments.<br/>
   A person is either a student (has no title) or a professor (has a Dr. title).<br/>
   Exactly one professor is the instructor of each class.<br/>
-  At least one student is the assistant for each class.<br/>
-  At least one student is enrolled in each class.<br/>
+  At least one person is the assistant for each class.<br/>
+  At least one person is enrolled in each class.<br/>
   Each assignment is associated with exactly one class.<br/>
-  Every student enrolled in a class must be assigned to every assignment associated with that class.<br/>
-  Only instructors of and assistants for a class can grade assigments associated with that class.
+  For each class, only students can be assistants.<br/>
+  <div style="background-color:#aaf">For each class, only students can be enrolled.</div>
 </div>
 
 <h3>Examples</h3>
 <div class="I">
   <div id="e1" class="S">
-    Dr. Ramos is a professor.<br/>
-    Phil is a student.<br/>
-    Statics is a class.<br/>
-    Homework #1 is an assignment.<br/>
-    Dr. Ramos is the instructor of Statics.<br/>
-    Phil is an assistant for Statics.<br/>
-    Phil is enrolled in Statics.<br/>
-    Homework #1 is associated with Statics.<br/>
-    Homework #1 is assigned to Phil.<br/>
-    Dr. Ramos can grade Homework #1.<br/>
-    Phil can grade Homework #1.
+    Dr. Buhler is a professor.<br/>
+    Dr. Vic is a professor.<br/>
+    Sarah is a student.<br/>
+    Geology is a class.<br/>
+    Test #1 is an assignment.<br/>
+    Dr. Buhler is the instructor of Geology.<br/>
+    Sarah is an assistant for Geology.<br/>
+    Dr. Vic is enrolled in Geology.
+    Test #1 is associated with Geology.
   </div>
-  <div class="E" style="background-color:#afa">
-    Correct Answer: Consistent
-    This example does not violate any of the statements above.
+  <div class="E" style="background-color:#faa">
+    Correct Answer: Inconsistent<br/>
+    Dr. Vic cannot be enrolled.
   </div>
 </div>
 <div class="I">
   <div id="e2" class="S">
-    Dr. Bauer is a professor.<br/>
-    Alice is a student.<br/>
-    Eve is a student.<br/>
-    Psychology is a class.<br/>
-    Quiz #1 is an assignment.<br/>
-    Dr. Bauer is the instructor of Psychology.<br/>
-    Alice is an assistant for Psychology.<br/>
-    Eve is enrolled in Psychology.<br/>
-    Quiz #1 is associated with Psychology.<br/>
-    Quiz #1 is assigned to Psychology.<br/>
-    Dr. Bauer can grade Quiz #1.
+    Dr. White is a professor.<br/>
+    Vicky is a student.<br/>
+    Chinese is a class.<br/>
+    Homework #1 is an assignment.<br/>
+    Dr. White is the instructor of Chinese.<br/>
+    Vicky is an assistant for Chinese.<br/>
+    Vicky is enrolled in Chinese.<br/>
+    Homework #1 is associated with Chinese.
   </div>
-  <div class="E" style="background-color:#faa">
-    Correct Answer: Inconsistent
-    Alice cannot grade Quiz #1.
+  <div class="E" style="background-color:#afa">
+    Correct Answer: Consistent<br/>
+    This example does not violate any of the statements above.
   </div>
 </div>
+
 
 
 

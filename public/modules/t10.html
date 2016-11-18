@@ -1,0 +1,132 @@
+<h1 id="topbar"></h1>
+
+<h3>Instructions</h3>
+<div id="info" class="placeholder I">
+  The grading policy is almost complete. The policy satisfies some of the goals (green statements on the right), but not all of them (red ones). Each unsatisfied goal comes with an example of why it is unsatisfied by the current design.<br/>The design is only one change away from satisfying all goals. Using the example as insight, make a single change to the solution that: 1. makes the red example inconsistent 2. satisfies all the goals.
+</div>
+
+<div class="S">
+  <h3>Statements</h3>
+  <ul class="I">
+    <li>The grading policy involves persons, classes and assignments.</li>
+    <li>A person is either a student (has no title) or a professor (has a Dr. title).</li>
+    <li><select id="T1M"></select> professor is the instructor of each class.</li>
+    <li><select id="T2M"></select> person is the assistant for each class.</li>
+    <li><select id="T3M"></select> person is enrolled in each class.</li>
+    <li>Each assignment is associated with <select id="T4M"></select> class.</li>
+    <li>For each class, <select id="T2R"></select> can be assistants.</li>
+    <li>For each class, <select id="T3R"></select> can be enrolled.</li>
+    <li>Every student enrolled in a class must be assigned to every assignment associated with that class.</li>
+    <li>Only instructors of and assistants for a class can grade assigments associated with that class.</li>
+  </ul>
+</div>
+
+<div class="E">
+  <h3>Goals and Examples of Statements+Goals Failing</h3>
+  <div class="I">
+    <ul>
+      <li style="background-color:#afa" id="SAT">There can be at least one class, assignment, and person.</li>
+      <li style="background-color:#afa" id="T1L1">There is exactly one instructor of each class.</li>
+      <li style="background-color:#afa" id="T4L1">There is exactly one class associated with each assignment.</li> 
+      <li style="background-color:#afa" id="T5L1">There is at least one student assigned to each assignment.</li>
+      <div style="background-color:#faa">
+        <li id="A">There is no student who can grade an assignment they are assigned to.</li> 
+        Example of this failing: Alice can grade Homework #1, which they are assigned to.
+        <ul>
+          <li>Dr. Ward is a professor.</li>
+          <li>Alice is a student.</li>
+          <li>Calculus is a class.</li>
+          <li>Homework #1 is an assignment.</li>
+          <li>Dr. Ward is the instructor of Calculus.</li>
+          <li>Alice is an assistant for Calculus.</li>
+          <li>Homework #1 is associated with Calculus.</li>
+          <li>Homework #1 is assigned to Alice.</li>
+          <li>Alice is enrolled in Calculus.</li>
+          <li>Dr. Ward can grade Homework #1.</li>
+          <li>Alice can grade Homework #1.</li>
+        </ul>
+      </div>
+    </ul>
+  </div>
+</div>
+
+<p class="placeholder" id="feedback"></p>
+
+<script>
+  function init2() {
+    var edit = {};
+    d3.select('#T1M')
+    .html("<option disabled='disabled' selected='selected'>exactly one</option> \
+      <option id='T1Mset'>a set of</option> \
+      <option id='T1Mlone'>at most one</option> \
+      <option id='T1Msome'>at least one</option>");
+    edit.T1Mset = "#A,#T1L1";
+    edit.T1Mlone = "#A,#T1L1";
+    edit.T1Msome = "#A,#T1L1";
+    d3.select('#T2M')
+    .html("<option disabled='disabled' selected='selected'>a set of</option> \
+      <option id='T2Mlone'>at most one</option> \
+      <option id='T2Mone'>exactly one</option> \
+      <option id='T2Msome'>at least one</option>");
+    edit.T2Mlone = "#A";
+    edit.T2Mone = "#A";
+    edit.T2Msome = "#A";
+    d3.select('#T2R')
+    .html("<option disabled='disabled' selected='selected'>all students</option> \
+      <option id='T2R1'>students who are assistants</option> \
+      <option id='T2R2'>students who are not assistants</option> \
+      <option id='T2R3'>students who are enrolled</option> \
+      <option id='T2R4'>students who are not enrolled</option>");
+    edit.T2R1 = "#A";
+    edit.T2R2 = "#SAT";
+    edit.T2R3 = "#A";
+    edit.T2R4 = "";
+    d3.select('#T3M')
+    .html("<option disabled='disabled' selected='selected'>a set of</option> \
+      <option id='T3Mlone'>at most one</option> \
+      <option id='T3Mone'>exactly one</option> \
+      <option id='T3Msome'>at least one</option>");
+    edit.T3Mlone = "#A";
+    edit.T3Mone = "#A";
+    edit.T3Msome = "#A";
+    d3.select('#T3R')
+    .html("<option disabled='disabled' selected='selected'>all students</option> \
+      <option id='T3R1'>students who are enrolled</option> \
+      <option id='T3R2'>students who are not enrolled</option> \
+      <option id='T3R3'>students who are assistants</option> \
+      <option id='T3R4'>students who are not assistants</option>");
+    edit.T3R1 = "#A";
+    edit.T3R2 = "#SAT";
+    edit.T3R3 = "#A";
+    edit.T3R4 = "";
+    d3.select('#T4M')
+    .html("<option disabled='disabled' selected='selected'>exactly one</option> \
+      <option id='T4Mset'>a set of</option> \
+      <option id='T4Mlone'>at most one</option> \
+      <option id='T4Msome'>at least one</option>");
+    edit.T4Mset = "#A,#T4L1";
+    edit.T4Msome = "#A,#T4L1";
+    edit.T4Mlone = "#A"; 
+    d3.select('#T5M')
+    .html("<option disabled='disabled' selected='selected'>at least one</option> \
+      <option id='T5Mset'>a set of</option> \
+      <option id='T5Mone'>exactly one</option> \
+      <option id='T5Mlone'>at most one</option>");
+    edit.T5Mset = "#A,#T5L1";
+    edit.T5Mone = "#A";
+    edit.T5Mlone = "#A,#T5L1";
+    d3.select('#T5R')
+    .html("<option disabled='disabled' selected='selected'>all students</option> \
+      <option id='T5R1'>students who are enrolled in the class</option> \
+      <option id='T5R2'>students who are not enrolled in the class</option> \
+      <option id='T5R3'>students who are assistants in the class</option> \
+      <option id='T5R4'>students who are not assistants in the class</option>");
+    edit.T5R1 = "#A";
+    edit.T5R2 = "#SAT";
+    edit.T5R3 = "#A";
+    edit.T5R4 = "";
+    init_edits(edit);
+  }         
+  init2();
+</script>
+
