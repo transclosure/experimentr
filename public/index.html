@@ -36,8 +36,8 @@
     var pre = ['modules/consent/training.html'];
     var post = ['modules/debrief/training.html'];
     var tasks = experiment;
-    //return tasks;
-    return pre.concat(tasks).concat(post);
+    return tasks;
+    //return pre.concat(tasks).concat(post);
   }
   function init() {
     taskID = experiment[task];
@@ -65,8 +65,8 @@
     d3.selectAll("button").attr("disabled", "disabled");
   }
   function toggleAnswer() {
-    var target = d3.event.target;
-    var e = d3.select(target); 
+    var t = d3.event.target;
+    var e = d3.select(t); 
     if(e.style("background-color") == "rgb(170, 255, 170)") {
       e.style("background-color","#faa");
     } else if(e.style("background-color") == "rgb(255, 170, 170)") {

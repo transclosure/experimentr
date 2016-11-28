@@ -7,15 +7,15 @@
 
 <h3>Statements</h3>
 <b>Changes since the last task have been highlighted</b>
-<div class="I">
-  The grading policy involves persons, classes and assignments.<br/>
-  A person is either a student (has no title) or a professor (has a Dr. title).<br/>
-  Exactly one professor is the instructor of each class.<br/>
-  At least one person is the assistant for each class.<br/>
-  At least one person is enrolled in each class.<br/>
-  Each assignment is associated with exactly one class.<br/>
-  <div style="background-color:#aaf">For each class, only students can be assistants.</div>
-</div>
+<ol class="I">
+  <li>The grading policy involves persons, classes and assignments.</li>
+  <li>A person is either a student (has no title) or a professor (has a Dr. title).</li>
+  <li>Exactly one professor is the instructor of each class.</li>
+  <li>At least one person is the assistant for each class.</li>
+  <li>At least one person is enrolled in each class.</li>
+  <li>Each assignment is associated with exactly one class.</li>
+  <li style="background-color:#aaf">For each class, only students can be assistants.</li>
+</ol>
 
 <h3>Examples</h3>
 <div class="I">
@@ -49,6 +49,22 @@
   <div class="E" style="background-color:#faa">
     Correct Answer: Inconsistent<br/>
     Dr. Green cannot be an assistant.
+  </div>
+</div>
+<div class="I">
+  <div id="e3" class="S">
+    Dr. Tenni is a professor.<br/>
+    Dr. Ferous is a professor.<br/>
+    Pottery is a class.<br/>
+    Sculpture #1 is an assignment.<br/>
+    Dr. Tenni is the instructor of Pottery.<br/>
+    Dr. Ferous is an assistant for Pottery.<br/>
+    Dr. Tenni is enrolled in Pottery.<br/>
+    Sculpture #1 is associated with Pottery.
+  </div>
+  <div class="E" style="background-color:#afa">
+    Correct Answer: Consistent<br/>
+    This example does not violate any of the statements above.
   </div>
 </div>
 
