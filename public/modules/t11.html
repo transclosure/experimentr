@@ -3,79 +3,78 @@
 <h3>Instructions</h3>
 <b>Changes since the last task have been highlighted</b>
 <div id="info" class="placeholder I" style="background-color:#aaf" >
-  <b>You will be analyzing parts of a salary policy. A salary policy defines who can raise what salaries for particular departments. Statements from a salary policy are shown below, along with some examples. Some of the examples are consistent with the statements' meanings. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.</b>
+  <b>You will be analyzing parts of a banking policy. A banking policy defines who can access which deposit boxes for particular banks. Statements from a banking policy are shown below, along with some examples. Some of the examples are consistent with the statements' meanings. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.</b>
 </div>
 
 <h3>Statements</h3>
 <b>Changes since the last task have been highlighted</b>
 <ol style="background-color:#aaf" class="I">
-  <li>The salary policy involves persons, departments and salaries.</li>
-  <li>A person is either a worker (has no title) or a manager (has a Pm. title).</li>
-  <li>At least one person is employed by each department.</li>
-  <li>Exactly one manager is the head of each department.</li>
-  <li>Each salary is affiliated with exactly one department.</li>
-  <li>At least one person is the lead in each department.</li>
-  <li>Every worker employed by a department must be paid every salary affiliated with that department.</li>
-  <li>For each department, only workers can be employed.</li>
-  <li>Only heads and leads of a department can raise salaries affiliated with that department.</li>
-  <li>For each department, only workers can be a lead.</li>
+  <li>The banking policy involves persons, banks and deposit boxes.</li>
+  <li>For each bank, only tellers can be employed.</li>
+  <li>At least one person is employed by each bank.</li>
+  <li>A person is either a teller (has no title) or a owner (has a P. title).</li>
+  <li>Every teller employed by a bank must supervise every deposit box located in that bank.</li>
+  <li>Exactly one owner is the head of each bank.</li>
+  <li>Each deposit box is located in exactly one bank.</li>
+  <li>Only heads and key holders of a bank can access deposit boxes located in that bank.</li>
+  <li>For each bank, only tellers can be a key holder.</li>
+  <li>At least one person is the key holder for each bank.</li>
 </ol>
 
 
 <h3>Examples</h3>
 <div class="I">
   <div id="e1" class="S">
-    Pm. Jenkins is a manager.<br/>
-    Timothy is a worker.<br/>
-    James is a worker.<br/>
-    Accounting is a department.<br/>
-    Level I is a salary.<br/>
-    Pm. Jenkins is the head of Accounting.<br/>
-    Timothy is a lead in Accounting.<br/>
-    James is employed by Accounting.<br/>
-    Level I is affiliated with Accounting.<br/>
-    Level I is paid to James.<br/>
-    Pm. Jenkins can raise Level I.
+    P. Faar is a owner.<br/>
+    Yolanda is a teller.<br/>
+    People's Savings is a bank.<br/>
+    Box AEC is a deposit box.<br/>
+    P. Faar is the head of People's Savings.<br/>
+    Yolanda is a key holder for People's Savings.<br/>
+    Yolanda is employed by People's Savings.<br/>
+    Box AEC is located in People's Savings.<br/>
+    Yolanda supervises Box AEC.<br/>
+    P. Faar can access Box AEC.<br/>
+    Yolanda can access Box AEC.
   </div>
-  <div class="E" style="background-color:#faa">
-    Correct Answer: Inconsistent<br/>
-    Timothy cannot raise Level I.
+  <div class="E" style="background-color:#afa">
+    Correct Answer: Consistent<br/>
+    This example does not violate any of the statements above.
   </div>
 </div>
 <div class="I">
   <div id="e2" class="S">
-    Pm. Dalton is a manager.<br/>
-    Pm. Tanner is a manager.<br/>
-    Evan is a worker.<br/>
-    HR is a department.<br/>
-    Entry Pay is a salary.<br/>
-    Pm. Dalton is the head of HR.<br/>
-    Evan is a lead in HR.<br/>
-    Evan is employed by HR.<br/>
-    Entry Pay is affiliated with HR.<br/>
-    Entry Pay is paid to Evan.<br/>
-    Pm. Dalton can raise Entry Pay.<br/>
-    Evan can raise Entry Pay.<br/>
-    Pm. Tanner can raise Entry Pay.<br/>
+    P. Lenin is a owner.<br/>
+    Fran is a teller.<br/>
+    Jessica is a teller.<br/>
+    First National is a bank.<br/>
+    Box A is a deposit box.<br/>
+    P. Lenin is the head of First National.<br/>
+    Fran is a key holder for First National.<br/>
+    Jessica is employed by First National.<br/>
+    Box A is located in First National.<br/>
+    Jessica supervises Box A.<br/>
+    P. Lenin can access Box A.
   </div>
   <div class="E" style="background-color:#faa">
     Correct Answer: Inconsistent<br/>
-    Pm. Tanner should not be able to raise EntryPay.
+    Fran cannot access Box A.
   </div>
 </div>
 <div class="I">
   <div id="e3" class="S">
-    Pm. Ulrich is a manager.<br/>
-    Rene is a worker.<br/>
-    Sales is a department.<br/>
-    Comission is a salary.<br/>
-    Pm. Ulrich is the head of Sales.<br/>
-    Rene is a lead in Sales.<br/>
-    Rene is employed by Sales.<br/>
-    Comission is affiliated with Sales.<br/>
-    Comission is paid to Rene.<br/>
-    Pm. Ulrich can raise Comission.<br/>
-    Rene can raise Comission.
+    P. Renault is a owner.<br/>
+    William is a teller.<br/>
+    Peter is a teller.<br/>
+    Second National is a bank.<br/>
+    Box #1002 is a deposit box.<br/>
+    P. Renault is the head of Second National.<br/>
+    William is a key holder for Second National.<br/>
+    Peter is employed by Second National.<br/>
+    Box #1002 is located in Second National.<br/>
+    Peter supervises Box #1002.<br/>
+    P. Renault can access Box #1002.
+    William can access Box #1002.
   </div>
   <div class="E" style="background-color:#afa">
     Correct Answer: Consistent<br/>
@@ -84,24 +83,27 @@
 </div>
 <div class="I">
   <div id="e4" class="S">
-    Pm. Vek is a manager.<br/>
-    April is a worker.<br/>
-    Jane is a worker.<br/>
-    Shipping is a department.<br/>
-    Parttime is a salary.<br/>
-    Pm. Vek is the head of Shipping.<br/>
-    April is a lead in Shipping.<br/>
-    Jane is employed by Shipping.<br/>
-    Parttime is affiliated with Shipping.<br/>
-    Parttime is paid to Jane.<br/>
-    Pm. Vek can raise Parttime.
-    April can raise Parttime.
+    P. Dennis is a owner.<br/>
+    P. Nori is a owner.<br/>
+    Keith is a teller.<br/>
+    Atlantic Credit Union is a bank.<br/>
+    Box #102 is a deposit box.<br/>
+    P. Dennis is the head of Atlantic Credit Union.<br/>
+    Keith is a key holder for Atlantic Credit Union.<br/>
+    Keith is employed by Atlantic Credit Union.<br/>
+    Box #102 is located in Atlantic Credit Union.<br/>
+    Keith supervises Box #102.<br/>
+    P. Dennis can access Box #102.<br/>
+    Keith can access Box #102.<br/>
+    P. Nori can access Box #102.<br/>
   </div>
-  <div class="E" style="background-color:#afa">
-    Correct Answer: Consistent<br/>
-    This example does not violate any of the statements above.
+  <div class="E" style="background-color:#faa">
+    Correct Answer: Inconsistent<br/>
+    P. Nori should not be able to access Box #102.
   </div>
 </div>
+
+
 
 
 
