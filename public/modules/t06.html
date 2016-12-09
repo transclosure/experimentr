@@ -1,0 +1,95 @@
+<h1 id="topbar"></h1>
+
+<h3>Instructions</h3>
+<div id="info" class="placeholder I">
+  You will be analyzing parts of a grading policy. A grading policy defines who can grade what assignments for particular classes. Statements from a grading policy are shown below, along with some examples. Some of the examples are consistent with the statements' meanings. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.
+</div>
+
+<h3>Statements</h3>
+<b>Changes since the last task have been highlighted</b>
+<ol class="I">
+  <li>The grading policy involves persons, classes and assignments.</li>
+  <li>A person is either a student (has no title) or a professor (has a Dr. title).</li>
+  <li>Exactly one professor is the instructor of each class.</li>
+  <li>At least one person is the assistant for each class.</li>
+  <li>At least one person is enrolled in each class.</li>
+  <li>Each assignment is associated with exactly one class.</li>
+  <li style="background-color:#aaf">For each class, only students can be assistants.</li>
+</ol>
+
+<h3>Examples</h3>
+<div class="I">
+  <div id="e1" class="S">
+    Dr. Johnson is a professor.<br/>
+    Lily is a student.<br/>
+    English is a class.<br/>
+    Quiz #1 is an assignment.<br/>
+    Dr. Johnson is the instructor of English.<br/>
+    Lily is an assistant for English.<br/>
+    Dr. Johnson is enrolled in English.<br/>
+    Quiz #1 is associated with English.
+  </div>
+  <div class="E" style="background-color:#afa">
+    Correct Answer: Consistent<br/>
+    This example does not violate any of the statements above.
+  </div>
+</div>
+<div class="I">
+  <div id="e2" class="S">
+    Dr. Stevens is a professor.<br/>
+    Dr. Green is a professor.<br/>
+    Ryan is a student.<br/>
+    Sewing is a class.<br/>
+    Project #1 is an assignment.<br/>
+    Dr. Stevens is the instructor of Sewing.<br/>
+    Dr. Green is an assistant for Sewing.<br/>
+    Ryan is enrolled in Sewing.
+    Project #1 is associated with Sewing.
+  </div>
+  <div class="E" style="background-color:#faa">
+    Correct Answer: Inconsistent<br/>
+    Dr. Green cannot be an assistant.
+  </div>
+</div>
+<div class="I">
+  <div id="e3" class="S">
+    Dr. Tenni is a professor.<br/>
+    Jessica is a professor.<br/>
+    Pottery is a class.<br/>
+    Sculpture #1 is an assignment.<br/>
+    Dr. Tenni is the instructor of Pottery.<br/>
+    Jessica is an assistant for Pottery.<br/>
+    Dr. Tenni is enrolled in Pottery.<br/>
+    Sculpture #1 is associated with Pottery.
+  </div>
+  <div class="E" style="background-color:#afa">
+    Correct Answer: Consistent<br/>
+    This example does not violate any of the statements above.
+  </div>
+</div>
+<div class="I">
+  <div id="e4" class="S">
+    Dr. Zurich is a professor.<br/>
+    Dr. Reynolds is a professor.<br/>
+    Dr. White is a professor.<br/>
+    Music is a class.<br/>
+    Project #1 is an assignment.<br/>
+    Dr. Zurich is the instructor of Music.<br/>
+    Dr. Reynolds is an assistant for Music.<br/>
+    Dr. White is enrolled in Music.
+    Project #1 is associated with Music.
+  </div>
+  <div class="E" style="background-color:#faa">
+    Correct Answer: Inconsistent<br/>
+    Dr. Reynolds cannot be an assistant.
+  </div>
+</div>
+
+
+
+
+<p id="feedback" class="placeholder"><button onclick="submit()">Submit Answers</button></p>
+
+<script>       
+   init_training();
+</script>

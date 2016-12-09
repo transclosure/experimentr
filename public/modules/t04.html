@@ -12,22 +12,21 @@
   <li>A person is either a student (has no title) or a professor (has a Dr. title).</li>
   <li>Exactly one professor is the instructor of each class.</li>
   <li>At least one person is the assistant for each class.</li>
-  <li>At least one person is enrolled in each class.</li>
-  <li>Each assignment is associated with exactly one class.</li>
-  <li style="background-color:#aaf">For each class, only students can be assistants.</li>
+  <li style="background-color:#aaf">At least one person is enrolled in each class.</li>
 </ol>
+  
+
 
 <h3>Examples</h3>
 <div class="I">
   <div id="e1" class="S">
-    Dr. Johnson is a professor.<br/>
-    Lily is a student.<br/>
+    Dr. Jones is a professor.<br/>
+    Tim is a student.<br/>
     English is a class.<br/>
-    Quiz #1 is an assignment.<br/>
-    Dr. Johnson is the instructor of English.<br/>
-    Lily is an assistant for English.<br/>
-    Dr. Johnson is enrolled in English.<br/>
-    Quiz #1 is associated with English.
+    Test #1 is an assignment.<br/>
+    Dr. Jones is the instructor of English.<br/>
+    Tim is an assistant for English.<br/>
+    Tim is enrolled in English.
   </div>
   <div class="E" style="background-color:#afa">
     Correct Answer: Consistent<br/>
@@ -36,31 +35,44 @@
 </div>
 <div class="I">
   <div id="e2" class="S">
-    Dr. Stevens is a professor.<br/>
-    Dr. Green is a professor.<br/>
-    Ryan is a student.<br/>
-    Sewing is a class.<br/>
-    Project #1 is an assignment.<br/>
-    Dr. Stevens is the instructor of Sewing.<br/>
-    Dr. Green is an assistant for Sewing.<br/>
-    Ryan is enrolled in Sewing.
-    Project #1 is associated with Sewing.
+    Dr. Yurt is a professor.<br/>
+    Dr. Faar is a professor.<br/>
+    Dr. Green is a student.<br/>
+    Math is a class.<br/>
+    Homework #1 is an assignment.<br/>
+    Dr. Yurt is the instructor of Math.<br/>
+    Dr. Faar is an assistant for Math.<br/>
+    Dr. Green is enrolled in Math.
   </div>
-  <div class="E" style="background-color:#faa">
-    Correct Answer: Inconsistent<br/>
-    Dr. Green cannot be an assistant.
+  <div class="E" style="background-color:#afa">
+    Correct Answer: Consistent<br/>
+    This example does not violate any of the statements above.
   </div>
 </div>
 <div class="I">
   <div id="e3" class="S">
-    Dr. Tenni is a professor.<br/>
-    Dr. Ferous is a professor.<br/>
-    Pottery is a class.<br/>
-    Sculpture #1 is an assignment.<br/>
-    Dr. Tenni is the instructor of Pottery.<br/>
-    Dr. Ferous is an assistant for Pottery.<br/>
-    Dr. Tenni is enrolled in Pottery.<br/>
-    Sculpture #1 is associated with Pottery.
+    Dr. Hill is a professor.<br/>
+    Ralph is a student.<br/>
+    Statistics is a class.<br/>
+    Quiz #1 is an assignment.<br/>
+    Dr. Hill is the instructor of Statistics.<br/>
+    Ralph is an assistant for Statistics.
+  </div>
+  <div class="E" style="background-color:#faa">
+    Correct Answer: Inconsistent<br/>
+    There is no student enrolled in Statistics.
+  </div>
+</div>
+<div class="I">
+  <div id="e4" class="S">
+    Dr. Mathews is a professor.<br/>
+    Dr. Reynolds is a professor.<br/>
+    Helga is a student.<br/>
+    Economics is a class.<br/>
+    Homework #1 is an assignment.<br/>
+    Dr. Mathews is the instructor of Economics.<br/>
+    Dr. Reynolds is an assistant for Economics.<br/>
+    Helga is enrolled in Economics.
   </div>
   <div class="E" style="background-color:#afa">
     Correct Answer: Consistent<br/>
@@ -70,9 +82,11 @@
 
 
 
-
 <p id="feedback" class="placeholder"><button onclick="submit()">Submit Answers</button></p>
 
 <script>       
    init_training();
 </script>
+
+
+
