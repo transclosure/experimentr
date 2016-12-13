@@ -11,14 +11,9 @@
 <ol style="background-color:#aaf" class="I">
   <li>The salary policy involves persons, departments and salaries.</li>
   <li>A person is either a worker (has no title) or a manager (has a Pm. title).</li>
-  <li>At least one person is employed by each department.</li>
   <li>Exactly one manager is the head of each department.</li>
-  <li>Each salary is affiliated with exactly one department.</li>
   <li>At least one person is the lead in each department.</li>
-  <li>Every worker employed by a department must be paid every salary affiliated with that department.</li>
-  <li>For each department, only workers can be employed.</li>
-  <li>Only heads and leads of a department can raise salaries affiliated with that department.</li>
-  <li>For each department, only workers can be a lead.</li>
+  <li>At least one person is employed by each department.</li>
 </ol>
 
 
@@ -29,17 +24,12 @@
     Timothy is a worker.<br/>
     James is a worker.<br/>
     Accounting is a department.<br/>
-    Level I is a salary.<br/>
     Pm. Jenkins is the head of Accounting.<br/>
     Timothy is a lead in Accounting.<br/>
-    James is employed by Accounting.<br/>
-    Level I is affiliated with Accounting.<br/>
-    Level I is paid to James.<br/>
-    Pm. Jenkins can raise Level I.
   </div>
   <div class="E" style="background-color:#faa">
     Correct Answer: Inconsistent<br/>
-    Timothy cannot raise Level I.
+    No one is employed by Accounting.
   </div>
 </div>
 <div class="I">
@@ -48,19 +38,12 @@
     Pm. Tanner is a manager.<br/>
     Evan is a worker.<br/>
     HR is a department.<br/>
-    Entry Pay is a salary.<br/>
     Pm. Dalton is the head of HR.<br/>
-    Evan is a lead in HR.<br/>
     Evan is employed by HR.<br/>
-    Entry Pay is affiliated with HR.<br/>
-    Entry Pay is paid to Evan.<br/>
-    Pm. Dalton can raise Entry Pay.<br/>
-    Evan can raise Entry Pay.<br/>
-    Pm. Tanner can raise Entry Pay.<br/>
   </div>
   <div class="E" style="background-color:#faa">
     Correct Answer: Inconsistent<br/>
-    Pm. Tanner should not be able to raise EntryPay.
+    No one is the lead of HR.
   </div>
 </div>
 <div class="I">
@@ -71,11 +54,7 @@
     Comission is a salary.<br/>
     Pm. Ulrich is the head of Sales.<br/>
     Rene is a lead in Sales.<br/>
-    Rene is employed by Sales.<br/>
-    Comission is affiliated with Sales.<br/>
-    Comission is paid to Rene.<br/>
-    Pm. Ulrich can raise Comission.<br/>
-    Rene can raise Comission.
+    Rene is employed by Sales.
   </div>
   <div class="E" style="background-color:#afa">
     Correct Answer: Consistent<br/>
@@ -85,17 +64,10 @@
 <div class="I">
   <div id="e4" class="S">
     Pm. Vek is a manager.<br/>
-    April is a worker.<br/>
-    Jane is a worker.<br/>
     Shipping is a department.<br/>
-    Parttime is a salary.<br/>
     Pm. Vek is the head of Shipping.<br/>
-    April is a lead in Shipping.<br/>
-    Jane is employed by Shipping.<br/>
-    Parttime is affiliated with Shipping.<br/>
-    Parttime is paid to Jane.<br/>
-    Pm. Vek can raise Parttime.
-    April can raise Parttime.
+    Pm. Vek is a lead in Shipping.<br/>
+    Pm. Vek is employed by Shipping.
   </div>
   <div class="E" style="background-color:#afa">
     Correct Answer: Consistent<br/>
