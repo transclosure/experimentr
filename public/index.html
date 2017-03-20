@@ -10,20 +10,8 @@
 </body>
 
 <script>
-  /* 
-  all data is recorded in _<taskID>_<metric> form
-  the <taskID> should denote the trial conditions (see example below)
-  generic, parameterized code goes here. anything task specific goes in their module
-
-  CONDITIONS
-  experimentID     order of the tasks
-  taskID           the task, which is composed of independent variables
-  spec            which specification (ex// G = gradebook spec)
-  phrasing        which phrasing      (ex// O = original phrasing)
-  model           which model         (ex// M = minimal model)
-  */
   function getexperiment() {
-    return ['modules/t01.html','modules/t02.html','modules/t03.html','modules/t04.html','modules/t05.html','modules/t06.html','modules/t07.html','modules/t08.html','modules/t09.html','modules/t10.html','modules/t11.html'];
+    return ['modules/g01.html','modules/g02.html','modules/g03.html','modules/g04.html','modules/g05.html','modules/g06.html','modules/g07.html','modules/g08.html','modules/g09.html','modules/gprov.html'];
   }
   var data = {};
   var experiment = getexperiment(); 
@@ -48,11 +36,13 @@
     d3.select("#topbar").text("Task "+(task+1)+" of "+experiment.length);
     experimentr.hideNext();
   }
-  function done(gotit) {
+  function done(exitans) {
     task = task + 1;
     d3.select("#topbar").text("");
     //
-    data[taskID+'_exitq'] = gotit;
+    data[taskID+'_end'] = Date.now();
+    data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
+    data[taskID+'_exitq'] = exitans;
     experimentr.addData(data);
     experimentr.next();
   }
@@ -80,8 +70,6 @@
     }
   }
   function submit() {
-    data[taskID+'_end'] = Date.now();
-    data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
     data[taskID+'_responses'] = html2arr(d3.selectAll(".S")[0]);
     data[taskID+'_answers'] = html2arr(d3.selectAll(".E")[0]);
     data[taskID+'_grade'] = 0;
