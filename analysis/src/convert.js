@@ -12,8 +12,7 @@ function getFields() {
 		    taskID+'_answers',
                     taskID+'_responses',
 		    taskID+'_grade',
-		    taskID+'_exitq',
-                    'q1'];
+		    taskID+'_exit_q1'];
   return experimentFields.concat(taskFields);
 }
 
