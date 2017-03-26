@@ -8,3 +8,5 @@ node src/convert.js results/data.json modules/g07.html  >> results/data.csv
 node src/convert.js results/data.json modules/g08.html  >> results/data.csv
 node src/convert.js results/data.json modules/g09.html  >> results/data.csv
 node src/convert2.js results/data.json modules/gprov.html >> results/data.csv
+node src/convert2.js results/data.json modules/gcore.html >> results/data.csv
+
