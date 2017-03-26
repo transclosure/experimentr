@@ -23,9 +23,14 @@
 
 <h3>Questions</h3>
 <div>
-  It turns out it is impossible for a student to be able to grade their own assignment. The parts of the grading policy responsible for forbidding this are highlighted above. <b>In your own words, why is it impossible for a student to be able to grade their own assignment?</b>
+  It turns out it is impossible for a student to be able to grade their own assignment. The parts of the grading policy responsible for forbidding this are highlighted above. 
+  <br/>
+  <b>In your own words, why is it impossible for a student to be able to grade their own assignment?</b>
   <br/>
   <textarea id="q1" rows="5" cols="80"></textarea>
+  <b>Which of the highlighted lines above best explains is it impossible for a student to be able to grade their own assignment?</b>
+  <br/>
+  <input id="q2" type="number"></input>
 </div>
 <br>
 <button id="submitComments" type="button">Submit Answers and Finish</button>
@@ -38,11 +43,13 @@ var postId  = experimentr.postId
 
 function validate() {
   var q1 = d3.select("#q1").property("value");
-  if(/\S/.test(q1)) data['q1'] = q1;
+  var q2 = d3.select("#q2").property("value");
+  if(/\S/.test(q1)) ans["q1"] = q1;
+  if(q2>0 && q2<11) ans["q2"] = q2;
   
-  valid = data['q1']!=null;
+  valid = ans["q1"]!=null && ans["q2"]!=null;
   if( valid ) {
-    done(JSON.stringify(data))
+    done(ans)
   }
   else {
     d3.select('#submitFeedback').text('Please answer all questions before submitting.');

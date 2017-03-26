@@ -42,7 +42,9 @@
     //
     data[taskID+'_end'] = Date.now();
     data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
-    data[taskID+'_exitq'] = exitans;
+    for (q in exitans) {
+      data[taskID+'_exit_'+q] = exitans[q];
+    }
     experimentr.addData(data);
     experimentr.next();
   }
@@ -85,7 +87,7 @@
     var msg = "The correct answers are now shown to the right of your answers. Before continuing, please answer the following question (your response will not affect your pay):<br/>Up to this point, do you understand the statements and examples?<br/>";
     d3.selectAll(".S").on("click", null);
     d3.selectAll(".E").style("visibility", "visible");
-    d3.select("#feedback").html(msg+"<button onclick='done(false)'>No</button><button onclick='done(true)'>Yes</button>");
+    d3.select("#feedback").html(msg+"<button onclick='done({q1:false})'>No</button><button onclick='done({q1:true})'>Yes</button>");
   }
   function html2arr(divs) {
     var arr = [];
@@ -168,7 +170,7 @@
     // 
     var msg = "Correct! This option satisfies all goals in a single change.<br/>Before continuing, please answer the following question(your response will not affect your pay):<br/>Did the previous tasks adequately prepare you for this final task? (If you struggled, answer no)<br/>";
     d3.selectAll('select').attr("disabled", "disabled");
-    d3.select("#feedback").html(msg+"<button onclick='done(false)'>No</button><button onclick='done(true)'>Yes</button>");
+    d3.select("#feedback").html(msg+"<button onclick='done({q1:false})'>No</button><button onclick='done({q1:true})'>Yes</button>");
   }
   experimentr.sequence(getsequence()).start();
 </script>
