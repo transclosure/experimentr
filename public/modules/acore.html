@@ -41,7 +41,7 @@ function validate() {
   var q1 = d3.select("#q1").property("value");
   var q2 = d3.select("#q2").property("value");
   if(/\S/.test(q1)) ans["q1"] = q1;
-  if(q2>0 && q2<11) ans["q2"] = q2;
+  if(q2>0 && q2<6) ans["q2"] = q2;
   
   valid = ans["q1"]!=null && ans["q2"]!=null;
   if( valid ) {
