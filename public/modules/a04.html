@@ -1,0 +1,73 @@
+<h1 id="topbar"></h1>
+
+<h3>Instructions</h3>
+<div id="info" class="placeholder I">
+  You will be analyzing parts of an addressbook policy. An addressbook policy defines how names and addresses are stored and looked up in an address book. Statements from the policy are shown below, along with some examples. Some of the examples are consistent with the statements' meanings. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.
+</div>
+
+<h3>Statements</h3>
+<b>Changes since the last task have been highlighted</b>
+<ol class="I">
+	<li>The addressbook policy involves targets listed in the book.</li>
+	<li>A target is either a name (like 'Bob') or an address (like '102 Rose Way').</li>
+  <li>Every name is an entry in the book.</li>
+  <li>Every entry in the book has exactly one target listing.</li>
+  <li style="background-color:#aaf">No name is listed in it's own lookup. To look up a name, one follows each target listing to the eventual address.</li>
+</ol>
+
+<h3>Examples</h3>
+<div class="I">
+  <div id="e1" class="S">
+    Erin is a name.<br/>
+    Paul is a name.<br/>
+    42 Bit Way is an address.<br/>
+    Erin is an entry in the book.<br/>
+    Paul is an entry in the book.<br/>
+    Paul lists Erin as a target.<br/>
+    Erin lists 42 Bit Way as a target.<br/>
+  </div>
+  <div class="E" style="background-color:#afa">
+    Correct Answer: Consistent<br/>
+    This example does not violate any of the statements above.
+  </div>
+</div>
+<div class="I">
+  <div id="e2" class="S">
+  	
+  </div>
+  <div class="E" style="background-color:#afa">
+    Correct Answer: Consistent<br/>
+    This example does not violate any of the statements above.
+  </div>
+</div>
+<div class="I">
+  <div id="e3" class="S">
+    George is a name.<br/>
+    George is an entry in the book.<br/>
+    George lists George as a target.<br/>
+  </div>
+  <div class="E" style="background-color:#faa">
+    Correct Answer: Inconsistent<br/>
+    George is listed in his own lookup.
+  </div>
+</div>
+<div class="I">
+  <div id="e4" class="S">
+    Jen is a name.<br/>
+    Rick is a name.<br/>
+    Jen is an entry in the book.<br/>
+    Rick is an entry in the book.<br/>
+    Jen lists Rick as a target.<br/>
+    Rick lists Jen as a target.<br/> 
+  </div>
+  <div class="E" style="background-color:#faa">
+    Correct Answer: Inconsistent<br/>
+    Jen and Rick are listed in their own lookup.
+  </div>
+</div>
+
+<p id="feedback" class="placeholder"><button onclick="submit()">Submit Answers</button></p>
+
+<script>       
+  init_training();
+</script>

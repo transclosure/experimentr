@@ -1,0 +1,60 @@
+<h1 id="topbar"></h1>
+
+<h3>Instructions</h3>
+<b>Changes since the last task have been highlighted</b>
+<div id="info" class="placeholder I" style="background-color:#aaf">
+  You will now be answering questions about the final addressbook policy. Please read each question carefully and answer to the best of your ability.
+</div>
+
+<h3>Statements</h3>
+<b>It turns out it is impossible for a name to not contain an address in its own lookup. The parts of the addressbook policy responsible for forbidding this are highlighted below.</b>
+<ol class="I">
+  <li>The addressbook policy involves targets listed in the book.</li>
+  <li>A target is either a name (like 'Bob') or an address (like '102 Rose Way').</li>
+  <li>Every name is an entry in the book.</li>
+  <li>Every entry in the book has <span style="background-color:#aaf">exactly one</span> target listing.</li>
+  <li>No name is listed in it's own lookup. To look up a name, one follows each target listing to the eventual address.</li>
+</ol>
+
+<h3>Questions</h3>
+<div>
+  It turns out it is impossible for a name to not contain an address in its own lookup. The parts of the addressbook policy responsible for forbidding this are highlighted above.
+  <br/>
+  <b>In your own words, why is it impossible for a name to not contain an address in its own lookup?</b>
+  <br/>
+  <textarea id="q1" rows="5" cols="80"></textarea>
+  <br/>
+  <b>Which of the highlighted lines above best explains why it is impossible for a name to not contain an address in its own lookup.</b>
+  <br/>
+  <input id="q2" type="number"></input>
+</div>
+<br>
+<button id="submitComments" type="button">Submit Answers and Finish</button>
+<div id="submitFeedback"></div>
+
+<script>
+var postId  = experimentr.postId
+    , ans  = {}
+    , valid = false
+
+function validate() {
+  var q1 = d3.select("#q1").property("value");
+  var q2 = d3.select("#q2").property("value");
+  if(/\S/.test(q1)) ans["q1"] = q1;
+  if(q2>0 && q2<11) ans["q2"] = q2;
+  
+  valid = ans["q1"]!=null && ans["q2"]!=null;
+  if( valid ) {
+    done(ans)
+  }
+  else {
+    d3.select('#submitFeedback').text('Please answer all questions before submitting.');
+  }
+}
+
+function init2() {
+  d3.select('#submitComments').on('click', validate);
+}
+init();
+init2();
+</script>
