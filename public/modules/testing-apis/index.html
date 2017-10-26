@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Survey</title>
-<script src="scripts/d3/d3.min.js" charset="utf-8"></script>
-<script src="experimentr.js"></script>
-<link rel="stylesheet" type="text/css" href="css/main.css" />
-<link rel="stylesheet" type="text/css" href="css/toyfinder.css" />
+<script src="../../scripts/d3/d3.min.js" charset="utf-8"></script>
+<script src="../../experimentr.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/main.css" />
+<link rel="stylesheet" type="text/css" href="../../css/toyfinder.css" />
 
 <body>
 </body>
 
 <script>
-  function getsequence() {
-    return ['modules/consent/training.html',
-    'modules/1.html',
-    'modules/debrief/training.html'];
+  function getexperiment() {
+    return [//'pre/',
+    '1.html',
+    'post/'];
   }
   var data = {};
   var experiment = getexperiment(); 
   var experimentID = experiment.toString();
   var task = 0;
   var taskID = null;
-  var training_answered;
-  var edit_answers = null;
   function init() {
     taskID = experiment[task];
     data = {};
@@ -31,141 +29,14 @@
     d3.select("#topbar").text("Task "+(task+1)+" of "+experiment.length);
     experimentr.hideNext();
   }
-  function done(exitans) {
+  function done() {
     task = task + 1;
     d3.select("#topbar").text("");
     //
     data[taskID+'_end'] = Date.now();
     data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
-    for (q in exitans) {
-      data[taskID+'_exit_'+q] = exitans[q];
-    }
     experimentr.addData(data);
     experimentr.next();
   }
-  /* TRAINING */
-  function init_training() {
-    init();
-    training_answered = 0;
-    d3.selectAll(".S").on("click", toggleAnswer);
-    d3.selectAll(".E").style("visibility", "hidden");
-    d3.selectAll("button").attr("disabled", "disabled");
-  }
-  function toggleAnswer() {
-    var t = d3.event.target;
-    var e = d3.select(t); 
-    if(e.style("background-color") == "rgb(170, 255, 170)") {
-      e.style("background-color","#faa");
-    } else if(e.style("background-color") == "rgb(255, 170, 170)") {
-      e.style("background-color","#afa");
-    } else {
-      training_answered = training_answered+1;
-      e.style("background-color","#afa");
-    }
-    if(training_answered == ((d3.selectAll(".S"))[0]).length) {
-      d3.selectAll("button").attr("disabled", null);
-    }
-  }
-  function submit() {
-    data[taskID+'_responses'] = html2arr(d3.selectAll(".S")[0]);
-    data[taskID+'_answers'] = html2arr(d3.selectAll(".E")[0]);
-    data[taskID+'_grade'] = 0;
-    for(i=0;i<(data[taskID+'_responses']).length;i++) {
-      if((data[taskID+'_responses'])[i] == (data[taskID+'_answers'])[i]) {
-        data[taskID+'_grade'] = data[taskID+'_grade'] + 1;
-      }
-    }
-    data[taskID+'_grade'] =  data[taskID+'_grade'] / Object.keys(data[taskID+'_responses']).length
-    data[taskID+'_responses'] = JSON.stringify(data[taskID+'_responses']);
-    data[taskID+'_answers'] = JSON.stringify(data[taskID+'_answers']);
-    // 
-    var msg = "The correct answers are now shown to the right of your answers. Before continuing, please answer the following question (your response will not affect your pay):<br/>Up to this point, do you understand the statements and examples?<br/>";
-    d3.selectAll(".S").on("click", null);
-    d3.selectAll(".E").style("visibility", "visible");
-    d3.select("#feedback").html(msg+"<button onclick='done({q1:false})'>No</button><button onclick='done({q1:true})'>Yes</button>");
-  }
-  function html2arr(divs) {
-    var arr = [];
-    for(i=0;i<divs.length;i++) {
-      var e = divs[i];
-      var bgc = d3.select(e).style("background-color");
-      if(bgc == "rgb(170, 255, 170)") {
-        arr[i] = true;
-      } else if(bgc == "rgb(255, 170, 170)") {
-        arr[i] = false;
-      }
-    }
-    return arr;
-  }
-  /* EDITS */
-  function init_edits(edits) {
-    init();
-    edit_answers = edits;
-    data[taskID+'_attempts'] = 0;
-    data[taskID+'_attempttime'] = [];
-    data[taskID+'_attemptcode'] = [];
-    //
-    experimentr.hideNext();
-    d3.selectAll('select').on('change', check);
-    d3.selectAll('option').on('click', attempt);
-  }
-  function check() {
-    var select = d3.event.target;
-    var option = select.options[select.selectedIndex];
-    option.click();
-  }
-  function attempt() {
-    if(!d3.event.target.disabled) {
-      var atime = Date.now() - data[taskID+'_start'];
-      var acode = d3.event.target.id;
-      data[taskID+'_attempts'] = data[taskID+'_attempts'] + 1;
-      data[taskID+'_attempttime'] = (data[taskID+'_attempttime']).concat([atime]);
-      data[taskID+'_attemptcode'] = (data[taskID+'_attemptcode']).concat([acode]);
-      //
-      if (edit_answers[acode]=="") {
-        pass();
-      } 
-      else if(edit_answers[acode]==null) {
-        fail(null);
-      }
-      else if(!edit_answers[acode].startsWith("#")) {
-        fail(edit_answers[acode]);
-      }
-      else {
-        var feedback = "The following goals are unsatisfied:<br/>";
-        d3.selectAll(edit_answers[acode]).each(function() {
-          feedback = feedback+"  "+d3.select(this).text()+"<br/>";
-        });
-        fail(feedback);
-      }
-    }
-  }
-  function fail(feedback) {
-    var opt = d3.select(d3.event.target); 
-    var id = opt.attr("id");
-    opt.style("background-color", "#faa");
-    opt.style("text-decoration" , "line-through");
-    opt.attr("disabled", "disabled");
-    var msg = "This option does not satisfy all goals in a single change. ";
-    if(feedback!=null) {
-      msg = msg+feedback+"<br/>";
-    }
-    d3.selectAll('select').attr("disabled", "disabled");
-    d3.select("#feedback").html(msg+"<button onclick='reset()'>Okay. Reset the options and I'll try again.</button>");
-  }
-  function reset() {
-    d3.select("#feedback").html("");
-    d3.selectAll('select').property('selectedIndex', 0);
-    d3.selectAll('select').attr("disabled", null);
-  }
-  function pass() {
-    data[taskID+'_end'] = Date.now();
-    data[taskID+'_time'] = parseFloat(data[taskID+'_end']) - parseFloat(data[taskID+'_start']);
-    experimentr.addData(data);
-    // 
-    var msg = "Correct! This option satisfies all goals in a single change.<br/>Before continuing, please answer the following question(your response will not affect your pay):<br/>Did the previous tasks adequately prepare you for this final task? (If you struggled, answer no)<br/>";
-    d3.selectAll('select').attr("disabled", "disabled");
-    d3.select("#feedback").html(msg+"<button onclick='done({q1:false})'>No</button><button onclick='done({q1:true})'>Yes</button>");
-  }
-  experimentr.sequence(getsequence()).start();
+  experimentr.sequence(getexperiment()).start();
 </script>

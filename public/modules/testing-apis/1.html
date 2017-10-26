@@ -1,58 +1,144 @@
 <h1 id="topbar"></h1>
 
 <h3>Instructions</h3>
-<div id="info" class="placeholder I">
-  You will be analyzing parts of an addressbook policy. An addressbook policy defines how names and addresses are stored and looked up in an address book. Statements from the policy are shown below, along with some examples. Some of the examples are consistent with the statements' meanings. Others are not. Please mark which examples are consistent (green) or inconsistent (red) by clicking on them.
+
+<div id="description" class="placeholder I">
+Below is an API function and its original test suite. Please analyze the function types, description, and examples thoroughly. When you feel you understand the function well enough, please fill in the test case templates below with your choice of input and expected output. Only test cases that match the API's expected output will be accepted (marked green). You will not be able to continue until the entire test suite is greenlit. 
 </div>
 
-<h3>Statements</h3>
-<ol class="I">
-	<li>The addressbook policy involves targets listed in the book.</li>
-	<li>A target is either a name (like 'Bob') or an address (like '102 Rose Way').</li>
-</ol>
+<h3>API Function</h3>
+<div class="I">
+<center><big><b>partition(</b>mylist<i>[listof[integer]]</i><b>)</b>
+→
+<i>[[listof[integer]], [listof[integer]]] or "err" </i></big>
+</center>
+<p>
+The partition function takes as input a list of integers, and returns two subsets of the input list. The two output lists have equal sums and together form the original input list. If no such partition exists, the function returns an error.
+</p>
+</div>
 
-<h3>Examples</h3>
+<h3>Test Suite</h3>
+<p><b>
+Please write test cases you think enhance the test suite: that is, 
+test new and interesting input not covered by the original test suite.
+</b></p>
 <div class="I">
-  <div id="e1" class="S">
-    22 Jar Street is an address.<br/>
+  <div class="S">
+    <big><b>partition(</b>mylist<i>[listof[integer]]</i><b>)</b></big>
   </div>
-  <div class="E" style="background-color:#afa">
-    Correct Answer: Consistent<br/>
-    This example does not violate any of the statements above.
-  </div>
-</div>
-<div class="I">
-  <div id="e2" class="S">
-    Jack is an address.<br/>
-    18 Hollywood Ave is an address.<br/>
-  </div>
-  <div class="E" style="background-color:#faa">
-    Correct Answer: Inconsistent<br/>
-    Jack is not an address.
-  </div>
-</div>
-<div class="I">
-  <div id="e3" class="S">
-  	Tim is a name.<br/>
-    33 Green Road is a name.<br/>
-  </div>
-  <div class="E" style="background-color:#faa">
-    Correct Answer: Inconsistent<br/>
-    33 Green Road is not a name.
-  </div>
-</div>
-<div class="I">
-  <div id="e4" class="S">
-  	Katie is a name.<br/>
-  </div>
-  <div class="E" style="background-color:#afa">
-    Correct Answer: Consistent<br/>
-    This example does not violate any of the statements above.
+  →
+  <div class="E" >
+    <big><i>[[listof[integer]], [listof[integer]]] or "err"</i></big>
   </div>
 </div>
 
-<p id="feedback" class="placeholder"><button onclick="submit()">Submit Answers</button></p>
+<div class="I" style="background-color:#afa">
+  <div class="S">
+    [1, 5, 11, 5]
+  </div>
+  →
+  <div class="E" >
+    [[1, 5, 5], [11]]
+  </div>
+</div>
 
-<script>       
-  init_training();
+<div class="I" style="background-color:#afa">
+  <div class="S">
+    [1, 5, 3]
+  </div>
+  →
+  <div class="E" >
+    "err"
+  </div>
+</div>
+
+<div id="test1" class="I">
+  <div class="S">
+    <textarea id="input1" rows="1" cols="30"></textarea>
+  </div>
+  →
+  <div class="E" >
+    <textarea id="output1" rows="1" cols="30"></textarea>
+  </div>
+</div>
+
+<div id="test2" class="I">
+  <div class="S">
+    <textarea id="input2" rows="1" cols="30"></textarea>
+  </div>
+  →
+  <div class="E" >
+    <textarea id="output2" rows="1" cols="30"></textarea>
+  </div>
+</div>
+
+<div id="test3" class="I">
+  <div class="S">
+    <textarea id="input3" rows="1" cols="30"></textarea>
+  </div>
+  →
+  <div class="E" >
+    <textarea id="output3" rows="1" cols="30"></textarea>
+  </div>
+</div>
+
+<button id="continue" type="button">Next Task</button>
+
+<script>
+  function partition_helper(arr, i, target) {
+    if(target==0) { return true; }
+    else if (i < 0 && target > 0) { return false; }
+    else if (arr[i] > target) { 
+      return partition_helper(arr, i-1, target);
+    }
+    else {
+      return partition_helper(arr, i-1, target-arr[i]) || partition_helper(arr, i-1, target);
+    }
+  }
+  function canPartition(arr) {
+    var total = 0;
+    for(var i in arr) { total += arr[i]; }
+    var target = total/2;
+    if(arr.length < 2) { return false; }
+    else { return partition_helper(arr, arr.length-1, target); }
+  }
+  function validPartition(arr, part) {
+    var a1 = arr.sort();
+    var a2 = part[0].concat(part[1]).sort();
+    return a1.length==a2.length && a1.every(function(v,i) { return v === a2[i]});
+  }    
+  function vtest(testnum) {
+    try {
+      var test = "#test"+testnum;
+      var input = "#input"+testnum;
+      var output = "#output"+testnum;
+      input = JSON.parse(d3.select(input).property("value"));
+      output = JSON.parse(d3.select(output).property("value"));
+      if(canPartition(input) && validPartition(input, output)) {
+        d3.select(test).attr("style","background-color:#afa");
+        return true;
+      }
+      else if(!canPartition(input) && output=="err") {
+        d3.select(test).attr("style","background-color:#afa");
+        return true;
+      }
+      else {
+        throw 'invalid test';
+      }
+    }
+    catch (e) {
+      d3.select(test).attr("style","background-color:#faa");
+      return false;
+    }
+  }
+  function vsuite() {
+    if(vtest(1) && vtest(2) && vtest(3)) {
+      d3.select('#continue').style('display', 'inline');
+      d3.selectAll('textarea').attr('disabled', true);
+    }
+  }
+  init();
+  d3.select("#continue").style('display', 'none');
+  d3.select("#continue").on("click", done);
+  d3.selectAll('textarea').on('input', vsuite);
 </script>

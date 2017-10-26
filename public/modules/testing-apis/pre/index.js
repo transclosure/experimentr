@@ -8,7 +8,7 @@
     experimentr.hideNext();
 
     // load previous workers file
-    d3.json('modules/consent/blocked-workers.json', function(err, d) {
+    d3.json('pre/blocked-workers.json', function(err, d) {
       workers = d;
       d3.select('#workerId').attr('disabled', null);
     });

@@ -36,11 +36,14 @@
     margin-top: 0em;
     clear:both;
     background: white;
+    text-align: justify;
+    padding: .25em;
   }
   .S, .E {
     margin-bottom: 1em;
     width: 48%;
     background: inherit;
+    text-align: center;
   }
   .S {
     float: left;
@@ -48,16 +51,14 @@
   .E {
     float: right;
   }
-  div.E {
-    font-weight: bold;
+  big i, big b, big {
+    padding: .25em;
   }
-  #fixed, #free {
-    border: 5px solid lightgray;
-    border-radius: 5px;
-    margin: 1%;
-    padding: 1%;
+  big i {
+    color: steelblue;
   }
-  #fixed, #free {
-    background: whitesmoke;
+  textarea {
+    resize: none;
   }
+
   
