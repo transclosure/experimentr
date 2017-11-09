@@ -1,0 +1,111 @@
+<h1 id="topbar"></h1>
+
+<h3>Instructions</h3>
+
+<div id="description" class="placeholder I">
+Please read the function description carefully. When you feel you understand the function description well enough, please fill in the test case templates below with your choice of input and expected output. You cannot proceed until all inputs/outputs are filled in.
+</div>
+
+<h3>Function Description</h3>
+<div class="I">
+<center>
+<big>
+<i>number</i><b>double</b>(<i>number</i> n) 
+</big>
+</center>
+<p>
+The double function takes in a number (n) and returns twice n.
+</p>
+</div>
+
+<h3>Test Case Templates</h3>
+<div class="I">
+    <b>double</b>(
+    <textarea disabled="true" rows="1" cols="20">3.06</textarea>
+    ) =
+    <textarea disabled="true" rows="1" cols="20">6.12</textarea>
+</div>
+<div id="test0" class="I">
+    <b>double</b>(
+    <textarea id="input0_1" disabled="true" rows="1" cols="20">2.01</textarea>
+    ) =
+    <textarea id="output0" rows="1" cols="20"></textarea>
+</div>
+<div id="test1" class="I">
+    <b>double</b>(
+    <textarea id="input1_1" rows="1" cols="20"></textarea>
+    ) =
+    <textarea id="output1" rows="1" cols="20"></textarea>
+</div>
+<div id="test2" class="I">
+    <b>double</b>(
+    <textarea id="input2_1" rows="1" cols="20"></textarea>
+    ) =
+    <textarea id="output2" rows="1" cols="20"></textarea>
+</div>
+<div id="test3" class="I">
+    <b>double</b>(
+    <textarea id="input3_1" rows="1" cols="20"></textarea>
+    ) =
+    <textarea id="output3" rows="1" cols="20"></textarea>
+</div>
+<button id="continue" type="button">Next Task</button>
+
+<script>
+  var vdic = {};
+  function textareainput() {
+    validate(d3.event.target.id);
+  }
+  function validate(usertarget) {
+    try {
+      if(tovalidate.includes(usertarget)) {
+        var uservalue = JSON.parse(d3.select("#"+usertarget).property("value"));
+        if(isvalid(uservalue)) {
+          d3.select("#"+usertarget).attr("style","background-color:#afa");
+          vdic[usertarget] = true;
+        } else {
+          throw "invalid";
+        }
+      }
+    } catch (e) {
+      d3.select("#"+usertarget).attr("style","background-color:#faa");
+      vdic[usertarget] = false;
+    }
+    var allvalid = true;
+    for (var key in vdic) {
+      allvalid = allvalid && vdic[key];
+    }
+    if(allvalid) {
+      d3.select("#continue").style('display', null);
+    } else {
+      d3.select("#continue").style('display', 'none');
+    }
+  }
+  //
+  function submit() {
+    d3.selectAll("textarea").attr("disabled", "true");
+    for (var i of [0,1,2,3]) {
+      var test = "test"+i;
+      var input1 = "input"+i+"_1";
+      var output = "output"+i;
+      data[taskID+"_"+test] = [
+      d3.select("#"+input1).property("value"),
+      d3.select("#"+output).property("value")];
+    }
+    done();
+  }
+  var tovalidate = ["output0",
+  "input1_1","output1",
+  "input2_1","output2",
+  "input3_1","output3"];
+  function isvalid(uservalue) {
+    return Number.isFinite(uservalue);
+  }
+  //
+  init();
+  d3.select("#continue").on("click", submit);
+  d3.selectAll("textarea").on("input", textareainput);
+  for(var form of tovalidate) {
+    validate(form);
+  }
+</script>
