@@ -7,12 +7,14 @@ var j2c           = require('json2csv')
   , data;
 
 function getFields() {
-  var experimentFields = ['workerId','postId','userAgent','experimentID','taskID'];
+  var experimentFields = ['workerId','postId','experimentID','taskID','q1'];
   var taskFields = [taskID+'_time',
-		    taskID+'_answers',
-                    taskID+'_responses',
-		    taskID+'_grade',
-		    taskID+'_exit_q1'];
+		    taskID+'_test0',
+                    taskID+'_test1',
+		    taskID+'_test2',
+		    taskID+'_test3',
+		    taskID+'_test4',
+		    taskID+'_test5'];
   return experimentFields.concat(taskFields);
 }
 
