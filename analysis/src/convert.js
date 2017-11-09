@@ -12,9 +12,7 @@ function getFields() {
 		    taskID+'_test0',
                     taskID+'_test1',
 		    taskID+'_test2',
-		    taskID+'_test3',
-		    taskID+'_test4',
-		    taskID+'_test5'];
+		    taskID+'_test3'];
   return experimentFields.concat(taskFields);
 }
 
