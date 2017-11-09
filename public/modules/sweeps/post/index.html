@@ -1,23 +1,21 @@
-<div id="debrief">
+<div>
   <h1>
     Thank you again for your participation and providing feedback below.
     <strong>Your feedback below will not affect your approval. You will be paid regardless of your answers.</strong>
   </h1>
+</div>
 
-  <div>
-    Was there something you struggled with in this study? Was there a particular point in the study (task #), where you started struggling? Is there something we could add that would have made the study easier to complete?<br/>
-    <textarea id="q1" rows="5" cols="80"></textarea>
-  </div>
+<div>
+    What is your most used programming language?<br/>
+    Did you have any issues with the survey?<br/>
+    <textarea id="q1" rows="1" cols="60"></textarea>
+</div>
 
-  <br>
+<div>
   <button id="submitComments" type="button">Submit</button>
-  <div id="submitFeedback"></div>
   <h1>Please copy and paste the following code back on Mechanical Turk before closing this window:</h1>
   <h2 id="postId">Please submit comments first</h2>
 </div>
-
-<style>
-</style>
 
 <script>
 var postId  = experimentr.postId
@@ -35,9 +33,6 @@ function validate() {
     d3.select('#submitComments').attr('disabled', 'true');
     d3.select('#submitFeedback').text('Submit Successful');
     d3.select("#postId").text(postId);
-  }
-  else {
-    d3.select('#submitFeedback').text('Please answer all questions before submitting.');
   }
 }
 
