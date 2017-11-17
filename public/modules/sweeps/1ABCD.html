@@ -12,7 +12,11 @@
 <script>
   var data = {};
   var pre = ['pre/index.html'];
-  var experiment = ['tasks/double-INT.html'];
+  var tasks = ['tasks/adding-machine-POS-FLOAT.html',
+  'tasks/adding-machine-NEG-FLOAT.html',
+  'tasks/adding-machine-POS-INT.html',
+  'tasks/adding-machine-NEG-INT.html'];
+  var experiment = [tasks[Math.floor(Math.random()*tasks.length)]];
   var post = ['post/index.html'];
   var sequence = pre.concat(experiment, post);
   var experimentID = experiment.toString();
@@ -35,5 +39,5 @@
     experimentr.addData(data);
     experimentr.next();
   }
-  experimentr.sequence(sequence).start();
+  experimentr.sequence(experiment).start();
 </script>
