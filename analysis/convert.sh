@@ -1,5 +1,20 @@
-node src/convert.js results/data.json tasks/adding-machine-POS-INT.html  >> results/data.csv
-node src/convert.js results/data.json tasks/adding-machine-NEG-INT.html  >> results/data.csv
-node src/convert.js results/data.json tasks/adding-machine-POS-FLOAT.html >> results/data.csv
-node src/convert.js results/data.json tasks/adding-machine-NEG-FLOAT.html >> results/data.csv
+node src/convert.js results/data.json tasks/triple-POS-INT.html  >> results/data.csv
+node src/convert.js results/data.json tasks/triple-NEG-INT.html  >> results/data.csv
+node src/convert.js results/data.json tasks/triple-POS-FLOAT.html >> results/data.csv
+node src/convert.js results/data.json tasks/triple-NEG-FLOAT.html >> results/data.csv
+node src/convert.js results/data.json tasks/adding-machine-WITH-00.html >> results/data.csv
+node src/convert.js results/data.json tasks/adding-machine-WITHOUT-00.html >> results/data.csv
+node src/convert.js results/data.json tasks/adding-machine-EMPTY-LIST.html >> results/data.csv
+node src/convert.js results/data.json tasks/adding-machine-LEADING-0.html >> results/data.csv
+node src/convert.js results/data.json tasks/sum-sublists-ALL-FULL.html >> results/data.csv
+node src/convert.js results/data.json tasks/sum-sublists-EMPTY-LIST.html >> results/data.csv
+node src/convert.js results/data.json tasks/sum-sublists-EMPTY-SUBLIST.html >> results/data.csv
+node src/convert.js results/data.json tasks/first-half-EVEN-LENGTH.html >> results/data.csv
+node src/convert.js results/data.json tasks/first-half-EMPTY-STRING.html >> results/data.csv
+node src/convert.js results/data.json tasks/first-half-ODD-LENGTH.html >> results/data.csv
+node src/convert.js results/data.json tasks/cut-at-xx-NO-XXS.html >> results/data.csv
+node src/convert.js results/data.json tasks/cut-at-xx-MULTIPLE-XXS.html >> results/data.csv
+node src/convert.js results/data.json tasks/cut-at-xx-EMPTY-STRING.html >> results/data.csv
+node src/convert.js results/data.json tasks/cut-at-xx-FOUR-XS.html >> results/data.csv
+node src/convert.js results/data.json tasks/cut-at-xx-THREE-XS.html >> results/data.csv
 
