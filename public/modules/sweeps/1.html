@@ -12,16 +12,40 @@
 <script>
   var data = {};
   var pre = ['pre/index.html'];
-  var tasks = ['tasks/adding-machine-POS-FLOAT.html',
-  'tasks/adding-machine-NEG-FLOAT.html',
-  'tasks/adding-machine-POS-INT.html',
-  'tasks/adding-machine-NEG-INT.html'];
-  var experiment = [tasks[Math.floor(Math.random()*tasks.length)]];
+  //
+  var triple = ['tasks/triple-POS-INT.html',
+  'tasks/triple-NEG-INT.html',
+  'tasks/triple-POS-FLOAT.html',
+  'tasks/triple-NEG-FLOAT.html'];
+  var addingmachine = ['tasks/adding-machine-WITH-00.html',
+  'tasks/adding-machine-WITHOUT-00.html',
+  'tasks/adding-machine-EMPTY-LIST.html',
+  'tasks/adding-machine-LEADING-0.html'];
+  var sumsublists = ['tasks/sum-sublists-ALL-FULL.html',
+  'tasks/sum-sublists-EMPTY-LIST.html',
+  'tasks/sum-sublists-EMPTY-SUBLIST.html'];
+  var firsthalf = ['tasks/first-half-EVEN-LENGTH.html',
+  'tasks/first-half-EMPTY-STRING.html',
+  'tasks/first-half-ODD-LENGTH.html'];
+  var cutatxx = ['tasks/cut-at-xx-NO-XXS.html',
+  'tasks/cut-at-xx-MULTIPLE-XXS.html',
+  'tasks/cut-at-xx-EMPTY-STRING.html',
+  'tasks/cut-at-xx-FOUR-XS.html',
+  'tasks/cut-at-xx-THREE-XS.html'];
+  var experiment = [randomElement(triple),
+  randomElement(addingmachine),
+  randomElement(sumsublists),
+  randomElement(firsthalf),
+  randomElement(cutatxx)];
+  //
   var post = ['post/index.html'];
   var sequence = pre.concat(experiment, post);
   var experimentID = experiment.toString();
   var task = 0;
   var taskID = null;
+  function randomElement(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
   function init() {
     taskID = experiment[task];
     data = {};

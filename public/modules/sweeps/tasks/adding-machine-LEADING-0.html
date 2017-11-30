@@ -1,0 +1,147 @@
+<h1 id="topbar"></h1>
+
+<h3>Instructions</h3>
+
+<div id="description" class="placeholder I">
+Please read the function description carefully. When you feel you understand the function description well enough, please fill in the test case templates below with your choice of input and expected output. You cannot proceed until all inputs/outputs are filled in.
+</div>
+
+<h3>Function Description</h3>
+<div class="I">
+<center>
+<big>
+<i>[natural]</i><b>adding-machine</b>(<i>[natural]</i> sequence) 
+</big>
+</center>
+<p>
+A natural number is any integer 0 or greater: 0, 1, 2, 3, and so-on. The adding-machine function takes in a list of naturals (sequence) and returns a list of natural sums. Each sum is calculated by adding every natural together until a 0 is reached in the sequence. The function stops calculating new sums and immediately returns when encountering two consecutive 0s.
+</p>
+</div>
+
+<h3>Test Case Templates</h3>
+<div class="I">
+    <b>adding-machine</b>(
+    <textarea disabled="true" rows="1" cols="20">[0, 1, 2]</textarea>
+    ) =
+    <textarea disabled="true" rows="1" cols="20">[0, 3]</textarea>
+</div>
+
+<div class="I">
+    <div id="delay" style="display:none;">Try and think of test cases that would catch the most bad implementations of this function. The templates for you to fill in will appear in 10 seconds.</div>
+    <button id="ready" type="button">I am ready to write test cases!</button>
+</div>
+
+<div id="tests" style="display:none;">
+    <div id="test0" class="I">
+        <b>adding-machine</b>(
+        <textarea id="input0_1" disabled="true" rows="1" cols="20">[0, 1]</textarea>
+        ) =
+        <textarea id="output0" rows="1" cols="20"></textarea>
+    </div>
+    <div id="test1" class="I">
+        <b>adding-machine</b>(
+        <textarea id="input1_1" rows="1" cols="20"></textarea>
+        ) =
+        <textarea id="output1" rows="1" cols="20"></textarea>
+    </div>
+    <div id="test2" class="I">
+        <b>adding-machine</b>(
+        <textarea id="input2_1" rows="1" cols="20"></textarea>
+        ) =
+        <textarea id="output2" rows="1" cols="20"></textarea>
+    </div>
+    <div id="test3" class="I">
+        <b>adding-machine</b>(
+        <textarea id="input3_1" rows="1" cols="20"></textarea>
+        ) =
+        <textarea id="output3" rows="1" cols="20"></textarea>
+    </div>
+</div>
+<button id="continue" type="button">Next Task</button>
+
+<script>
+  var vdic = {};
+  var tovalidate = ["output0",
+  "input1_1","output1",
+  "input2_1","output2",
+  "input3_1","output3"];
+  function textareainput() {
+    validate(d3.event.target.id);
+  }
+  function validate(usertarget) {
+    try {
+      if(tovalidate.includes(usertarget)) {
+        var uservalue = JSON.parse(d3.select("#"+usertarget).property("value"));
+        if(isvalid(uservalue)) {
+          d3.select("#"+usertarget).attr("style","background-color:#afa");
+          vdic[usertarget] = true;
+        } else {
+          throw "invalid";
+        }
+      }
+    } catch (e) {
+      d3.select("#"+usertarget).attr("style","background-color:#faa");
+      vdic[usertarget] = false;
+    }
+    var allvalid = true;
+    for (var key in vdic) {
+      allvalid = allvalid && vdic[key];
+    }
+    if(allvalid) {
+      d3.select("#continue").style('display', null);
+    } else {
+      d3.select("#continue").style('display', 'none');
+    }
+  }
+  function isvalid(uservalue) {
+    try {
+      var valid = true;
+      if(Array.isArray(uservalue)) {
+        for(v of uservalue) {
+          valid = valid && Number.isFinite(v);
+        }
+      } else {
+        valid = false;
+      }
+    } catch (e) {
+      valid = false;
+    }
+    return valid;
+  }
+  //
+  var takearest = function(period, decision, callback){
+    var interval = setInterval(function(){
+        if (decision()) {
+            interval = clearInterval(interval);
+            callback();
+        }
+    }, period);
+  }
+  function begin() {
+    d3.select("#ready").style('display', 'none');
+    d3.select("#delay").style('display', null);
+    takearest(10000, function(){ return done; }, function(){
+      d3.select("#tests").style('display', null);
+    });
+  }
+  function submit() {
+    d3.selectAll("textarea").attr("disabled", "true");
+    for (var i of [0,1,2,3]) {
+      var test = "test"+i;
+      var input1 = "input"+i+"_1";
+      var output = "output"+i;
+      data[taskID+"_"+test] = [
+      d3.select("#"+input1).property("value"),
+      d3.select("#"+output).property("value")];
+    }
+    done();
+  }
+  //
+  init();
+  d3.selectAll("textarea").on("input", textareainput);
+  for(var form of tovalidate) {
+    validate(form);
+  }
+  d3.select("#ready").on("click", begin);
+  d3.select("#continue").on("click", submit);
+</script>
