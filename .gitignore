@@ -15,5 +15,6 @@ analysis/*.r.Rout
 public/components/*
 
 *.jar
-/alloy/temp/*.*
+alloy/temp/*.als*
+alloy/temp/*.png*
 public/temp/*

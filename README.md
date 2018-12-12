@@ -1,3 +1,10 @@
+Alloy as a Service
+========
+
+- run getdep.sh
+- run alloy/compile.sh
+- follow experimentr readme below to start client/server
+
 <img src="https://raw.github.com/codementum/experimentr/master/experimentr-logo.png" title="Experimentr" alt="Experimentr" />
 ========
 
