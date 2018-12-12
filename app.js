@@ -22,7 +22,7 @@ redisClient.on('connect', function() {
 
 // Data handling
 var save = function save(d) {
-  redisClient.hmset(d.postId, d)
+  redisClient.hmset(d.postId, {"content": JSON.stringify(d)})
   if( debug )
     console.log('saved to redis: ' + d.postId +', at: '+ (new Date()).toString())
 }
@@ -31,15 +31,16 @@ var save = function save(d) {
 var app = express()
 app.use(express.bodyParser())
 app.use(express.static(__dirname + '/public'))
+app.use('/scripts', express.static(__dirname + '/node_modules/'));
 
 // If the study has finished, write the data to file
 app.post('/finish', function(req, res) {
-  fs.readFile('public/modules/blocked-workers.json', 'utf8', function(err,data) {
+  fs.readFile('public/modules/consent/blocked-workers.json', 'utf8', function(err,data) {
     if (err) console.log(err);
     var data = JSON.parse(data);
     data.push(req.body.workerId);
     data = JSON.stringify(data);
-    fs.writeFile('public/modules/blocked-workers.json', data, function(err) {
+    fs.writeFile('public/modules/consent/blocked-workers.json', data, function(err) {
       if(err) console.log(err);
     });
   });
