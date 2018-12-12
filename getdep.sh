@@ -1,6 +1,3 @@
-rm -rf public/components
-mkdir public/components
-
 wget https://codemirror.net/codemirror.zip
 unzip codemirror.zip
 mv codemirror-5.42.0 public/components/codemirror
