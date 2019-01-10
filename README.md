@@ -1,9 +1,11 @@
 Alloy as a Service
 ========
 
-- run getdep.sh
-- run alloy/compile.sh
-- follow experimentr readme below to start client/server
+- ./getdep.sh
+- cd alloy; ./compile.sh
+- (follow experimentr readme below to set up redis/node)
+- redis redis.conf
+- node app.js
 
 <img src="https://raw.github.com/codementum/experimentr/master/experimentr-logo.png" title="Experimentr" alt="Experimentr" />
 ========

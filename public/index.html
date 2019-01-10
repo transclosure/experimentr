@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 
 <meta charset="utf-8">
-<title>Survey</title>
+<title>✅❌spec</title>
 
-<script src="components/codemirror/lib/codemirror.js"></script>
-<link rel="stylesheet" href="components/codemirror/lib/codemirror.css">
-<script src="components/codemirror/mode/clike/clike.js"></script>
 <script src="components/d3js/d3.v3.min.js"></script>
 <script src="experimentr.js"></script>
 
@@ -46,6 +43,12 @@
   u {
     text-shadow : 0 0 0 #333;
   }
+  textarea {
+    font-size: 80%;
+    width:98%;
+    height:50px;
+    resize: none;
+  }
   #experimentr {
     margin: 0em auto 0em auto;
     width: 1080px;
@@ -58,44 +61,26 @@
     font-size: xx-large;
     font-weight: bold;
   }
-  #specification, #assertion, #question, #scenarios, #feedback {
+  #examples, #checker {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     margin: 0px 0px 0px 0px;
     background: #CCC;
   }
-  #spec, #assert, #quest, #scenario, #comment {
+  #example, #check {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     background: #FFF;
   }
-  #comment {
-    width : 98%;
-    height : 98%;
-    resize: none;
-  }
-  #specification {
+  #examples {
     width: 50%;
     float:left;
   }
-  #assertion{
-    width: 50%;
-    float: left;
-  }
-  #question{
+  #checker {
     width: 45%;
     float: right;  
-  }
-  #scenarios {
-    width: 45%;
-    float: right;
-    margin: 15px 0px 15px 0px;
-  }
-  #feedback {
-    width: 45%;
-    float: right;
   }
 </style>
 
@@ -103,147 +88,69 @@
 
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
-function getexperiment() {
-    if(Math.random() < .5) { return ['modules/+GOM.html','modules/+AOM.html'] }
-    else { return ['modules/+GOC.html','modules/+AOC.html'] }
-}
+  function getexperiment() {
+    return ['modules/check-ex-spec/simple.html'];
+  }
   var data = {};
   var experiment = getexperiment(); 
   var experimentID = experiment.toString();
-  var junktimer;
   function getsequence() {
-    var pre = ['modules/consent.html'];
+    var pre = ['modules/check-ex-spec/consent.html'];
     var comment = [];
-    var post = ['modules/debrief.html'];
+    var post = ['modules/check-ex-spec/debrief.html'];
     var tasks = comment.concat(experiment);
-    return pre.concat(tasks).concat(post);
+    return tasks;
   }
 /* GENERIC TASK FUNCTIONS */
-  function runalloy () {return run("alloy");}
-  function runaluminum () {return run("aluminum");}
-  function run (url){
-    d3.select("#graph").selectAll("*").remove();
+  function alloyparams() {
+    var ex1 = "?ex1=\'"+encodeURIComponent(document.getElementById('example1').value)+"\'";
+    ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex2 = "&ex2=\'"+encodeURIComponent(document.getElementById('example2').value)+"\'";
+    ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex3 = "&ex3=\'"+encodeURIComponent(document.getElementById('example3').value)+"\'";
+    ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex4 = "&ex4=\'"+encodeURIComponent(document.getElementById('example4').value)+"\'";
+    ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex5 = "&ex5=\'"+encodeURIComponent(document.getElementById('example5').value)+"\'";
+    ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
+    return ex1+ex2+ex3+ex4+ex5;
+  }
+  function runalloy() {
     var req = new XMLHttpRequest();
-    var url = "/"+url+"?spec="+encodeURIComponent(specCM.getValue()+assertCM.getValue());
-    req.open("GET", url, false);
+    var url = "/alloy";
+    req.open("GET", url+alloyparams(), false);
     req.send();
     var response = req.response.split('\n');
-    var filename = response[0];
-    var status = response[1];
-    response.shift();
-    response.shift();
     var info = response.join('\n');
-    d3.select("#status").text(status);
-    // failed
-    if(status=="ASSERTION IS FALSE")
-    {
-      foo(tid, specCM.getValue());
-      scenarioCM.setValue(prettyScenario(info));
-      vizScenario(filename);
-    }
-    // pass
-    else if (status=="ASSERTION IS TRUE")
-    {
-      foo(tid, specCM.getValue());
-      bar(tid, "PASS");
-      scenarioCM.setValue(info);
-    }
-    // other, probably syntax error
-    else 
-    {
-      scenarioCM.setValue(info);
-    }
-  }
-  function vizScenario(filename) {
-    d3.select("#graph").append("img").attr("src", filename + "?" + new Date().getTime()).attr("width", "100%").attr("height", "100%");
-  }
-  function prettyScenario(info) {
-    var pretty = "";
-    for(line of info.split('\n'))
-    {
-      if (line.startsWith("this") & line.indexOf("<:") > -1)
-      {
-        pretty = pretty + line.split("=")[0] + " :=\n";
-        for (subline of (line.split("=")[1]).split(",")){
-          pretty = pretty + "\t\t\t\t" + subline + "\n";
-        }
-      }
-      else if (line.startsWith("skolem"))
-      {
-        pretty = pretty+line+"\n";
-      }
-    }
-    return pretty;
+    d3.select("#out").text(info);
   }
   function init(taskID) {
     data = {};
     data['experimentID'] = experimentID;
-    data['_start_'+experimentID+'_'+taskID] = Date.now();
-    data['_clicks_'+experimentID+'_'+taskID] = 0;
-    data['_clicktime_'+experimentID+'_'+taskID] = [];
-    data['_specs_'+experimentID+'_'+taskID] = [];
-    data['_changes_'+experimentID+'_'+taskID] = [];
-    data['_feedback_'+experimentID+'_'+taskID] = "none";
-    junktimer = Date.now();
+    data['_start_'+experimentID+'_'+taskID] = new Date(Date.now()).toString();
+    data['_checks_'+experimentID+'_'+taskID] = 0;
+    data['_checktime_'+experimentID+'_'+taskID] = [];
     //
     experimentr.hideNext();
-    if (taskID.slice(-1)=="M"){
-      d3.select("#run").on('click', runaluminum);
-      runaluminum();
-    }
-    else
-    {
-      d3.select("#run").on('click', runalloy);
-      runalloy();
-    }
+    d3.select("#run").on('click', runalloy);
   }
-  function foo(taskID, spec) {
+  function check(taskID) {
     //
-    data['_clicks_'+experimentID+'_'+taskID] = data['_clicks_'+experimentID+'_'+taskID] + 1;
-    var ctime = Date.now() - data['_start_'+experimentID+'_'+taskID];
-    data['_clicktime_'+experimentID+'_'+taskID] = (data['_clicktime_'+experimentID+'_'+taskID]).concat([ctime]);
-    data['_specs_'+experimentID+'_'+taskID] = (data['_specs_'+experimentID+'_'+taskID]).concat([spec]);
-    //
-    d3.select("#attempts").text(8 - data['_clicks_'+experimentID+'_'+taskID]);
-    if(data['_clicks_'+experimentID+'_'+taskID] > 7)
-    {
-      bar(taskID, "FAIL");
-    }
+    data['_checks_'+experimentID+'_'+taskID] = data['_checks_'+experimentID+'_'+taskID] + 1;
+    var ctime = new Date(Date.now()).toString();
+    data['_checktime_'+experimentID+'_'+taskID] = (data['_checktime_'+experimentID+'_'+taskID]).concat([ctime]);
   }
-  function bar(taskID, result) {
+  function finish(taskID) {
     d3.selectAll('button').attr('disabled', true);
     //
-    data['_end_'+experimentID+'_'+taskID] = Date.now();
-    data['_result_'+experimentID+'_'+taskID] = result;
-    data['_time_'+experimentID+'_'+taskID] = parseFloat(data['_end_'+experimentID+'_'+taskID]) - parseFloat(data['_start_'+experimentID+'_'+taskID]);
-    d3.select('#scenarios').style("display", "none");
-    d3.select('#feedback').style("display", null);
-    d3.select('#done').attr("disabled", null);
+    data['_end_'+experimentID+'_'+taskID] = new Date(Date.now()).toString();
+    experimentr.addData(data);
+    experimentr.next();
   }
-  function done(taskID, text)
-  {
-     data['_feedback_'+experimentID+'_'+taskID] = text;
-     experimentr.addData(data);
-     experimentr.next();
-  }
-  function userevent(taskID, spec) {
-    var n = (data['_changes_'+experimentID+'_'+taskID]).length;
-    if(n > 0)
-    {
-      if((data['_changes_'+experimentID+'_'+taskID])[n-1] != spec)
-      {
-         (data['_changes_'+experimentID+'_'+taskID]) = (data['_changes_'+experimentID+'_'+taskID]).concat(spec);
-      }
-    }
-    else {
- 	(data['_changes_'+experimentID+'_'+taskID]) = (data['_changes_'+experimentID+'_'+taskID]).concat(spec);
-    }
-  };
   /* DOCUMENTATION
    all data is recorded in _<metric>_<experimentID><taskID> form
    the <experimentID><taskID> should denote the trial conditions (see example below)
    generic, parameterized code goes here. anything task specific goes in their module
-   sorry for the obfuscated names. i did that to avoid quick CTRL+F to win cheaters.
    */
   /*
    CONDITIONS

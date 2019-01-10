@@ -1,0 +1,35 @@
+<div id="examples">
+	<h1>Examples</h1>
+  <textarea id="example1">
+    one sig Node1, Node2, Node3 extends Node {}
+    run { edge = {(Node1->Node2)+(Node2->Node3)} } for 3 expect 0
+  </textarea>
+  <textarea id="example2">
+    one sig Node1, Node2, Node3 extends Node {}
+    run { edge = {(Node1->Node3)+(Node2->Node3)} } for 3 expect 0
+  </textarea> 
+  <textarea id="example3">
+    one sig Node1, Node2, Node3, Node4 extends Node {}
+    run { edge = {(Node1->Node2)+(Node1->Node3)+(Node1->Node4)} } for 4 expect 1
+  </textarea>
+  <textarea id="example4">
+  </textarea>
+  <textarea id="example5">
+  </textarea>
+</div>
+
+<div id="checker">
+  <h1>Checker</h1>
+  <div id="check">
+    <p>Produce examples of n-ary trees.</p>
+    <div style="text-align:center;">
+      <button id="run">Run examples against specs.</button>
+    </div>
+    <p>Status: <span id="out">Waiting for initial examples.</span></p>
+  </div>
+</div>
+
+<script>
+var tid = "simple";
+init(tid);
+</script>

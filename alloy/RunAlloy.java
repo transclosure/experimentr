@@ -1,24 +1,4 @@
-/*
- * Alloy Analyzer 4 -- Copyright (c) 2006-2008, Felix Chang
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+import java.nio.file.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -36,108 +16,85 @@ import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
 import edu.mit.csail.sdg.alloy4compiler.translator.TranslateAlloyToKodkod;
 import edu.mit.csail.sdg.alloy4viz.VizGUI;
 
-/** This class demonstrates how to access Alloy4 via the compiler methods. */
-
 public final class RunAlloy {
-
-    /*
-     * Execute every command in every file.
-     *
-     * This method parses every file, then execute every command.
-     *
-     * If there are syntax or type errors, it may throw
-     * a ErrorSyntax or ErrorType or ErrorAPI or ErrorFatal exception.
-     * You should catch them and display them,
-     * and they may contain filename/line/column information.
-     */
+    // Given a set of models as strings, runs against hard coded specifications and provides feedback
     public static void main(String[] args) throws Err {
-
-        // The visualizer (We will initialize it to nonnull when we visualize an Alloy solution)
-        VizGUI viz = null;
-
-        // Alloy4 sends diagnostic messages and progress reports to the A4Reporter.
-        // By default, the A4Reporter ignores all these events (but you can extend the A4Reporter to display the event for the user)
-        A4Reporter rep = new A4Reporter() {
-            // For example, here we choose to display each "warning" by printing it to System.out
-            @Override public void warning(ErrorWarning msg) {
-                //System.out.print("Relevance Warning:\n"+(msg.toString().trim())+"\n\n");
-                //System.out.flush();
-            }
-        };
-
-        for(String filename:args) {
-
-            // Parse+typecheck the model
-            //System.out.println("=========== Parsing+Typechecking "+filename+" =============");
-            CompModule world;
-            try {
-                world = CompUtil.parseEverything_fromFile(rep, null, filename);
-            }
-            catch (Exception e)
-            {
-                System.out.println("SYNTAX ERROR IN SPEC");
-                System.out.println(e);
-                return;
-            }
-
-            // Choose some default options for how you want to execute the commands
-            A4Options options = new A4Options();
-            options.solver = A4Options.SatSolver.SAT4J;
-
-            for (Command command: world.getAllCommands()) {
-                // Execute the command
-                //System.out.println("============ Command "+command+": ============");
-                A4Solution ans = TranslateAlloyToKodkod.execute_command(rep, world.getAllReachableSigs(), command, options);
-                // Print the outcome
-                //System.out.println(ans);
-                // If satisfiable... 
-                if (ans.satisfiable()) {
-                    //                   You can query "ans" to find out the values of each set or type.
-                    //                   This can be useful for debugging.
-                    //                  
-                    //                   You can also write the outcome to an XML file
-                    //                  
-                    //                   You can then visualize the XML file by calling this:
-                try{
-                    ans.writeXML(filename+".xml");
-                    fixBitWidth(filename+".xml");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                    try {
-                        viz = new VizGUI(false, "", null);
-                        viz.loadXML(filename+".xml", true);
-                        String image = "../public/"+filename+".png";
-                        File imageFile = new File(image);
-                        if(!imageFile.exists()) {
-                            imageFile.createNewFile();
-                        } 
-                        viz.getViewer().alloySaveAsPNG(image, 1.0, 400, 300);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        System.out.println("");
+        final String[] ocspecs = {"simple/btree.als"};
+        final String goldspec = "simple/tree.als";
+        final String[] ucspecs = {"simple/dag.als"};
+        boolean[] ocs = new boolean[ocspecs.length];
+        boolean[] ucs = new boolean[ocspecs.length];
+        String uniqueid = args[0];
+        // For each good / bad example...
+        for(int e=1; e < args.length; e++) {
+            String example = args[e];
+            if(!example.trim().isEmpty()) {
+                boolean good = example.contains("expect 1");
+                Boolean consistent = check(uniqueid, goldspec, example, good);
+                if(consistent==true) {
+                    if(good) {
+                        for(int i=0; i<ocspecs.length; i++) {
+                            if(check(uniqueid, ocspecs[i], example, false)==true) {
+                                ocs[i] = true;
+                            }
+                        }
+                    } else {
+                        for(int i=0; i<ucspecs.length; i++) {
+                            if(check(uniqueid, ucspecs[i], example, true)==true) {
+                                ucs[i] = true;
+                            }
+                        }
                     }
-                    System.out.println("ASSERTION IS FALSE");
-                    System.out.println(ans.toString());
-                    System.exit(0);
-                }
-                // If unsatisfiable... assertion is valid up to the bounds! 
-                else {
-                    System.out.println("ASSERTION IS TRUE");
+                } else {
+                    System.out.println("Example #"+e+" is inconsistent with the gold-standard spec.");
                 }
             }
         }
+        int ocsnum = 0;
+        for(boolean caught : ocs) if(caught) ocsnum++;
+        System.out.println("Avoided "+ocsnum+" of "+ocs.length+" over-constrained specs.");
+        int ucsnum = 0;
+        for(boolean caught : ucs) if(caught) ucsnum++;
+        System.out.println("Caught "+ucsnum+" of "+ucs.length+" under-constrained specs.");
+        return;
     }
-    public static void fixBitWidth(String filename) throws Exception {
-        File file = new File(filename);
-        FileInputStream fis = new FileInputStream(file);
-        byte[] data = new byte[(int) file.length()];
-        fis.read(data);
-        fis.close();
-        String xmlstring = new String(data, "UTF-8");
-        xmlstring = xmlstring.replaceAll("bitwidth=\"0\"", "bitwidth=\"10\"");
-        FileOutputStream fop = new FileOutputStream(file);
-        fop.write(xmlstring.getBytes());
-        fop.flush();
-        fop.close();
-    }
+    // Given a single spec, example, and expected SAT result, produces feedback
+    public static Boolean check(String uniqueid, String spec, String example, boolean expected) throws Err {
+        // Add example command to base spec in a temp file
+        String espec = "temp/"+uniqueid+".als";
+        try {
+            Files.copy(Paths.get(spec), Paths.get(espec), StandardCopyOption.REPLACE_EXISTING);
+            example = example.replaceAll("@", "\n");
+            Files.write(Paths.get(espec), example.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("INTERNAL ERROR: IO Error appending Example to Spec. Aborting.");
+            System.exit(1);
+        }
+        // Load spec
+        A4Reporter rep = new A4Reporter() {
+            @Override public void warning(ErrorWarning msg) {
+                //System.out.println(("Relevance Warning:\n"+(msg.toString().trim())+"\n\n");
+                //System.out.flush();
+            }
+        };
+        A4Options options = new A4Options();
+        options.solver = A4Options.SatSolver.SAT4J;
+        CompModule world = null;
+        try {
+            world = CompUtil.parseEverything_fromFile(rep, null, espec);
+        }
+        catch (Exception e)
+        {
+            System.out.println("INTERNAL ERROR: Syntax Error in Spec. Aborting.");
+            System.exit(1);
+        }
+        // Run example command
+        Boolean result = null;
+        for (Command command: world.getAllCommands()) {
+            A4Solution ans = TranslateAlloyToKodkod.execute_command(rep, world.getAllReachableSigs(), command, options);
+            result = (expected == ans.satisfiable());
+        }
+        return result;
+    }  
 }
