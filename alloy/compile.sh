@@ -1,10 +1,10 @@
 rm -rf temp
 
-javac -cp alloy4.2.jar RunAlloy.java
-echo Main-Class: RunAlloy > MANIFEST.MF
+javac -cp alloy4.2.jar RunSimple.java
+echo Main-Class: RunSimple > MANIFEST.MF
 echo "" >> MANIFEST.MF
-cp alloy4.2.jar RunAlloy.jar
-jar ufm RunAlloy.jar MANIFEST.MF *.class
+cp alloy4.2.jar RunSimple.jar
+jar ufm RunSimple.jar MANIFEST.MF *.class
 rm MANIFEST.MF
 rm *.class
 

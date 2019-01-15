@@ -134,8 +134,8 @@
   }
   function runalloy() {
     var req = new XMLHttpRequest();
-    var url = "/alloy";
-    req.open("GET", url+alloyparams(), false);
+    var url = "/"+taskID+alloyparams();
+    req.open("GET", url, false);
     req.send();
     var response = req.response.split('\n');
     d3.selectAll(".case").style('visibility', 'hidden');

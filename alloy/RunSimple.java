@@ -16,14 +16,14 @@ import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
 import edu.mit.csail.sdg.alloy4compiler.translator.TranslateAlloyToKodkod;
 import edu.mit.csail.sdg.alloy4viz.VizGUI;
 
-public final class RunAlloy {
+public final class RunSimple {
     // Given a set of models as strings, runs against hard coded specifications and provides feedback
     public static void main(String[] args) throws Err {
         String reveal = "";
         String out = "";
-        final String[] ocspecs = {"simple/btree.als"};
-        final String goldspec = "simple/tree.als";
-        final String[] ucspecs = {"simple/dag.als"};
+        final String[] ocspecs = {"hw0_simple/btree.als"};
+        final String goldspec = "hw0_simple/tree.als";
+        final String[] ucspecs = {"hw0_simple/dag.als"};
         boolean[] ocs = new boolean[ocspecs.length];
         boolean[] ucs = new boolean[ocspecs.length];
         String uniqueid = args[0];
