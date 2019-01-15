@@ -1,32 +1,41 @@
-<div id="examples">
+<div class="examples">
 	<h1>Examples</h1>
-  <textarea id="example1">
+  <textarea class="example" id="example1">
     one sig Node1, Node2, Node3 extends Node {}
     run { edge = {(Node1->Node2)+(Node2->Node3)} } for 3 expect 0
   </textarea>
-  <textarea id="example2">
+  <textarea class="example" id="example2">
     one sig Node1, Node2, Node3 extends Node {}
     run { edge = {(Node1->Node3)+(Node2->Node3)} } for 3 expect 0
   </textarea> 
-  <textarea id="example3">
+  <textarea class="example" id="example3">
     one sig Node1, Node2, Node3, Node4 extends Node {}
     run { edge = {(Node1->Node2)+(Node1->Node3)+(Node1->Node4)} } for 4 expect 1
   </textarea>
-  <textarea id="example4">
+  <textarea class="example" id="example4">
   </textarea>
-  <textarea id="example5">
+  <textarea class="example" id="example5">
   </textarea>
 </div>
 
-<div id="checker">
+<div class="checker">
   <h1>Checker</h1>
-  <div id="check">
-    <p>Produce examples of n-ary trees.</p>
-    <div style="text-align:center;">
-      <button id="run">Run examples against specs.</button>
-    </div>
-    <p>Status: <span id="out">Waiting for initial examples.</span></p>
+  <div class="prompt">
+    <p>Produce examples of n-ary trees. Bad examples (expect 0) catch under-constrained cases. Good examples (expect 1) avoid over-constrained cases. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
+    <p><button id="run">Run examples against specifications</button></p>
+    <p>Status: <span id="out"></span></p>
   </div>
+</div>
+
+
+<div class="cases">
+  <h1>Covered Cases</h1>
+  <div class="prompt">
+    <p>Once you have covered all cases, you can submit your examples below. If you have tried every type of example, you can reveal the cases you missed for help.</p>
+    <p><button id="stop">Reveal all missed cases</button><button id="submit">Submit final examples</button></p>
+  </div>
+  <div class="case" id="dag">Directed Acyclic Graphs</div>
+  <div class="case" id="btree">Binary Trees</div>
 </div>
 
 <script>

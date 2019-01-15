@@ -5,6 +5,7 @@
 
 <script src="components/d3js/d3.v3.min.js"></script>
 <script src="experimentr.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <style>
   * {
@@ -61,26 +62,31 @@
     font-size: xx-large;
     font-weight: bold;
   }
-  #examples, #checker {
+  .examples, .checker, .cases {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     margin: 0px 0px 0px 0px;
     background: #CCC;
   }
-  #example, #check {
+  .examples {
+    width: 50%;
+    float:left;
+  }
+  .checker {
+    width: 45%;
+    float: right;  
+  }
+  .cases {
+    width: 45%;
+    float: right;  
+  }
+  .prompt, .example, .case {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     background: #FFF;
-  }
-  #examples {
-    width: 50%;
-    float:left;
-  }
-  #checker {
-    width: 45%;
-    float: right;  
+    text-align:center;
   }
 </style>
 
@@ -88,12 +94,10 @@
 
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
-  function getexperiment() {
-    return ['modules/check-ex-spec/simple.html'];
-  }
   var data = {};
-  var experiment = getexperiment(); 
+  var experiment = ['modules/check-ex-spec/simple.html'];
   var experimentID = experiment.toString();
+  var taskID = "NULL";
   function getsequence() {
     var pre = ['modules/check-ex-spec/consent.html'];
     var comment = [];
@@ -102,18 +106,31 @@
     return tasks;
   }
 /* GENERIC TASK FUNCTIONS */
-  function alloyparams() {
-    var ex1 = "?ex1=\'"+encodeURIComponent(document.getElementById('example1').value)+"\'";
+  function examples() {
+    var ex1 = "ex1=\'"+document.getElementById('example1').value+"\'";
     ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex2 = "&ex2=\'"+encodeURIComponent(document.getElementById('example2').value)+"\'";
+    var ex2 = "ex2=\'"+document.getElementById('example2').value+"\'";
     ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex3 = "&ex3=\'"+encodeURIComponent(document.getElementById('example3').value)+"\'";
+    var ex3 = "ex3=\'"+document.getElementById('example3').value+"\'";
     ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex4 = "&ex4=\'"+encodeURIComponent(document.getElementById('example4').value)+"\'";
+    var ex4 = "ex4=\'"+document.getElementById('example4').value+"\'";
     ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex5 = "&ex5=\'"+encodeURIComponent(document.getElementById('example5').value)+"\'";
+    var ex5 = "ex5=\'"+document.getElementById('example5').value+"\'";
     ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
-    return ex1+ex2+ex3+ex4+ex5;
+    return [ex1,ex2,ex3,ex4,ex5];
+  }
+  function alloyparams() {
+    var ex1 = "ex1=\'"+encodeURIComponent(document.getElementById('example1').value)+"\'";
+    ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex2 = "ex2=\'"+encodeURIComponent(document.getElementById('example2').value)+"\'";
+    ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex3 = "ex3=\'"+encodeURIComponent(document.getElementById('example3').value)+"\'";
+    ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex4 = "ex4=\'"+encodeURIComponent(document.getElementById('example4').value)+"\'";
+    ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex5 = "ex5=\'"+encodeURIComponent(document.getElementById('example5').value)+"\'";
+    ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
+    return "?"+ex1+"&"+ex2+"&"+ex3+"&"+ex4+"&"+ex5;
   }
   function runalloy() {
     var req = new XMLHttpRequest();
@@ -121,29 +138,59 @@
     req.open("GET", url+alloyparams(), false);
     req.send();
     var response = req.response.split('\n');
+    d3.selectAll(".case").style('visibility', 'hidden');
+    var cases = response.shift();
+    for (c in cases.split(" ")) {
+      if(c>0) {
+        var id = cases.split(" ")[c].split("/")[1].split(".als")[0];
+        d3.select("#"+id).style('visibility', null);
+      }
+    }
     var info = response.join('\n');
     d3.select("#out").text(info);
   }
-  function init(taskID) {
+  function init(tid) {
+    taskID = tid;
     data = {};
     data['experimentID'] = experimentID;
     data['_start_'+experimentID+'_'+taskID] = new Date(Date.now()).toString();
     data['_checks_'+experimentID+'_'+taskID] = 0;
     data['_checktime_'+experimentID+'_'+taskID] = [];
+    data['_examples_'+experimentID+'_'+taskID] = [];
+    data['_finalexamples_'+experimentID+'_'+taskID] = [];
     //
     experimentr.hideNext();
-    d3.select("#run").on('click', runalloy);
+    d3.select("#run").on('click', check);
+    d3.select("#stop").on('click', exitsurvey);
+    d3.select("#submit").on('click', finish);
+    d3.select("#submit").style('display', 'none');
+    d3.select("#submit").style('disabled', true);
+    d3.selectAll(".case").style('visibility', 'hidden');
+    runalloy();
   }
-  function check(taskID) {
-    //
+  function check() {
     data['_checks_'+experimentID+'_'+taskID] = data['_checks_'+experimentID+'_'+taskID] + 1;
     var ctime = new Date(Date.now()).toString();
     data['_checktime_'+experimentID+'_'+taskID] = (data['_checktime_'+experimentID+'_'+taskID]).concat([ctime]);
-  }
-  function finish(taskID) {
-    d3.selectAll('button').attr('disabled', true);
+    data['_examples_'+experimentID+'_'+taskID] = (data['_examples_'+experimentID+'_'+taskID]).concat([examples()]);
     //
+    runalloy();
+  }
+  function exitsurvey() {
+    //
+    d3.select("#run").style('disabled', true);
+    d3.select("#run").style('visibility', 'hidden');
+    d3.select("#stop").style('disabled', true);
+    d3.select("#stop").style('display', 'none');
+    d3.select("#submit").style('disabled', false);
+    d3.select("#submit").style('display', null);
+    d3.selectAll(".case").style('visibility', null);
+  }
+  function finish() {
+    d3.selectAll('button').attr('disabled', true);  
+    //  
     data['_end_'+experimentID+'_'+taskID] = new Date(Date.now()).toString();
+    data['_finalexamples_'+experimentID+'_'+taskID] = examples();
     experimentr.addData(data);
     experimentr.next();
   }

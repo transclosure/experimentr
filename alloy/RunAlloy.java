@@ -19,7 +19,8 @@ import edu.mit.csail.sdg.alloy4viz.VizGUI;
 public final class RunAlloy {
     // Given a set of models as strings, runs against hard coded specifications and provides feedback
     public static void main(String[] args) throws Err {
-        System.out.println("");
+        String reveal = "";
+        String out = "";
         final String[] ocspecs = {"simple/btree.als"};
         final String goldspec = "simple/tree.als";
         final String[] ucspecs = {"simple/dag.als"};
@@ -37,26 +38,29 @@ public final class RunAlloy {
                         for(int i=0; i<ocspecs.length; i++) {
                             if(check(uniqueid, ocspecs[i], example, false)==true) {
                                 ocs[i] = true;
+                                reveal += " "+ocspecs[i];
                             }
                         }
                     } else {
                         for(int i=0; i<ucspecs.length; i++) {
                             if(check(uniqueid, ucspecs[i], example, true)==true) {
                                 ucs[i] = true;
+                                reveal += " "+ucspecs[i];
                             }
                         }
                     }
                 } else {
-                    System.out.println("Example #"+e+" is inconsistent with the gold-standard spec.");
+                    out += "Example #"+e+" is inconsistent with the gold-standard spec.\n";
                 }
             }
         }
         int ocsnum = 0;
         for(boolean caught : ocs) if(caught) ocsnum++;
-        System.out.println("Avoided "+ocsnum+" of "+ocs.length+" over-constrained specs.");
+        out += "Avoided "+ocsnum+" of "+ocs.length+" over-constrained specs.\n";
         int ucsnum = 0;
         for(boolean caught : ucs) if(caught) ucsnum++;
-        System.out.println("Caught "+ucsnum+" of "+ucs.length+" under-constrained specs.");
+        out += "Caught "+ucsnum+" of "+ucs.length+" under-constrained specs.\n";
+        System.out.println(reveal+"\n"+out);
         return;
     }
     // Given a single spec, example, and expected SAT result, produces feedback
