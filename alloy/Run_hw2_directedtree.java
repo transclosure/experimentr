@@ -16,14 +16,14 @@ import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
 import edu.mit.csail.sdg.alloy4compiler.translator.TranslateAlloyToKodkod;
 import edu.mit.csail.sdg.alloy4viz.VizGUI;
 
-public final class RunSimple {
+public final class Run_hw2_directedtree {
     // Given a set of models as strings, runs against hard coded specifications and provides feedback
     public static void main(String[] args) throws Err {
         String reveal = "";
         String out = "";
-        final String[] ocspecs = {"hw0_simple/btree.als"};
-        final String goldspec = "hw0_simple/tree.als";
-        final String[] ucspecs = {"hw0_simple/dag.als"};
+        final String[] ocspecs = {};
+        final String goldspec = "hw2_directedtree/gold.als";
+        final String[] ucspecs = {"hw2_directedtree/not-acyclic.als", "hw2_directedtree/not-connected.als", "hw2_directedtree/not-injective.als"};
         boolean[] ocs = new boolean[ocspecs.length];
         boolean[] ucs = new boolean[ucspecs.length];
         String uniqueid = args[0];
@@ -73,6 +73,7 @@ public final class RunSimple {
             Files.write(Paths.get(espec), example.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             System.out.println("INTERNAL ERROR: IO Error appending Example to Spec. Aborting.");
+            System.out.println(e);
             System.exit(1);
         }
         // Load spec

@@ -1,0 +1,40 @@
+<div class="examples">
+	<h1>Examples</h1>
+  <textarea class="example" id="example1">
+    one sig Atom1, Atom2, Atom3 extends Atom {}
+    run { r= {(Atom1->Atom2)} } for 3 expect 0
+  </textarea>
+  <textarea class="example" id="example2">
+  </textarea> 
+  <textarea class="example" id="example3">
+  </textarea>
+  <textarea class="example" id="example4">
+  </textarea>
+  <textarea class="example" id="example5">
+  </textarea>
+</div>
+
+<div class="checker">
+  <h1>Checker</h1>
+  <div class="prompt">
+    <p>Produce examples of directed trees. Bad examples (expect 0) catch under-constrained cases. Good examples (expect 1) avoid over-constrained cases. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
+    <p><button id="run">Run examples against specifications</button></p>
+    <p>Status: <span id="out"></span></p>
+  </div>
+</div>
+
+<div class="cases">
+  <h1>Covered Cases</h1>
+  <div class="prompt">
+    <p>Once you have covered all cases, you can submit your examples below. If you have tried every type of example, you can reveal the cases you missed for help.</p>
+    <p><button id="stop">Reveal all missed cases</button><button id="submit">Submit final examples</button></p>
+  </div>
+  <div class="case" id="not-acyclic">Not Acyclic</div>
+  <div class="case" id="not-connected">Not Connected</div>
+  <div class="case" id="not-injective">Not Injective</div>
+</div>
+
+<script>
+var tid = "hw2_directedtree";
+init(tid);
+</script>

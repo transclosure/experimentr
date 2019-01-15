@@ -95,7 +95,7 @@
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
   var data = {};
-  var experiment = ['modules/check-ex-spec/simple.html'];
+  var experiment = ['modules/check-ex-spec/simple.html', 'modules/check-ex-spec/hw2_directedtree.html'];
   var experimentID = experiment.toString();
   var taskID = "NULL";
   function getsequence() {
@@ -138,16 +138,20 @@
     req.open("GET", url, false);
     req.send();
     var response = req.response.split('\n');
-    d3.selectAll(".case").style('visibility', 'hidden');
-    var cases = response.shift();
-    for (c in cases.split(" ")) {
-      if(c>0) {
-        var id = cases.split(" ")[c].split("/")[1].split(".als")[0];
-        d3.select("#"+id).style('visibility', null);
+    try {
+      d3.selectAll(".case").style('visibility', 'hidden');
+      var cases = response.shift();
+      for (c in cases.split(" ")) {
+        if(c>0) {
+          var id = cases.split(" ")[c].split("/")[1].split(".als")[0];
+          d3.select("#"+id).style('visibility', null);
+        }
       }
+      var info = response.join('\n');
+      d3.select("#out").text(info);
+    } catch (e) {
+      d3.select("#out").text(req.response);
     }
-    var info = response.join('\n');
-    d3.select("#out").text(info);
   }
   function init(tid) {
     taskID = tid;

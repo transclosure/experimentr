@@ -72,6 +72,15 @@ app.get('/simple', function handlePost(req, res) {
   });
 })
 
+app.get('/hw2_directedtree', function handlePost(req, res) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  ip = ip.replace(/:/g,'');
+  var dir = process.cwd()+"/alloy/";
+  exec("java -jar Run_hw2_directedtree.jar "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+    res.send(stdout);
+  });
+})
+
 // Create the server and tell which port to listen to
 http.createServer(app).listen(port, function (err) {
   if (!err) console.log('Listening on port ' + port)
