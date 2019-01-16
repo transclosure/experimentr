@@ -6,6 +6,6 @@ fact isDirectedTree {
 	-- injective:
 	r.~r in iden
 	-- connected:
-	-- lone Atom - Atom.r
+	--(Atom -> Atom) in *(r+~r)
 }
 

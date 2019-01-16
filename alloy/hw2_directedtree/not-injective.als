@@ -4,8 +4,8 @@ fact isDirectedTree {
 	-- acyclic:
 	no iden & ^r
 	-- injective:
-	-- r.~r in iden
+	--r.~r in iden
 	-- connected:
-	lone Atom - Atom.r
+	(Atom -> Atom) in *(r+~r)
 }
 
