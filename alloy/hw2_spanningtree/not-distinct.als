@@ -7,8 +7,7 @@ pred isUndirectedTree (r: Atom -> Atom) {
 	(Atom -> Atom) in *r
 	-- no self-loops
 	no iden & r
-	-- minimally-connected: remove any given edge, and there should be no 
-	-- other path between those two nodes
+	-- minimally-connected: remove any given edge, and there should be no other path between those two nodes
 	all n1, n2: Atom |
 		let e = n1->n2 + n2->n1 |
 			e in r implies
@@ -22,10 +21,7 @@ pred spans (graph1, graph2: Atom -> Atom) {
 
 fact {
 	-- both trees are distinct, valid undirected trees that span the graph
-    spans [tree1, graph]
-    isUndirectedTree [tree1] 
-    spans [tree2, graph]
-    isUndirectedTree [tree2] 
-    tree1 = tree2
+    spans [tree1, graph] and spans [tree2, graph]
+    isUndirectedTree [tree1] and isUndirectedTree [tree2] 
+    --tree1 != tree2
 }
-

@@ -8,4 +8,3 @@ fact isDirectedTree {
 	-- connected:
 	--(Atom -> Atom) in *(r+~r)
 }
-
