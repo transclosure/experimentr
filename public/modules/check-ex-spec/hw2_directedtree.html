@@ -1,23 +1,27 @@
 <div class="examples">
 	<h1>Examples</h1>
-  <textarea class="example" id="example1">
-    one sig Atom1, Atom2 extends Atom {}
-    run { r= {(Atom1->Atom2)} } for 2 expect 1
-  </textarea>
-  <textarea class="example" id="example2">
-  </textarea> 
-  <textarea class="example" id="example3">
-  </textarea>
-  <textarea class="example" id="example4">
-  </textarea>
-  <textarea class="example" id="example5">
-  </textarea>
+  <div class="example">
+    <button onclick="prev()">Prev</button>
+    <span>Example <span id="e"></span> of 5</span></span>
+    <button onclick="next()">Next</button>
+  </div>
+  <div class="example">
+    <p id="g"></p>
+    <p><button onclick="swap()">Toggle Good/Bad</button></p>
+  </div>
+  <div class="example"><svg></svg></div>
+  <div class="example">
+    <button onclick="remAtom()">Remove</button>
+    <span>Atom</span>
+    <button onclick="addAtom()">Add</button>
+  </div>
+  <div class="example" id="r"></div>
 </div>
 
 <div class="checker">
   <h1>Checker</h1>
   <div class="prompt">
-    <p>Produce examples of directed trees. Bad examples (expect 0) catch under-constrained cases. Good examples (expect 1) avoid over-constrained cases. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
+    <p>Produce good and bad examples of directed trees. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
     <p><button id="run">Run examples against specifications</button></p>
     <p>Status: <span id="out"></span></p>
   </div>
@@ -35,6 +39,83 @@
 </div>
 
 <script>
+// modelinput
+function graph2run(example) {
+  var nodes = example.nodes;
+  var links = example.links;
+  var good = example.good;
+  //
+  var line1 = "";
+  if(example.nodes.length != 0) {
+    line1 = "one sig ";
+    for(n in example.nodes) {
+      var node = example.nodes[n];
+      line1 += node.id + ", ";
+    }
+    line1 = line1.substring(0, line1.length-2);
+    line1 += " extends Atom {}";
+  }
+  //
+  var line2 = "run {";
+  if(example.links.length == 0) {
+     line2 += "no r}";
+  } 
+  else {
+    line2 += "r = ";
+    for(l in example.links) {
+      var link = example.links[l];
+      line2 += "("+link.target.id+"->"+link.source.id+")+";
+    }
+    line2 = line2.substring(0, line2.length-1);
+    line2 += "}";
+  }
+  line2 += " for "+example.nodes.length;
+  if(good) {
+    line2 += " expect 1";
+  } else {
+    line2 += " expect 0";
+  }
+  return line1+"\n"+line2;
+}
+function update2() {
+  var example = examples[e];
+  d3.select("#r").text("");
+  for(i in example.nodes) {
+    var nodeA = example.nodes[i];
+    for(j in example.nodes) {
+      var nodeB = example.nodes[j];
+      d3.select("#r").append("input")
+        .attr("type", "button")
+        .attr("name", "Toggle r(\'"+nodeA.id+"\',\'"+nodeB.id+"\')")
+        .attr("value", "Toggle r(\'"+nodeA.id+"\',\'"+nodeB.id+"\')")
+        .attr("onclick", "toggleR(\'"+nodeA.id+"\',\'"+nodeB.id+"\')"); 
+    }
+  }
+  update();
+}
+function addAtom() {
+  var example = examples[e];
+  example.nodes = example.nodes.concat([{id:"Atom"+(example.nodes.length+1)}]);
+  update2();
+}
+function remAtom() {
+  var example = examples[e];
+  example.links = example.links.filter(l => l.source.id != "Atom"+example.nodes.length && l.target.id != "Atom"+example.nodes.length);
+  example.nodes = example.nodes.filter(n => n.id != "Atom"+example.nodes.length);
+  update2();
+}
+function toggleR(atomB, atomA) {
+  var example = examples[e];
+  var rAB = example.links.filter(l => l.source.id == atomA && l.target.id == atomB);
+  if(rAB.length == 0) {
+    example.links = example.links.concat([{source:atomA, target:atomB}]);
+  } else {
+    example.links = example.links.filter(l => l.source.id != atomA || l.target.id != atomB);
+  }
+  update2();
+}
+// generic
 var tid = "hw2_directedtree";
 init(tid);
+update();
 </script>
