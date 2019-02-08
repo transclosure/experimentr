@@ -96,16 +96,15 @@
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
   var data = {};
-  var experiment = ['modules/check-ex-spec/hw2_directedtree.html'];
+  var experiment = ['modules/check-ex-spec/timdemo.html'];
   var experimentID = experiment.toString();
   var taskID = null;
   var e = null;
   var examples = null;
   function getsequence() {
     var pre = ['modules/check-ex-spec/consent.html'];
-    var comment = [];
     var post = ['modules/check-ex-spec/debrief.html'];
-    var tasks = comment.concat(experiment);
+    var tasks = experiment;
     return tasks;
   }
 /* GENERIC TASK FUNCTIONS */

@@ -62,12 +62,11 @@ app.post('/', function handlePost(req, res) {
   res.send(200)
 })
 
-// Handle spec gets
-app.get('/simple', function handlePost(req, res) {
+app.get('/timdemo', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar RunSimple.jar "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("java -jar Run_timdemo.jar "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })

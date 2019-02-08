@@ -8,11 +8,11 @@
   </div>
   <div class="example"><svg></svg></div>
   <div class="example">
-    <button onclick="remAtom()">Remove</button>
-    <span>Atom</span>
-    <button onclick="addAtom()">Add</button>
+    <button onclick="remPerson()">Remove</button>
+    <span>Person</span>
+    <button onclick="addPerson()">Add</button>
   </div>
-  <div class="example" id="r">
+  <div class="example" id="partner">
   </div>
 </div>
 
@@ -20,11 +20,10 @@
   <h1>Checker</h1>
   <div class="prompt">
     <p>Produce good and bad examples of the following specification. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
-    <p>Directed Trees are:</p>
     <ul>
-      <li>acyclic</li>
-      <li>connected</li>
-      <li>injective</li>
+      <li>Everybody has a partner.</li>
+      <li>Partnership is symmetric.</li>
+      <li>No disj x,y,z | x->y->z.</li>
     </ul>
     <p><button id="run">Run examples against specifications</button></p>
     <p>Status: <span id="out"></span></p>
@@ -33,9 +32,9 @@
 
 <div class="cases">
   <h1>Covered Cases</h1>
-  <div class="case" id="not-acyclic">Not Acyclic</div>
-  <div class="case" id="not-connected">Not Connected</div>
-  <div class="case" id="not-injective">Not Injective</div>
+  <div class="case" id="missing-partner">Someone without a partner.</div>
+  <div class="case" id="not-symmetric">Partnership is not symmetric.</div>
+  <div class="case" id="no-max">A partnership trio is allowed.</div>
 </div>
 
 <script>
@@ -53,15 +52,15 @@ function graph2run(example) {
       line1 += node.id + ", ";
     }
     line1 = line1.substring(0, line1.length-2);
-    line1 += " extends Atom {}";
+    line1 += " extends Person {}";
   }
   //
   var line2 = "run {";
   if(example.links.length == 0) {
-     line2 += "no r}";
+     line2 += "no partner}";
   } 
   else {
-    line2 += "r = ";
+    line2 += "partner = ";
     for(l in example.links) {
       var link = example.links[l];
       line2 += "("+link.target.id+"->"+link.source.id+")+";
@@ -80,25 +79,25 @@ function graph2run(example) {
 function update2() {
   update();
   var example = examples[e];
-  d3.select("#r").text("r(Atom,Atom)").append("p");
+  d3.select("#partner").text("partner(Person,Person)").append("p");
   for(i in example.nodes) {
     var a = Number(i)+1;
-    var nodeA = example.nodes[i];
+    var personA = example.nodes[i];
     for(j in example.nodes) {
       var b = Number(j)+1;
-      var nodeB = example.nodes[j];
-      var rAB = example.links.filter(l => l.source.id == nodeB.id && l.target.id == nodeA.id);
+      var personB = example.nodes[j];
+      var partnerAB = example.links.filter(l => l.source.id == personB.id && l.target.id == personA.id);
       var on = null;
-      if(rAB.length == 0) {
+      if(partnerAB.length == 0) {
         on = true;
       }
       else {
         on = false;
       }
-      d3.select("#r").append("input")
+      d3.select("#partner").append("input")
         .attr("type", "button")
         .attr("class", function () {
-          if(rAB.length == 0) {
+          if(partnerAB.length == 0) {
             return "";
           }
           else {
@@ -107,33 +106,33 @@ function update2() {
         })
         .attr("name", a+","+b)
         .attr("value", a+","+b)
-        .attr("onclick", "toggleR(\'"+nodeA.id+"\',\'"+nodeB.id+"\')"); 
+        .attr("onclick", "togglePartner(\'"+personA.id+"\',\'"+personB.id+"\')"); 
     }
-    d3.select("#r").append("br");
+    d3.select("#partner").append("br");
   }
 }
-function addAtom() {
+function addPerson() {
   var example = examples[e];
-  example.nodes = example.nodes.concat([{id:"Atom"+(example.nodes.length+1)}]);
+  example.nodes = example.nodes.concat([{id:"Person"+(example.nodes.length+1)}]);
   update2();
 }
-function remAtom() {
+function remPerson() {
   var example = examples[e];
-  example.links = example.links.filter(l => l.source.id != "Atom"+example.nodes.length && l.target.id != "Atom"+example.nodes.length);
-  example.nodes = example.nodes.filter(n => n.id != "Atom"+example.nodes.length);
+  example.links = example.links.filter(l => l.source.id != "Person"+example.nodes.length && l.target.id != "Person"+example.nodes.length);
+  example.nodes = example.nodes.filter(n => n.id != "Person"+example.nodes.length);
   update2();
 }
-function toggleR(atomB, atomA) {
+function togglePartner(personB, personA) {
   var example = examples[e];
-  var rAB = example.links.filter(l => l.source.id == atomA && l.target.id == atomB);
-  if(rAB.length == 0) {
-    example.links = example.links.concat([{source:atomA, target:atomB}]);
+  var partnerAB = example.links.filter(l => l.source.id == personA && l.target.id == personB);
+  if(partnerAB.length == 0) {
+    example.links = example.links.concat([{source:personA, target:personB}]);
   } else {
-    example.links = example.links.filter(l => l.source.id != atomA || l.target.id != atomB);
+    example.links = example.links.filter(l => l.source.id != personA || l.target.id != personB);
   }
   update2();
 }
 // generic
-init("hw2_directedtree");
+init("timdemo");
 update();
 </script>
