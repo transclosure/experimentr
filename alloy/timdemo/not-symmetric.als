@@ -6,5 +6,5 @@ fact {
 	-- partnership is symmetric
 	not (partner = ~partner)
 	-- no disj x,y,z | x->y->z.
-	--no disj x,y,z:Person | x.partner = y and y.partner = z
+	--all disj x,y,z:Person | (x->y) in partner implies (y->z) not in partner
 }

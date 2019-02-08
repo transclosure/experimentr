@@ -21,7 +21,7 @@ public final class Run_timdemo {
     public static void main(String[] args) throws Err {
         String reveal = "";
         String out = "";
-        final String[] ocspecs = {};
+        final String[] ocspecs = {"timdemo/lone-pair.als"};
         final String goldspec = "timdemo/gold.als";
         final String[] ucspecs = {"timdemo/missing-partner.als", "timdemo/not-symmetric.als", "timdemo/no-max.als"};
         boolean[] ocs = new boolean[ocspecs.length];
