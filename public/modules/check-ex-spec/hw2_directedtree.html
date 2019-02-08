@@ -4,18 +4,16 @@
     <button onclick="prev()">Prev</button>
     <span>Example <span id="e"></span> of 5</span></span>
     <button onclick="next()">Next</button>
-  </div>
-  <div class="example">
-    <p id="g"></p>
-    <p><button onclick="swap()">Toggle Good/Bad</button></p>
+    <p><button id="g" onclick="swap()"></button></p>
   </div>
   <div class="example"><svg></svg></div>
   <div class="example">
     <button onclick="remAtom()">Remove</button>
     <span>Atom</span>
-    <button onclick="addAtom()">Add</button>
+    <button onclick="addAtom()">Atom</button>
   </div>
-  <div class="example" id="r"></div>
+  <div class="example" id="r">
+  </div>
 </div>
 
 <div class="checker">
@@ -29,10 +27,6 @@
 
 <div class="cases">
   <h1>Covered Cases</h1>
-  <div class="prompt">
-    <p>Once you have covered all cases, you can submit your examples below. If you have tried every type of example, you can reveal the cases you missed for help.</p>
-    <p><button id="stop">Reveal all missed cases</button><button id="submit">Submit final examples</button></p>
-  </div>
   <div class="case" id="not-acyclic">Not Acyclic</div>
   <div class="case" id="not-connected">Not Connected</div>
   <div class="case" id="not-injective">Not Injective</div>
@@ -78,20 +72,39 @@ function graph2run(example) {
   return line1+"\n"+line2;
 }
 function update2() {
+  update();
   var example = examples[e];
-  d3.select("#r").text("");
+  d3.select("#r").text("r(Atom,Atom)").append("p");
   for(i in example.nodes) {
+    var a = Number(i)+1;
     var nodeA = example.nodes[i];
     for(j in example.nodes) {
+      var b = Number(j)+1;
       var nodeB = example.nodes[j];
+      var rAB = example.links.filter(l => l.source.id == nodeB.id && l.target.id == nodeA.id);
+      var on = null;
+      if(rAB.length == 0) {
+        on = true;
+      }
+      else {
+        on = false;
+      }
       d3.select("#r").append("input")
         .attr("type", "button")
-        .attr("name", "Toggle r(\'"+nodeA.id+"\',\'"+nodeB.id+"\')")
-        .attr("value", "Toggle r(\'"+nodeA.id+"\',\'"+nodeB.id+"\')")
+        .attr("class", function () {
+          if(rAB.length == 0) {
+            return "";
+          }
+          else {
+            return "toggled";
+          }
+        })
+        .attr("name", a+","+b)
+        .attr("value", a+","+b)
         .attr("onclick", "toggleR(\'"+nodeA.id+"\',\'"+nodeB.id+"\')"); 
     }
+    d3.select("#r").append("br");
   }
-  update();
 }
 function addAtom() {
   var example = examples[e];
@@ -115,7 +128,6 @@ function toggleR(atomB, atomA) {
   update2();
 }
 // generic
-var tid = "hw2_directedtree";
-init(tid);
+init("hw2_directedtree");
 update();
 </script>

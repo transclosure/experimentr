@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <meta charset="utf-8">
-<title>✅❌spec</title>
+<title>✓✗spec</title>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="experimentr.js"></script>
@@ -16,9 +16,6 @@
   body {
     margin: auto auto auto auto;
     width: 1080px;
-  }
-  button {
-    font-size: large; 
   }
   h1 {
     font-size: 150%;
@@ -89,6 +86,9 @@
     background: #FFF;
     text-align:center;
   }
+  .toggled {
+    font-weight: bolder;
+  }
 </style>
 
 <body></body>
@@ -157,8 +157,8 @@
     }
   }
   function init(tid) {
-    taskID = tid;
     e = 0;
+    taskID = tid;
     examples = [
       {good : true, nodes : [], links: []},
       {good : true, nodes : [], links: []},
@@ -167,56 +167,19 @@
       {good : true, nodes : [], links: []}];
     data = {};
     data['experimentID'] = experimentID;
-    data['_start_'+experimentID+'_'+taskID] = new Date(Date.now()).toString();
-    data['_checks_'+experimentID+'_'+taskID] = 0;
-    data['_checktime_'+experimentID+'_'+taskID] = [];
-    data['_examples_'+experimentID+'_'+taskID] = [];
-    data['_exitexamples_'+experimentID+'_'+taskID] = [];
+    data['taskID'] = tid;
     //
     experimentr.hideNext();
     d3.select("#run").on('click', check);
-    d3.select("#stop").on('click', exitsurvey);
-    d3.select("#submit").on('click', finish);
-    d3.select("#submit").style('display', 'none');
-    d3.select("#submit").style('disabled', true);
     d3.selectAll(".case").style('visibility', 'hidden');
+    update2();
     runalloy();
   }
   function check() {
-    data['_checks_'+experimentID+'_'+taskID] = data['_checks_'+experimentID+'_'+taskID] + 1;
-    var ctime = new Date(Date.now()).toString();
-    data['_checktime_'+experimentID+'_'+taskID] = (data['_checktime_'+experimentID+'_'+taskID]).concat([ctime]);
-    data['_examples_'+experimentID+'_'+taskID] = (data['_examples_'+experimentID+'_'+taskID]).concat([getExamples()]);
-    //
-    runalloy();
-  }
-  function exitsurvey() {
-    //
-    d3.select("#run").style('disabled', true);
-    d3.select("#run").style('visibility', 'hidden');
-    d3.select("#stop").style('disabled', true);
-    d3.select("#stop").style('display', 'none');
-    d3.select("#submit").style('disabled', false);
-    d3.select("#submit").style('display', null);
-    d3.selectAll(".case").style('visibility', null);
-  }
-  function finish() {
-    d3.selectAll('button').attr('disabled', true);  
-    //  
-    data['_end_'+experimentID+'_'+taskID] = new Date(Date.now()).toString();
-    data['_exitexamples_'+experimentID+'_'+taskID] = getExamples();
+    data['time'] = new Date(Date.now()).toString();
+    data['examples'] = getExamples();
     experimentr.addData(data);
-    experimentr.next();
-  }
-  function update() {
-    d3.select("#e").text(e+1);
-    if(examples[e].good) {
-      d3.select("#g").text("Good example: any under-constraint that does accept this example will be revealed as a covered case.");
-    } else {
-      d3.select("#g").text("Bad example: any over-constraint that does not accept this example will be revealed as a covered case.");
-    }
-    var example = examples[e];
-    viz(example.nodes, example.links);
+    runalloy();
   }
   function prev() {
     if(e > 0) e--;
@@ -228,12 +191,22 @@
   }
   function swap() {
     examples[e].good = !(examples[e].good);
-    update();
+    update2();
+  }
+  function update() {
+    d3.select("#e").text(e+1);
+    if(examples[e].good) {
+      d3.select("#g").text("Good example: any over-constraint that does not accept this example will be revealed as a covered case.");
+    } else {
+      d3.select("#g").text("Bad example: any under-constraint that does accept this example will be revealed as a covered case.");
+    }
+    var example = examples[e];
+    viz(example.nodes, example.links);
   }
   function viz(nodes, links) {
-    var width = 500;
-    var height = 300;
-    var radius = 15;
+    var width = 400;
+    var height = 400;
+    var radius = 20;
     var svg = d3.select('svg');
     svg.text("");
     svg.attr('width', width).attr('height', height)
@@ -244,25 +217,26 @@
     var simulation = d3
       .forceSimulation()
       .force('link', linkForce)
-      .force('charge', d3.forceManyBody().strength(-100))
+      .force('charge', d3.forceManyBody().strength(500))
       .force('center', d3.forceCenter(width / 2, height / 2))
+      .force('collision', d3.forceCollide().radius(50))
     var linkElements = svg.append("g")
       .attr("class", "links")
       .selectAll("line")
       .data(links)
       .enter().append("line")
         .attr("stroke-width", 3)
-        .attr("stroke", "rgba(50, 50, 50, 0.9)")
+        .attr("stroke", "black")
         .attr("marker-end", "url(#arrow)");
     var arrowElements = svg.append("svg:defs").append("svg:marker")
       .attr("id", "arrow")
-      .attr("refX", 9)
-      .attr("refY", 3)
+      .attr("refX", radius*.5)
+      .attr("refY", 2)
       .attr("markerWidth", 6)
       .attr("markerHeight", 6)
       .attr("orient", "auto")
       .append("path")
-      .attr("d", "M 0 0 6 3 0 6 1 3")
+      .attr("d", "M 0 0 4 2 0 4 1 2")
       .style("fill", "black");
     var nodeElements = svg.append("g")
       .attr("class", "nodes")
@@ -270,14 +244,15 @@
       .data(nodes)
       .enter().append("circle")
         .attr("r", radius)
-        .attr("fill", "gray");
+        .attr("stroke", "black")
+        .style("fill", "white");
     var textElements = svg.append("g")
       .attr("class", "texts")
       .selectAll("text")
       .data(nodes)
       .enter().append("text")
         .text(function (node) { return node.id })
-          .attr("font-size", radius)
+          .attr("font-size", radius*.5)
           .attr("dx", -radius*.75)
         .attr("dy", 0);
     simulation.nodes(nodes).on('tick', () => {
