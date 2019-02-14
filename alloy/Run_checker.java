@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.Throwable;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.mit.csail.sdg.alloy4.A4Reporter;
 import edu.mit.csail.sdg.alloy4.Err;
@@ -16,36 +19,52 @@ import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
 import edu.mit.csail.sdg.alloy4compiler.translator.TranslateAlloyToKodkod;
 import edu.mit.csail.sdg.alloy4viz.VizGUI;
 
-public final class Run_hw2_directedtree {
+public final class Run_checker {
     // Given a set of models as strings, runs against hard coded specifications and provides feedback
     public static void main(String[] args) throws Err {
         String reveal = "";
         String out = "";
-        final String[] ocspecs = {};
-        final String goldspec = "hw2_directedtree/gold.als";
-        final String[] ucspecs = {"hw2_directedtree/not-acyclic.als", "hw2_directedtree/not-connected.als", "hw2_directedtree/not-injective.als"};
-        boolean[] ocs = new boolean[ocspecs.length];
-        boolean[] ucs = new boolean[ucspecs.length];
-        String uniqueid = args[0];
+        // Load the proper specs depending on the task
+        String taskid = args[0];
+        List<String> ocspecs = null;
+        String goldspec = null;
+        List<String> ucspecs = null;
+        if (taskid.equals("timdemo")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("timdemo/lone-pair.als"));
+            goldspec = "timdemo/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("timdemo/missing-partner.als", "timdemo/not-symmetric.als", "timdemo/no-max.als"));
+        }
+        else if (taskid.equals("hw2_directedtree")) {
+            ocspecs = new ArrayList<String>(Arrays.asList());
+            goldspec = "hw2_directedtree/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_directedtree/not-acyclic.als", "hw2_directedtree/not-connected.als", "hw2_directedtree/not-injective.als"));
+        }
+        else {
+            System.out.println("INTERNAL ERROR: Task <"+taskid+"> not recognized. Aborting.");
+            System.exit(1);
+        }
+        boolean[] ocs = new boolean[ocspecs.size()];
+        boolean[] ucs = new boolean[ucspecs.size()];
+        String uniqueid = args[1];
         // For each good / bad example...
-        for(int e=1; e < args.length; e++) {
+        for(int e=2; e < args.length; e++) {
             String example = args[e];
             if(!example.trim().isEmpty()) {
                 boolean good = example.contains("expect 1");
                 Boolean consistent = check(uniqueid, goldspec, example, good);
                 if(consistent==true) {
                     if(good) {
-                        for(int i=0; i<ocspecs.length; i++) {
-                            if(check(uniqueid, ocspecs[i], example, false)==true) {
+                        for(int i=0; i<ocspecs.size(); i++) {
+                            if(check(uniqueid, ocspecs.get(i), example, false)==true) {
                                 ocs[i] = true;
-                                reveal += " "+ocspecs[i];
+                                reveal += " "+ocspecs.get(i);
                             }
                         }
                     } else {
-                        for(int i=0; i<ucspecs.length; i++) {
-                            if(check(uniqueid, ucspecs[i], example, true)==true) {
+                        for(int i=0; i<ucspecs.size(); i++) {
+                            if(check(uniqueid, ucspecs.get(i), example, true)==true) {
                                 ucs[i] = true;
-                                reveal += " "+ucspecs[i];
+                                reveal += " "+ucspecs.get(i);
                             }
                         }
                     }

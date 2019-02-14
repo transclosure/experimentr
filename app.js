@@ -62,11 +62,17 @@ app.post('/', function handlePost(req, res) {
   res.send(200)
 })
 
+// Create the server and tell which port to listen to
+http.createServer(app).listen(port, function (err) {
+  if (!err) console.log('Listening on port ' + port)
+})
+
+// check-ex-spec
 app.get('/timdemo', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_timdemo.jar "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("java -jar Run_checker.jar timdemo "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -75,12 +81,7 @@ app.get('/hw2_directedtree', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_hw2_directedtree.jar "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("java -jar Run_checker.jar hw2_directedtree "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
-})
-
-// Create the server and tell which port to listen to
-http.createServer(app).listen(port, function (err) {
-  if (!err) console.log('Listening on port ' + port)
 })
