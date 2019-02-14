@@ -95,69 +95,36 @@
 
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
+  var tasks = ["timdemo", "hw2_directedtree"];
   var data = {};
-  var experiment = ['modules/check-ex-spec/timdemo.html'];
-  var experimentID = experiment.toString();
+  var experimentID = null;
   var taskID = null;
   var e = null;
   var examples = null;
-  function getsequence() {
-    var pre = ['modules/check-ex-spec/consent.html'];
-    var post = ['modules/check-ex-spec/debrief.html'];
-    var tasks = experiment;
-    return tasks;
-  }
-/* GENERIC TASK FUNCTIONS */
-  function getExamples() {
-    var ex1 = "ex1=\'"+graph2run(examples[0])+"\'";
-    ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex2 = "ex2=\'"+graph2run(examples[1])+"\'";
-    ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex3 = "ex3=\'"+graph2run(examples[2])+"\'";
-    ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex4 = "ex4=\'"+graph2run(examples[3])+"\'";
-    ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex5 = "ex5=\'"+graph2run(examples[4])+"\'";
-    ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
-    return [ex1,ex2,ex3,ex4,ex5];
-  }
-  function alloyparams() {
-    var ex1 = "ex1=\'"+encodeURIComponent(graph2run(examples[0]))+"\'";
-    ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex2 = "ex2=\'"+encodeURIComponent(graph2run(examples[1]))+"\'";
-    ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex3 = "ex3=\'"+encodeURIComponent(graph2run(examples[2]))+"\'";
-    ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex4 = "ex4=\'"+encodeURIComponent(graph2run(examples[3]))+"\'";
-    ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex5 = "ex5=\'"+encodeURIComponent(graph2run(examples[4]))+"\'";
-    ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
-    return "?"+ex1+"&"+ex2+"&"+ex3+"&"+ex4+"&"+ex5;
-  }
-  function runalloy() {
-    var req = new XMLHttpRequest();
-    var url = "/"+taskID+alloyparams();
-    req.open("GET", url, false);
-    req.send();
-    var response = req.response.split('\n');
-    try {
-      d3.selectAll(".case").style('visibility', 'hidden');
-      var cases = response.shift();
-      for (c in cases.split(" ")) {
-        if(c>0) {
-          var id = cases.split(" ")[c].split("/")[1].split(".als")[0];
-          d3.select("#"+id).style('visibility', null);
-        }
-      }
-      var info = response.join('\n');
-      d3.select("#out").text(info);
-    } catch (e) {
-      d3.select("#out").text(req.response);
+  function gettask() {
+    d3.select("body").append("p")
+      .text("Select a task:")
+      .attr("class", "prompt")
+      .append("div").attr("id", "taskselect");
+    for(t in tasks) {
+      var task = tasks[t];
+      d3.select("#taskselect").append("input")
+        .attr("type", "button")
+        .attr("onclick", "load(\'"+task+"\')")
+        .attr("name", task)
+        .attr("value", task);
+      d3.select("#taskselect").append("br");
     }
   }
-  function init(tid) {
-    e = 0;
+  function load(tid) {
+    d3.select("body").html("");
+    var task = 'modules/check-ex-spec/'+tid+".html";
     taskID = tid;
+    data['taskID'] = tid;
+    experimentr.sequence([task]).start();
+  }
+  function init() {
+    e = 0;
     examples = [
       {good : true, nodes : [], links: []},
       {good : true, nodes : [], links: []},
@@ -165,8 +132,6 @@
       {good : true, nodes : [], links: []},
       {good : true, nodes : [], links: []}];
     data = {};
-    data['experimentID'] = experimentID;
-    data['taskID'] = tid;
     //
     experimentr.hideNext();
     d3.select("#run").on('click', check);
@@ -174,6 +139,7 @@
     update2();
     runalloy();
   }
+/* GENERIC TASK FUNCTIONS */
   function check() {
     data['time'] = new Date(Date.now()).toString();
     data['examples'] = getExamples();
@@ -202,6 +168,54 @@
     var example = examples[e];
     viz(example.nodes, example.links);
   }
+  function getExamples() {
+    var ex1 = "ex1=\'"+graph2run(examples[0])+"\'";
+    ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex2 = "ex2=\'"+graph2run(examples[1])+"\'";
+    ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex3 = "ex3=\'"+graph2run(examples[2])+"\'";
+    ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex4 = "ex4=\'"+graph2run(examples[3])+"\'";
+    ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex5 = "ex5=\'"+graph2run(examples[4])+"\'";
+    ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
+    return [ex1,ex2,ex3,ex4,ex5];
+  }
+  function alloyparams() {
+    var ex1 = "ex1=\'"+encodeURIComponent(graph2run(examples[0]))+"\'";
+    ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex2 = "ex2=\'"+encodeURIComponent(graph2run(examples[1]))+"\'";
+    ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex3 = "ex3=\'"+encodeURIComponent(graph2run(examples[2]))+"\'";
+    ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex4 = "ex4=\'"+encodeURIComponent(graph2run(examples[3]))+"\'";
+    ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
+    var ex5 = "ex5=\'"+encodeURIComponent(graph2run(examples[4]))+"\'";
+    ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
+    return "?"+ex1+"&"+ex2+"&"+ex3+"&"+ex4+"&"+ex5;
+  }
+  function runalloy() {
+    d3.select("#out").text("Checking...");
+    var req = new XMLHttpRequest();
+    var url = "/"+taskID+alloyparams();
+    req.open("GET", url, false);
+    req.send();
+    var response = req.response.split('\n');
+    try {
+      d3.selectAll(".case").style('visibility', 'hidden');
+      var cases = response.shift();
+      for (c in cases.split(" ")) {
+        if(c>0) {
+          var id = cases.split(" ")[c].split("/")[1].split(".als")[0];
+          d3.select("#"+id).style('visibility', null);
+        }
+      }
+      var info = response.join('\n');
+      d3.select("#out").text(info);
+    } catch (e) {
+      d3.select("#out").text(req.response);
+    }
+  }
   function viz(nodes, links) {
     var width = 400;
     var height = 400;
@@ -226,6 +240,7 @@
       .enter().append("line")
         .attr("stroke-width", 3)
         .attr("stroke", "black")
+        .attr("opacity", 0.2)
         .attr("marker-end", "url(#arrow)");
     var arrowElements = svg.append("svg:defs").append("svg:marker")
       .attr("id", "arrow")
@@ -269,17 +284,5 @@
     })
     simulation.force("link").links(links)
   }
-  /* DOCUMENTATION
-   all data is recorded in _<metric>_<experimentID><taskID> form
-   the <experimentID><taskID> should denote the trial conditions (see example below)
-   generic, parameterized code goes here. anything task specific goes in their module
-   */
-  /*
-   CONDITIONS
-   experimentID     order of the tasks
-   spec             G(gradebook), A(addressbook)
-   phrasing         O(original), R(rephrase)
-   scenario         M(minimal), C(control)
-   */
-   experimentr.sequence(getsequence()).start();
+  gettask();
 </script>
