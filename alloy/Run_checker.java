@@ -69,7 +69,7 @@ public final class Run_checker {
                         }
                     }
                 } else {
-                    out += "Example #"+e+" is inconsistent with the gold-standard spec.\n";
+                    out += "Example #"+(e-1)+" is inconsistent with the gold-standard spec.\n";
                 }
             }
         }

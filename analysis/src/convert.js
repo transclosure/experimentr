@@ -1,26 +1,14 @@
 var j2c           = require('json2csv')
   , fs            = require('fs')
   , file          = process.argv[2]
-  , experimentID  = process.argv[3]
-  , formerTask    = process.argv[4]
-  , latterTask    = process.argv[5]
   , _             = require('underscore')
   , fields        = getFields()
   , data;
 
 function getFields() {
-  var experimentFields = ['workerId','postId','experimentID','formerTask','latterTask'];
+  var experimentFields = ['taskID','time','uc','uctotal','oc','octotal','examples'];
   var taskFields = [];
-  for (taskID of [formerTask,latterTask]) {
-    taskFields = taskFields.concat([  '_clicks_'+experimentID+'_'+taskID,
-                                      '_time_'+experimentID+'_'+taskID,
-                                      '_clicktime_'+experimentID+'_'+taskID,
-                                      '_specs_'+experimentID+'_'+taskID,
-				      '_result_'+experimentID+'_'+taskID,
-				      '_changes_'+experimentID+'_'+taskID]);
-				     // '_feedback_'+experimentID+'_'+taskID]);
-  }
-  return experimentFields.concat(taskFields);
+  return experimentFields;
 }
 
 fs.readFile(file, 'utf8', function (err, data) {
@@ -65,8 +53,6 @@ function filterDebug (arr) {
 
 function addConditions (arr) {
   return _.map(arr, function(row) {
-    row.formerTask = formerTask;
-    row.latterTask = latterTask;
     return row;
 })
 }
