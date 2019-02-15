@@ -106,6 +106,7 @@ function update2() {
     }
     d3.select("#next").append("br");
   }
+  viz(example.nodes, example.links);
 }
 function addNode() {
   var example = examples[e];
@@ -128,5 +129,11 @@ function toggleNext(atomB, atomA) {
   }
   update2();
 }
+examples = [
+      {good : true, nodes : [], links: []},
+      {good : true, nodes : [], links: []},
+      {good : true, nodes : [], links: []},
+      {good : true, nodes : [], links: []},
+      {good : true, nodes : [], links: []}];
 init();
 </script>

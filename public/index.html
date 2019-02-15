@@ -95,7 +95,7 @@
 
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
-  var tasks = ["hw2_directedtree", "hw2_ring", "timdemo"];
+  var tasks = ["hw2_directedtree", "hw2_ring", "hw2_spanningtree", "timdemo"];
   var data = {};
   var experimentID = null;
   var taskID = null;
@@ -133,12 +133,6 @@
   }
   function init() {
     e = 0;
-    examples = [
-      {good : true, nodes : [], links: []},
-      {good : true, nodes : [], links: []},
-      {good : true, nodes : [], links: []},
-      {good : true, nodes : [], links: []},
-      {good : true, nodes : [], links: []}];
     //
     experimentr.hideNext();
     d3.select("#run").on('click', check);
@@ -174,7 +168,6 @@
       d3.select("#g").text("Bad example: any under-constraint that does accept this example will be revealed as a covered case.");
     }
     var example = examples[e];
-    viz(example.nodes, example.links);
   }
   function getExamples() {
     var ex1 = "\'"+graph2run(examples[0])+"\'";

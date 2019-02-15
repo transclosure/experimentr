@@ -1,0 +1,255 @@
+<div class="examples">
+	<h1>Examples</h1>
+  <div class="example">
+    <button onclick="prev()">Prev</button>
+    <span>Example <span id="e"></span> of 5</span></span>
+    <button onclick="next()">Next</button>
+    <p><button id="g" onclick="swap()"></button></p>
+  </div>
+  <div class="example"><svg></svg></div>
+  <div class="example">
+    <button onclick="remAtom()">Remove</button>
+    <span>Atom</span>
+    <button onclick="addAtom()">Add</button>
+  </div>
+  <div class="example" id="graph"></div>
+  <div class="example" id="tree1"></div>
+  <div class="example" id="tree2"></div>
+</div>
+
+<div class="checker">
+  <h1>Checker</h1>
+  <div class="prompt">
+    <p>Produce good and bad examples of the following specification. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
+    <p>Graph with 2 Spanning Trees (see homework for a detailed definition).</p>
+    <p><button id="run">Run examples against specifications</button></p>
+    <p>Status: <span id="out"></span></p>
+  </div>
+</div>
+
+<div class="cases">
+  <h1>Covered Cases</h1>
+  <div class="case" id="degree-two-or-less">Degree No More Than Two</div>
+  <div class="case" id="not-distinct">Spanning Trees Not Distinct</div>
+  <div class="case" id="not-spanning">Not a Spanning Tree</div>
+  <div class="case" id="not-undirectedtree">Not an Undirected Tree</div>
+</div>
+
+<script>
+// modelinput
+function graph2run(example) {
+  var good = example.good;
+  //
+  var line1 = "";
+  if(example.nodes.length != 0) {
+    line1 = "one sig ";
+    for(n in example.nodes) {
+      var node = example.nodes[n];
+      line1 += node.id + ", ";
+    }
+    line1 = line1.substring(0, line1.length-2);
+    line1 += " extends Atom {}";
+  }
+  //
+  var line2 = "run {";
+  // graph
+  if(example.graph.length == 0) {
+     line2 += "no graph";
+  } 
+  else {
+    line2 += "graph = ";
+    for(l in example.graph) {
+      var link = example.graph[l];
+      line2 += "("+link.target.id+"->"+link.source.id+")+";
+    }
+    line2 = line2.substring(0, line2.length-1);
+  }
+  line2 += " and ";
+  // tree1
+  if(example.tree1.length == 0) {
+     line2 += "no tree1";
+  } 
+  else {
+    line2 += "tree1 = ";
+    for(l in example.tree1) {
+      var link = example.tree1[l];
+      line2 += "("+link.target.id+"->"+link.source.id+")+";
+    }
+    line2 = line2.substring(0, line2.length-1);
+  }
+  line2 += " and ";
+  // tree2
+  if(example.tree2.length == 0) {
+     line2 += "no tree2";
+  } 
+  else {
+    line2 += "tree2 = ";
+    for(l in example.tree2) {
+      var link = example.tree2[l];
+      line2 += "("+link.target.id+"->"+link.source.id+")+";
+    }
+    line2 = line2.substring(0, line2.length-1);
+    
+  }
+  line2 += "}";
+  // 
+  line2 += " for "+example.nodes.length;
+  if(good) {
+    line2 += " expect 1";
+  } else {
+    line2 += " expect 0";
+  }
+  return line1+"\n"+line2;
+}
+function update2() {
+  update();
+  var example = examples[e];
+  // graph
+  d3.select("#graph").text("graph(Atom,Atom)").append("p");
+  for(i in example.nodes) {
+    var a = Number(i)+1;
+    var nodeA = example.nodes[i];
+    for(j in example.nodes) {
+      var b = Number(j)+1;
+      var nodeB = example.nodes[j];
+      var graphAB = example.graph.filter(l => l.source.id == nodeB.id && l.target.id == nodeA.id);
+      var on = null;
+      if(graphAB.length == 0) {
+        on = true;
+      }
+      else {
+        on = false;
+      }
+      d3.select("#graph").append("input")
+        .attr("type", "button")
+        .attr("class", function () {
+          if(graphAB.length == 0) {
+            return "";
+          }
+          else {
+            return "toggled";
+          }
+        })
+        .attr("name", a+","+b)
+        .attr("value", a+","+b)
+        .attr("onclick", "toggleGraph(\'"+nodeA.id+"\',\'"+nodeB.id+"\')"); 
+    }
+    d3.select("#graph").append("br");
+  }
+  // tree1
+  d3.select("#tree1").text("tree1(Atom,Atom)").append("p");
+  for(i in example.nodes) {
+    var a = Number(i)+1;
+    var nodeA = example.nodes[i];
+    for(j in example.nodes) {
+      var b = Number(j)+1;
+      var nodeB = example.nodes[j];
+      var tree1AB = example.tree1.filter(l => l.source.id == nodeB.id && l.target.id == nodeA.id);
+      var on = null;
+      if(tree1AB.length == 0) {
+        on = true;
+      }
+      else {
+        on = false;
+      }
+      d3.select("#tree1").append("input")
+        .attr("type", "button")
+        .attr("class", function () {
+          if(tree1AB.length == 0) {
+            return "";
+          }
+          else {
+            return "toggled";
+          }
+        })
+        .attr("name", a+","+b)
+        .attr("value", a+","+b)
+        .attr("onclick", "toggleTree1(\'"+nodeA.id+"\',\'"+nodeB.id+"\')"); 
+    }
+    d3.select("#tree1").append("br");
+  }
+  // tree2
+  d3.select("#tree2").text("tree2(Atom,Atom)").append("p");
+  for(i in example.nodes) {
+    var a = Number(i)+1;
+    var nodeA = example.nodes[i];
+    for(j in example.nodes) {
+      var b = Number(j)+1;
+      var nodeB = example.nodes[j];
+      var tree2AB = example.tree2.filter(l => l.source.id == nodeB.id && l.target.id == nodeA.id);
+      var on = null;
+      if(tree2AB.length == 0) {
+        on = true;
+      }
+      else {
+        on = false;
+      }
+      d3.select("#tree2").append("input")
+        .attr("type", "button")
+        .attr("class", function () {
+          if(tree2AB.length == 0) {
+            return "";
+          }
+          else {
+            return "toggled";
+          }
+        })
+        .attr("name", a+","+b)
+        .attr("value", a+","+b)
+        .attr("onclick", "toggleTree2(\'"+nodeA.id+"\',\'"+nodeB.id+"\')"); 
+    }
+    d3.select("#tree2").append("br");
+  }
+  viz(example.nodes, example.graph.concat(example.tree1).concat(example.tree2));
+}
+function addAtom() {
+  var example = examples[e];
+  example.nodes = example.nodes.concat([{id:"Atom"+(example.nodes.length+1)}]);
+  update2();
+}
+function remAtom() {
+  var example = examples[e];
+  example.graph = example.graph.filter(l => l.source.id != "Atom"+example.nodes.length && l.target.id != "Atom"+example.nodes.length);
+  example.tree1 = example.tree1.filter(l => l.source.id != "Atom"+example.nodes.length && l.target.id != "Atom"+example.nodes.length);
+  example.tree2 = example.tree2.filter(l => l.source.id != "Atom"+example.nodes.length && l.target.id != "Atom"+example.nodes.length);
+  example.nodes = example.nodes.filter(n => n.id != "Atom"+example.nodes.length);
+  update2();
+}
+function toggleGraph(atomB, atomA) {
+  var example = examples[e];
+  var graphAB = example.graph.filter(l => l.source.id == atomA && l.target.id == atomB);
+  if(graphAB.length == 0) {
+    example.graph = example.graph.concat([{source:atomA, target:atomB}]);
+  } else {
+    example.graph = example.graph.filter(l => l.source.id != atomA || l.target.id != atomB);
+  }
+  update2();
+}
+function toggleTree1(atomB, atomA) {
+  var example = examples[e];
+  var tree1AB = example.tree1.filter(l => l.source.id == atomA && l.target.id == atomB);
+  if(tree1AB.length == 0) {
+    example.tree1 = example.tree1.concat([{source:atomA, target:atomB}]);
+  } else {
+    example.tree1 = example.tree1.filter(l => l.source.id != atomA || l.target.id != atomB);
+  }
+  update2();
+}
+function toggleTree2(atomB, atomA) {
+  var example = examples[e];
+  var tree2AB = example.tree2.filter(l => l.source.id == atomA && l.target.id == atomB);
+  if(tree2AB.length == 0) {
+    example.tree2 = example.tree2.concat([{source:atomA, target:atomB}]);
+  } else {
+    example.tree2 = example.tree2.filter(l => l.source.id != atomA || l.target.id != atomB);
+  }
+  update2();
+}
+examples = [
+      {good : true, nodes : [], graph: [], tree1: [], tree2: []},
+      {good : true, nodes : [], graph: [], tree1: [], tree2: []},
+      {good : true, nodes : [], graph: [], tree1: [], tree2: []},
+      {good : true, nodes : [], graph: [], tree1: [], tree2: []},
+      {good : true, nodes : [], graph: [], tree1: [], tree2: []}];
+init();
+</script>

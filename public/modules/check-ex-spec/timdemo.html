@@ -111,6 +111,7 @@ function update2() {
     }
     d3.select("#partner").append("br");
   }
+  viz(example.nodes, example.links);
 }
 function addPerson() {
   var example = examples[e];
@@ -133,5 +134,11 @@ function togglePartner(personB, personA) {
   }
   update2();
 }
+examples = [
+      {good : true, nodes : [], links: []},
+      {good : true, nodes : [], links: []},
+      {good : true, nodes : [], links: []},
+      {good : true, nodes : [], links: []},
+      {good : true, nodes : [], links: []}];
 init();
 </script>
