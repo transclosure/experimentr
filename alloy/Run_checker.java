@@ -29,15 +29,50 @@ public final class Run_checker {
         List<String> ocspecs = null;
         String goldspec = null;
         List<String> ucspecs = null;
-        if (taskid.equals("timdemo")) {
+        if (taskid.equals("hw2_directedtree_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_directedtree_easy/binary-only.als"));
+            goldspec = "hw2_directedtree_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_directedtree_easy/not-acyclic.als", "hw2_directedtree_easy/not-connected.als", "hw2_directedtree_easy/not-injective.als"));
+        }
+        else if (taskid.equals("hw2_directedtree_hard")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_directedtree_hard/binary-only.als"));
+            goldspec = "hw2_directedtree_hard/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_directedtree_hard/not-acyclic.als", "hw2_directedtree_hard/not-connected.als", "hw2_directedtree_hard/not-injective.als"));
+        }
+        else if (taskid.equals("hw2_ring_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_ring_easy/disallow-empty.als"));
+            goldspec = "hw2_ring_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_ring_easy/not-onepointer.als", "hw2_ring_easy/not-reachable.als"));
+        }
+        else if (taskid.equals("hw2_ring_hard")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_ring_hard/disallow-empty.als"));
+            goldspec = "hw2_ring_hard/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_ring_hard/not-onepointer.als", "hw2_ring_hard/not-reachable.als"));
+        }
+        else if (taskid.equals("hw2_spanningtree_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_spanningtree_easy/degree-two-or-less.als"));
+            goldspec = "hw2_spanningtree_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_spanningtree_easy/not-distinct.als", "hw2_spanningtree_easy/not-spanning.als", "hw2_spanningtree_easy/not-undirectedtree.als"));
+        }
+        else if (taskid.equals("hw2_spanningtree_hard")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_spanningtree_hard/degree-two-or-less.als"));
+            goldspec = "hw2_spanningtree_hard/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_spanningtree_hard/not-distinct.als", "hw2_spanningtree_hard/not-spanning.als", "hw2_spanningtree_hard/not-undirectedtree.als"));
+        }
+        else if (taskid.equals("hw2_undirectedtree_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_undirectedtree_easy/no-more-than-three.als"));
+            goldspec = "hw2_undirectedtree_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_undirectedtree_easy/not-acyclic.als", "hw2_undirectedtree_easy/not-connected.als", "hw2_undirectedtree_easy/not-minimally-connected.als", "hw2_undirectedtree_easy/not-symmetric.als"));
+        }
+        else if (taskid.equals("hw2_undirectedtree_hard")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_undirectedtree_hard/no-more-than-three.als"));
+            goldspec = "hw2_undirectedtree_hard/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw2_undirectedtree_hard/not-acyclic.als", "hw2_undirectedtree_hard/not-connected.als", "hw2_undirectedtree_hard/not-minimally-connected.als", "hw2_undirectedtree_hard/not-symmetric.als"));
+        }
+        else if (taskid.equals("timdemo")) {
             ocspecs = new ArrayList<String>(Arrays.asList("timdemo/lone-pair.als"));
             goldspec = "timdemo/gold.als";
             ucspecs = new ArrayList<String>(Arrays.asList("timdemo/missing-partner.als", "timdemo/not-symmetric.als", "timdemo/no-max.als"));
-        }
-        else if (taskid.equals("hw2_directedtree")) {
-            ocspecs = new ArrayList<String>(Arrays.asList());
-            goldspec = "hw2_directedtree/gold.als";
-            ucspecs = new ArrayList<String>(Arrays.asList("hw2_directedtree/not-acyclic.als", "hw2_directedtree/not-connected.als", "hw2_directedtree/not-injective.als"));
         }
         else {
             System.out.println("INTERNAL ERROR: Task <"+taskid+"> not recognized. Aborting.");

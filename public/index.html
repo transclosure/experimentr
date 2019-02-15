@@ -117,11 +117,18 @@
     }
   }
   function load(tid) {
-    d3.select("body").html("");
-    var task = 'modules/check-ex-spec/'+tid+".html";
     taskID = tid;
+    if(taskID!="timdemo") {
+      if (Math.random() < 0.5) {
+        taskID = taskID + "_easy";
+      } else {
+        taskID = taskID + "_hard";
+      }
+    }
+    d3.select("body").html("");
+    var task = 'modules/check-ex-spec/'+taskID+".html";
     data = {};
-    data['taskID'] = tid;
+    data['taskID'] = taskID;
     experimentr.sequence([task]).start();
   }
   function init() {
