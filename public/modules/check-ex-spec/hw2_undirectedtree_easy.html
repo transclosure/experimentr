@@ -20,7 +20,7 @@
   <h1>Checker</h1>
   <div class="prompt">
     <p>Produce good and bad examples of the following specification. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
-    <p>Directed Trees (see homework for a detailed definition).</p>
+    <p>Undirected Trees (see homework for a detailed definition).</p>
     <p><button id="run">Run examples against specifications</button></p>
     <p>Status: <span id="out"></span></p>
   </div>
@@ -28,10 +28,11 @@
 
 <div class="cases">
   <h1>Covered Cases</h1>
-  <div class="case" id="binary-only">Binary Trees Only</div>
+  <div class="case" id="no-more-than-three">No More Than Three Atoms</div>
   <div class="case" id="not-acyclic">Not Acyclic</div>
   <div class="case" id="not-connected">Not Connected</div>
-  <div class="case" id="not-injective">Not Injective</div>
+  <div class="case" id="not-minimally-connected">Not Minimally Connected</div>
+  <div class="case" id="not-symmetric">Not Symmetric</div>
 </div>
 
 <script>
