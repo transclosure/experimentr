@@ -6,7 +6,7 @@ var j2c           = require('json2csv')
   , data;
 
 function getFields() {
-  var experimentFields = ['taskID','time','uc','uctotal','oc','octotal','examples'];
+  var experimentFields = ['email','taskID','time','uc','uctotal','oc','octotal','examples'];
   var taskFields = [];
   return experimentFields;
 }
