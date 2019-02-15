@@ -40,12 +40,12 @@ public final class Run_checker {
             ucspecs = new ArrayList<String>(Arrays.asList("hw2_directedtree_hard/not-acyclic.als", "hw2_directedtree_hard/not-connected.als", "hw2_directedtree_hard/not-injective.als"));
         }
         else if (taskid.equals("hw2_ring_easy")) {
-            ocspecs = new ArrayList<String>(Arrays.asList("hw2_ring_easy/disallow-empty.als"));
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_ring_easy/disallow-one.als"));
             goldspec = "hw2_ring_easy/gold.als";
             ucspecs = new ArrayList<String>(Arrays.asList("hw2_ring_easy/not-onepointer.als", "hw2_ring_easy/not-reachable.als"));
         }
         else if (taskid.equals("hw2_ring_hard")) {
-            ocspecs = new ArrayList<String>(Arrays.asList("hw2_ring_hard/disallow-empty.als"));
+            ocspecs = new ArrayList<String>(Arrays.asList("hw2_ring_hard/disallow-one.als"));
             goldspec = "hw2_ring_hard/gold.als";
             ucspecs = new ArrayList<String>(Arrays.asList("hw2_ring_hard/not-onepointer.als", "hw2_ring_hard/not-reachable.als"));
         }
