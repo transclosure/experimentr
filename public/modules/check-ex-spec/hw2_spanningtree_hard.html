@@ -224,6 +224,7 @@ function toggleGraph(atomB, atomA) {
     example.graph = example.graph.filter(l => l.source.id != atomA || l.target.id != atomB);
   }
   update2();
+  update2();
 }
 function toggleTree1(atomB, atomA) {
   var example = examples[e];
@@ -234,6 +235,7 @@ function toggleTree1(atomB, atomA) {
     example.tree1 = example.tree1.filter(l => l.source.id != atomA || l.target.id != atomB);
   }
   update2();
+  update2();
 }
 function toggleTree2(atomB, atomA) {
   var example = examples[e];
@@ -243,6 +245,7 @@ function toggleTree2(atomB, atomA) {
   } else {
     example.tree2 = example.tree2.filter(l => l.source.id != atomA || l.target.id != atomB);
   }
+  update2();
   update2();
 }
 var goodnodes = [{"id": "Atom1"},{"id": "Atom2"},{"id": "Atom3"}];
