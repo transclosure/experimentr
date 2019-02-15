@@ -7,6 +7,7 @@
 <script src="experimentr.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en"></link>
+<meta name="google-signin-client_id" content="685734333806-nc40le9lp8pbqjmjajibvc0q3u9sgbvm.apps.googleusercontent.com">
 
 <style>
   * {
@@ -91,7 +92,7 @@
   }
 </style>
 
-<body></body>
+<body><div id="signin" class="g-signin2" data-onsuccess="onSignIn"></div></body>
 
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
@@ -101,6 +102,16 @@
   var taskID = null;
   var e = null;
   var examples = null;
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    document.getElementById("signin").innerText = "Welcome " + profile.getName();
+    data['email'] = profile.getEmail();
+    gettask();
+  }
   function gettask() {
     d3.select("body").append("p")
       .text("Select a task:")
@@ -127,7 +138,6 @@
     }
     d3.select("body").html("");
     var task = 'modules/check-ex-spec/'+taskID+".html";
-    data = {};
     data['taskID'] = taskID;
     experimentr.sequence([task]).start();
   }
@@ -293,5 +303,4 @@
     })
     simulation.force("link").links(links)
   }
-  gettask();
 </script>
