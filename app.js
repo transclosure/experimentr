@@ -75,7 +75,7 @@ app.get('/hw2_directedtree_easy', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar hw2_directedtree_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar hw2_directedtree_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -83,7 +83,7 @@ app.get('/hw2_directedtree_hard', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar hw2_directedtree_hard "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar hw2_directedtree_hard "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -91,7 +91,7 @@ app.get('/hw2_ring_easy', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar hw2_ring_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar hw2_ring_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -99,7 +99,7 @@ app.get('/hw2_ring_hard', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar hw2_ring_hard "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar hw2_ring_hard "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -107,7 +107,7 @@ app.get('/hw2_spanningtree_easy', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar hw2_spanningtree_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar hw2_spanningtree_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -115,7 +115,7 @@ app.get('/hw2_spanningtree_hard', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar hw2_spanningtree_hard "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar hw2_spanningtree_hard "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -123,7 +123,7 @@ app.get('/hw2_undirectedtree_easy', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar hw2_undirectedtree_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar hw2_undirectedtree_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -131,7 +131,7 @@ app.get('/hw2_undirectedtree_hard', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar hw2_undirectedtree_hard "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar hw2_undirectedtree_hard "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })
@@ -139,7 +139,7 @@ app.get('/timdemo', function handlePost(req, res) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   ip = ip.replace(/:/g,'');
   var dir = process.cwd()+"/alloy/";
-  exec("java -jar Run_checker.jar timdemo "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+  exec("timeout 15s java -jar Run_checker.jar timdemo "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
     res.send(stdout);
   });
 })

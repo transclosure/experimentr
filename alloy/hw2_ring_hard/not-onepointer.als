@@ -1,6 +1,8 @@
 sig Node {next: set Node} 
 
-fact isRing { all n: Node | {
-	--one n.next      -- each node has one next pointer
-	Node in n.^next -- each node is reachable by every node
-}}
+fact isRing {
+	-- each node has one next pointer
+	--all n: Node | one n.next
+	-- each node is reachable by every node
+	all n: Node | Node in n.^next 
+}

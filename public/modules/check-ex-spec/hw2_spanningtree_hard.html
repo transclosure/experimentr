@@ -245,11 +245,26 @@ function toggleTree2(atomB, atomA) {
   }
   update2();
 }
+var goodnodes = [{"id": "Atom1"},{"id": "Atom2"},{"id": "Atom3"}];
+var goodgraph = [ {"source":{"id": "Atom2"},"target":{"id": "Atom1"}},
+                  {"source":{"id": "Atom1"},"target":{"id": "Atom2"}},
+                  {"source":{"id": "Atom3"},"target":{"id": "Atom1"}},
+                  {"source":{"id": "Atom1"},"target":{"id": "Atom3"}},
+                  {"source":{"id": "Atom2"},"target":{"id": "Atom3"}},
+                  {"source":{"id": "Atom3"},"target":{"id": "Atom2"}}];
+var goodtree1 = [ {"source":{"id": "Atom2"},"target":{"id": "Atom1"}},
+                  {"source":{"id": "Atom1"},"target":{"id": "Atom2"}},
+                  {"source":{"id": "Atom2"},"target":{"id": "Atom3"}},
+                  {"source":{"id": "Atom3"},"target":{"id": "Atom2"}}];
+var goodtree2 = [ {"source":{"id": "Atom2"},"target":{"id": "Atom1"}},
+                  {"source":{"id": "Atom1"},"target":{"id": "Atom2"}},
+                  {"source":{"id": "Atom1"},"target":{"id": "Atom3"}},
+                  {"source":{"id": "Atom3"},"target":{"id": "Atom1"}}];
 examples = [
-      {good : true, nodes : [], graph: [], tree1: [], tree2: []},
-      {good : true, nodes : [], graph: [], tree1: [], tree2: []},
-      {good : true, nodes : [], graph: [], tree1: [], tree2: []},
-      {good : true, nodes : [], graph: [], tree1: [], tree2: []},
-      {good : true, nodes : [], graph: [], tree1: [], tree2: []}];
+      {good : true, nodes : goodnodes, graph: goodgraph, tree1: goodtree1, tree2: goodtree2},
+      {good : true, nodes : goodnodes, graph: goodgraph, tree1: goodtree1, tree2: goodtree2},
+      {good : true, nodes : goodnodes, graph: goodgraph, tree1: goodtree1, tree2: goodtree2},
+      {good : true, nodes : goodnodes, graph: goodgraph, tree1: goodtree1, tree2: goodtree2},
+      {good : true, nodes : goodnodes, graph: goodgraph, tree1: goodtree1, tree2: goodtree2}];
 init();
 </script>
