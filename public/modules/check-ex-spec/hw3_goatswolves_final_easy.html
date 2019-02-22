@@ -1,0 +1,235 @@
+<div class="examples">
+	<h1>Examples</h1>
+  <div class="example">
+    <button onclick="prev()">Prev</button>
+    <span>Example <span id="e"></span> of 5</span></span>
+    <button onclick="next()">Next</button>
+    <p><button id="g" onclick="swap()"></button></p>
+  </div>
+  <div class="example">
+    <button onclick="remGoat()">Remove</button>
+    <span>Goat</span>
+    <button onclick="addGoat()">Add</button>
+  </div>
+  <div class="example">
+    <button onclick="remWolf()">Remove</button>
+    <span>Wolf</span>
+    <button onclick="addWolf()">Add</button>
+  </div>
+  <div class="example">
+    <p>Boat</p>
+    <p>
+      <button id="boatnear" onclick="boatNear()">Near</button>
+      <button id="boatfar" onclick="boatFar()">Far</button>
+    </p>
+  </div>
+  <div class="example" id="near"></div>
+  <div class="example" id="far"></div>
+</div>
+
+<div class="checker">
+  <h1>Checker</h1>
+  <div class="prompt">
+    <p>Produce good and bad examples of the following specification. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
+    <p>Goats and Wolves River Crossing Final State (see homework for a more detailed description).</p>
+    <p><button id="run">Run examples against specifications</button></p>
+    <p>Status: <span id="out"></span></p>
+  </div>
+</div>
+
+<div class="cases">
+  <h1>Covered Cases</h1>
+</div>
+
+<script>
+function addGoat() {
+  var example = examples[e];
+  example.goat = example.goat.concat(["Goat"+(example.goat.length+1)]);
+  update2();
+}
+function remGoat() {
+  var example = examples[e];
+  example.near = example.near.filter(l => l != "Goat"+example.goat.length);
+  example.far = example.far.filter(l => l != "Goat"+example.goat.length);
+  example.goat = example.goat.filter(l => l != "Goat"+example.goat.length);
+  update2();
+}
+function addWolf() {
+  var example = examples[e];
+  example.wolf = example.wolf.concat(["Wolf"+(example.wolf.length+1)]);
+  update2();
+}
+function remWolf() {
+  var example = examples[e];
+  example.near = example.near.filter(l => l != "Wolf"+example.wolf.length);
+  example.far = example.far.filter(l => l != "Wolf"+example.wolf.length);
+  example.wolf = example.wolf.filter(l => l != "Wolf"+example.wolf.length);
+  update2();
+}
+function boatNear() {
+  var example = examples[e];
+  example.boat = "Near";
+  update2();
+}
+function boatFar() {
+  var example = examples[e];
+  example.boat = "Far";
+  update2();
+}
+function update2() {
+  update();
+  var example = examples[e];
+  d3.select("#near").text("Near").append("p").append("span");
+  d3.select("#far").text("Far").append("p").append("span");
+  var animals = example.goat.concat(example.wolf);
+  for(i in animals) {
+    var animal = animals[i];
+    var aNear = example.near.filter(l => l == animal);
+    var aFar = example.far.filter(l => l == animal);
+
+    d3.select("#near").append("input")
+    .attr("type", "button")
+    .attr("class", function () {
+      if(aNear.length == 0) {
+        return "";
+      }
+      else {
+        return "toggled";
+      }
+    })
+    .attr("name", animal)
+    .attr("value", animal)
+    .attr("onclick", "toggleNear(\'"+animal+"\')"); 
+
+    d3.select("#far").append("input")
+    .attr("type", "button")
+    .attr("class", function () {
+      if(aFar.length == 0) {
+        return "";
+      }
+      else {
+        return "toggled";
+      }
+    })
+    .attr("name", animal)
+    .attr("value", animal)
+    .attr("onclick", "toggleFar(\'"+animal+"\')"); 
+
+  }
+  d3.select("#boatnear").attr("class", function () {
+    if(example.boat == "Near") {
+      return "toggled";
+    }
+    else {
+      return "";
+    }
+  });
+  d3.select("#boatfar").attr("class", function () {
+    if(example.boat == "Far") {
+      return "toggled";
+    }
+    else {
+      return "";
+    }
+  });
+}
+function toggleNear(animal) {
+  var example = examples[e];
+  var aNear = example.near.filter(l => l == animal);
+  if(aNear.length == 0) {
+    example.near = example.near.concat([animal]);
+  } else {
+    example.near = example.near.filter(l => l != animal);
+  }
+  update2();
+  update2();
+}
+function toggleFar(animal) {
+  var example = examples[e];
+  var aFar = example.far.filter(l => l == animal);
+  if(aFar.length == 0) {
+    example.far = example.far.concat([animal]);
+  } else {
+    example.far = example.far.filter(l => l != animal);
+  }
+  update2();
+  update2();
+}
+function graph2run(example) {
+  var goats = example.goat;
+  var wolves = example.wolf;
+  var nears = example.near;
+  var fars = example.far;
+  var boat = example.boat; 
+  var good = example.good;
+  //
+  var line1 = "";
+  if(goats.length != 0) {
+    line1 = "one sig ";
+    for(g in goats) {
+      var goat = goats[g];
+      line1 += goat + ", ";
+    }
+    line1 = line1.substring(0, line1.length-2);
+    line1 += " extends Goat {}";
+  }
+  //
+  var line2 = "";
+  if(wolves.length != 0) {
+    line2 = "one sig ";
+    for(g in wolves) {
+      var wolf = wolves[g];
+      line2 += wolf + ", ";
+    }
+    line2 = line2.substring(0, line2.length-2);
+    line2 += " extends Wolf {}";
+  }
+  //
+  var line3 = "run {";
+  // Final.near
+  if(nears.length == 0) {
+     line3 += "no Final.near";
+  } 
+  else {
+    line3 += "Final.near = ";
+    for(n in nears) {
+      var near = nears[n];
+      line3 += near+"+";
+    }
+    line3 = line3.substring(0, line3.length-1);
+  }
+  line3 += " and ";
+  // Final.far
+  if(fars.length == 0) {
+     line3 += "no Final.far";
+  } 
+  else {
+    line3 += "Final.far = ";
+    for(f in fars) {
+      var far = fars[f];
+      line3 += far+"+";
+    }
+    line3 = line3.substring(0, line3.length-1);
+  }
+  line3 += " and ";
+  // Final.boat
+  line3 += "Final.boat = "+boat;
+  line3 += "}";
+  // bounds/expect
+  line3 += " for exactly 1 State, exactly "+goats.length+" Goat, exactly "+wolves.length+" Wolf, 4 Int";
+  if(good) {
+    line3 += " expect 1";
+  } else {
+    line3 += " expect 0";
+  }
+  //
+  return line1+"\n"+line2+"\n"+line3;
+}
+examples = [
+      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"},
+      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"},
+      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"},
+      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"},
+      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"}];
+init();
+</script>
