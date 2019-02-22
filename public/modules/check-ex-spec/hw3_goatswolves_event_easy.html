@@ -48,6 +48,10 @@
 
 <div class="cases">
   <h1>Covered Cases</h1>
+  <div class="example">Under-constraint: <span class="case" id="floating">Some animal on both or neither side.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="invalid-transition">Invalid Event Transition.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="eating">Wolves outnumber Goats, eating occurs.</span></div>
+  <div class="example">Over-constraint: <span class="case" id="equal-goat-wolf">Equal goats and wolves only.</span></div>
 </div>
 
 <script>
@@ -355,10 +359,10 @@ function graph2run(example) {
   return line1+"\n"+line2+"\n"+line3;
 }
 examples = [
-      {good : false, goat : [], wolf: [], prenear: [], prefar: [], preboat: "Near", postnear: [], postfar: [], postboat: "Far"},
-      {good : false, goat : [], wolf: [], prenear: [], prefar: [], preboat: "Near", postnear: [], postfar: [], postboat: "Far"},
-      {good : false, goat : [], wolf: [], prenear: [], prefar: [], preboat: "Near", postnear: [], postfar: [], postboat: "Far"},
-      {good : false, goat : [], wolf: [], prenear: [], prefar: [], preboat: "Near", postnear: [], postfar: [], postboat: "Far"},
-      {good : false, goat : [], wolf: [], prenear: [], prefar: [], preboat: "Near", postnear: [], postfar: [], postboat: "Far"}];
+      {good : true, goat : ["Goat1"], wolf: ["Wolf1"], prenear: ["Goat1","Wolf1"], prefar: [], preboat: "Near", postnear: [], postfar: ["Goat1","Wolf1"], postboat: "Far"},
+      {good : true, goat : ["Goat1"], wolf: ["Wolf1"], prenear: ["Goat1","Wolf1"], prefar: [], preboat: "Near", postnear: [], postfar: ["Goat1","Wolf1"], postboat: "Far"},
+      {good : true, goat : ["Goat1"], wolf: ["Wolf1"], prenear: ["Goat1","Wolf1"], prefar: [], preboat: "Near", postnear: [], postfar: ["Goat1","Wolf1"], postboat: "Far"},
+      {good : true, goat : ["Goat1"], wolf: ["Wolf1"], prenear: ["Goat1","Wolf1"], prefar: [], preboat: "Near", postnear: [], postfar: ["Goat1","Wolf1"], postboat: "Far"},
+      {good : true, goat : ["Goat1"], wolf: ["Wolf1"], prenear: ["Goat1","Wolf1"], prefar: [], preboat: "Near", postnear: [], postfar: ["Goat1","Wolf1"], postboat: "Far"}];
 init();
 </script>

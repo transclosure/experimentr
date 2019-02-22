@@ -39,6 +39,10 @@
 
 <div class="cases">
   <h1>Covered Cases</h1>
+  <div class="example">Under-constraint: <span class="case" id="some-near">Some animal on the near side.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="boat-near">Boat on the near side.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="eating">Wolves outnumber Goats, eating occurs.</span></div>
+  <div class="example">Over-constraint: <span class="case" id="no-animal">No animals allowed.</span></div>
 </div>
 
 <script>
@@ -226,10 +230,10 @@ function graph2run(example) {
   return line1+"\n"+line2+"\n"+line3;
 }
 examples = [
-      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"},
-      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"},
-      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"},
-      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"},
-      {good : false, goat : [], wolf: [], near: [], far: [], boat: "Near"}];
+      {good : true, goat : [], wolf: [], near: [], far: [], boat: "Far"},
+      {good : true, goat : [], wolf: [], near: [], far: [], boat: "Far"},
+      {good : true, goat : [], wolf: [], near: [], far: [], boat: "Far"},
+      {good : true, goat : [], wolf: [], near: [], far: [], boat: "Far"},
+      {good : true, goat : [], wolf: [], near: [], far: [], boat: "Far"}];
 init();
 </script>

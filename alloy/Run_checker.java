@@ -75,19 +75,19 @@ public final class Run_checker {
             ucspecs = new ArrayList<String>(Arrays.asList("timdemo/missing-partner.als", "timdemo/not-symmetric.als", "timdemo/no-max.als"));
         }
         else if (taskid.equals("hw3_goatswolves_initial_easy")) {
-            ocspecs = new ArrayList<String>(Arrays.asList());
+            ocspecs = new ArrayList<String>(Arrays.asList("hw3_goatswolves_initial_easy/no-animal.als"));
             goldspec = "hw3_goatswolves_initial_easy/gold.als";
-            ucspecs = new ArrayList<String>(Arrays.asList());
+            ucspecs = new ArrayList<String>(Arrays.asList("hw3_goatswolves_initial_easy/some-far.als", "hw3_goatswolves_initial_easy/boat-far.als", "hw3_goatswolves_initial_easy/eating.als"));
         }
         else if (taskid.equals("hw3_goatswolves_final_easy")) {
-            ocspecs = new ArrayList<String>(Arrays.asList());
+            ocspecs = new ArrayList<String>(Arrays.asList("hw3_goatswolves_final_easy/no-animal.als"));
             goldspec = "hw3_goatswolves_final_easy/gold.als";
-            ucspecs = new ArrayList<String>(Arrays.asList());
+            ucspecs = new ArrayList<String>(Arrays.asList("hw3_goatswolves_final_easy/some-near.als", "hw3_goatswolves_final_easy/boat-near.als", "hw3_goatswolves_final_easy/eating.als"));
         }
         else if (taskid.equals("hw3_goatswolves_event_easy")) {
-            ocspecs = new ArrayList<String>(Arrays.asList());
+            ocspecs = new ArrayList<String>(Arrays.asList("hw3_goatswolves_event_easy/equal-goat-wolf.als"));
             goldspec = "hw3_goatswolves_event_easy/gold.als";
-            ucspecs = new ArrayList<String>(Arrays.asList());
+            ucspecs = new ArrayList<String>(Arrays.asList("hw3_goatswolves_event_easy/invalid-transition.als", "hw3_goatswolves_event_easy/eating.als", "hw3_goatswolves_event_easy/floating.als"));
         }
         else {
             System.out.println("INTERNAL ERROR: Task <"+taskid+"> not recognized. Aborting.");
