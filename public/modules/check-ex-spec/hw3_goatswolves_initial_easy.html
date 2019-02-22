@@ -7,14 +7,12 @@
     <p><button id="g" onclick="swap()"></button></p>
   </div>
   <div class="example">
-    <button onclick="remGoat()">Remove</button>
-    <span>Goat</span>
-    <button onclick="addGoat()">Add</button>
+    <button onclick="remGoat()">Remove Goat</button>
+    <button onclick="addGoat()">Add Goat</button>
   </div>
   <div class="example">
-    <button onclick="remWolf()">Remove</button>
-    <span>Wolf</span>
-    <button onclick="addWolf()">Add</button>
+    <button onclick="remWolf()">Remove Wolf</button>
+    <button onclick="addWolf()">Add Wolf</button>
   </div>
   <div class="example">
     <p>Boat</p>
@@ -39,10 +37,10 @@
 
 <div class="cases">
   <h1>Covered Cases</h1>
-  <div class="example">Under-constraint: <span class="case" id="some-far">Some animal on the far side.</span></div>
-  <div class="example">Under-constraint: <span class="case" id="boat-far">Boat on the far side.</span></div>
-  <div class="example">Under-constraint: <span class="case" id="eating">Wolves outnumber Goats, eating occurs.</span></div>
-  <div class="example">Over-constraint: <span class="case" id="no-animal">No animals allowed.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="some-far">Allows some animal on the far side.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="boat-far">Allows boat on the far side.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="eating">Allows wolves to outnumber Goats, thus eating occurs.</span></div>
+  <div class="example">Over-constraint: <span class="case" id="no-animal">Disallows any number of animals, except none.</span></div>
 </div>
 
 <script>

@@ -7,17 +7,15 @@
     <p><button id="g" onclick="swap()"></button></p>
   </div>
   <div class="example">
-    <button onclick="remGoat()">Remove</button>
-    <span>Goat</span>
-    <button onclick="addGoat()">Add</button>
+    <button onclick="remGoat()">Remove Goat</button>
+    <button onclick="addGoat()">Add Goat</button>
   </div>
   <div class="example">
-    <button onclick="remWolf()">Remove</button>
-    <span>Wolf</span>
-    <button onclick="addWolf()">Add</button>
+    <button onclick="remWolf()">Remove Wolf</button>
+    <button onclick="addWolf()">Add Wolf</button>
   </div>
   <div class="example">
-    <p>Pre State</p>
+    <p>Before</p>
     <p>
       <button id="preboatnear" onclick="preBoatNear()">Boat Near</button>
       <button id="preboatfar" onclick="preBoatFar()">Boat Far</button>
@@ -26,7 +24,7 @@
     <p id="prefar"></p>
   </div>
   <div class="example">
-    <p>Post State</p>
+    <p>After</p>
     <p>
       <button id="postboatnear" onclick="postBoatNear()">Boat Near</button>
       <button id="postboatfar" onclick="postBoatFar()">Boat Far</button>
@@ -40,7 +38,7 @@
   <h1>Checker</h1>
   <div class="prompt">
     <p>Produce good and bad examples of the following specification. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
-    <p>Goats and Wolves River Crossing Event Transition (see homework for a more detailed description).</p>
+    <p>Goats and Wolves River Crossing Event Transition [Before->After] (see homework for a more detailed description).</p>
     <p><button id="run">Run examples against specifications</button></p>
     <p>Status: <span id="out"></span></p>
   </div>
@@ -48,10 +46,10 @@
 
 <div class="cases">
   <h1>Covered Cases</h1>
-  <div class="example">Under-constraint: <span class="case" id="floating">Some animal on both or neither side.</span></div>
-  <div class="example">Under-constraint: <span class="case" id="invalid-transition">Invalid Event Transition.</span></div>
-  <div class="example">Under-constraint: <span class="case" id="eating">Wolves outnumber Goats, eating occurs.</span></div>
-  <div class="example">Over-constraint: <span class="case" id="equal-goat-wolf">Equal goats and wolves only.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="floating">Allows some animal on both or neither side.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="invalid-transition">Allows an invalid event transition.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="eating">Allows wolves to outnumber Goats, thus eating occurs.</span></div>
+  <div class="example">Over-constraint: <span class="case" id="equal-goat-wolf">Disallows unequal goats and wolves.</span></div>
 </div>
 
 <script>
