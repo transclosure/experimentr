@@ -74,6 +74,21 @@ public final class Run_checker {
             goldspec = "timdemo/gold.als";
             ucspecs = new ArrayList<String>(Arrays.asList("timdemo/missing-partner.als", "timdemo/not-symmetric.als", "timdemo/no-max.als"));
         }
+        else if (taskid.equals("hw3_goatswolves_initial_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList());
+            goldspec = "hw3_goatswolves_initial_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList());
+        }
+        else if (taskid.equals("hw3_goatswolves_final_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList());
+            goldspec = "hw3_goatswolves_final_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList());
+        }
+        else if (taskid.equals("hw3_goatswolves_event_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList());
+            goldspec = "hw3_goatswolves_event_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList());
+        }
         else {
             System.out.println("INTERNAL ERROR: Task <"+taskid+"> not recognized. Aborting.");
             System.exit(1);
