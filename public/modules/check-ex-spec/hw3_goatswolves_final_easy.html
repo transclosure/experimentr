@@ -15,11 +15,8 @@
     <button onclick="addWolf()">Add Wolf</button>
   </div>
   <div class="example">
-    <p>Boat</p>
-    <p>
-      <button id="boatnear" onclick="boatNear()">Near</button>
-      <button id="boatfar" onclick="boatFar()">Far</button>
-    </p>
+    <button id="boatnear" onclick="boatNear()">Boat is on the Near side</button>
+    <button id="boatfar" onclick="boatFar()">Boat is on the Far side</button>
   </div>
   <div class="example" id="near"></div>
   <div class="example" id="far"></div>
@@ -81,8 +78,8 @@ function boatFar() {
 function update2() {
   update();
   var example = examples[e];
-  d3.select("#near").text("Near").append("p").append("span");
-  d3.select("#far").text("Far").append("p").append("span");
+  d3.select("#near").text("The Near side contains:").append("p").append("span");
+  d3.select("#far").text("The Far side contains:").append("p").append("span");
   var animals = example.goat.concat(example.wolf);
   for(i in animals) {
     var animal = animals[i];

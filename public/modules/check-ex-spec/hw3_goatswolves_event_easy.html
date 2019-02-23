@@ -15,19 +15,19 @@
     <button onclick="addWolf()">Add Wolf</button>
   </div>
   <div class="example">
-    <p>Before</p>
+    <p>The Before State consists of:</p>
     <p>
-      <button id="preboatnear" onclick="preBoatNear()">Boat Near</button>
-      <button id="preboatfar" onclick="preBoatFar()">Boat Far</button>
+      <button id="preboatnear" onclick="preBoatNear()">Boat is on the Near side</button>
+      <button id="preboatfar" onclick="preBoatFar()">Boat is on the Far side</button>
     </p>
     <p id="prenear"></p>
     <p id="prefar"></p>
   </div>
   <div class="example">
-    <p>After</p>
+    <p>The After State consists of:</p>
     <p>
-      <button id="postboatnear" onclick="postBoatNear()">Boat Near</button>
-      <button id="postboatfar" onclick="postBoatFar()">Boat Far</button>
+      <button id="postboatnear" onclick="postBoatNear()">Boat is on the Near side</button>
+      <button id="postboatfar" onclick="postBoatFar()">Boat is on the Far side</button>
     </p>
     <p id="postnear"></p>
     <p id="postfar"></p>
@@ -104,10 +104,10 @@ function postBoatFar() {
 function update2() {
   update();
   var example = examples[e];
-  d3.select("#prenear").text("Near").append("p").append("span");
-  d3.select("#prefar").text("Far").append("p").append("span");
-  d3.select("#postnear").text("Near").append("p").append("span");
-  d3.select("#postfar").text("Far").append("p").append("span");
+  d3.select("#prenear").text("The Near side contains:").append("p").append("span");
+  d3.select("#prefar").text("The Far side contains:").append("p").append("span");
+  d3.select("#postnear").text("The Near side contains:").append("p").append("span");
+  d3.select("#postfar").text("The Far side contains:").append("p").append("span");
   var animals = example.goat.concat(example.wolf);
   for(i in animals) {
     var animal = animals[i];
