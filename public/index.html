@@ -97,7 +97,7 @@
 
 <script>
 /* OVERALL EXPERIMENT FUNCTIONS */
-  var tasks = ["hw2_directedtree", "hw2_ring", "hw2_spanningtree", "hw2_undirectedtree", "timdemo", "hw3_goatswolves_initial", "hw3_goatswolves_final", "hw3_goatswolves_event"];
+  var tasks = ["hw2_directedtree", "hw2_ring", "hw2_spanningtree", "hw2_undirectedtree", "timdemo", "hw3_goatswolves_initial", "hw3_goatswolves_final", "hw3_goatswolves_event", "hw4_statemachine_deterministic", "hw4_statemachine_reachable", "hw4_statemachine_deadlock", "hw4_statemachine_livelock"];
   var data = {};
   var experimentID = null;
   var taskID = null;
@@ -149,7 +149,6 @@
     d3.select("#run").on('click', check);
     d3.selectAll(".case").style('visibility', 'hidden');
     update2();
-    runalloy();
   }
 /* GENERIC TASK FUNCTIONS */
   function check() {

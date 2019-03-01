@@ -89,6 +89,26 @@ public final class Run_checker {
             goldspec = "hw3_goatswolves_event_easy/gold.als";
             ucspecs = new ArrayList<String>(Arrays.asList("hw3_goatswolves_event_easy/invalid-transition.als", "hw3_goatswolves_event_easy/eating.als", "hw3_goatswolves_event_easy/floating.als"));
         }
+        else if (taskid.equals("hw4_statemachine_deterministic_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw4_statemachine_deterministic_easy/one_succ.als"));
+            goldspec = "hw4_statemachine_deterministic_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw4_statemachine_deterministic_easy/no_initial.als", "hw4_statemachine_deterministic_easy/nondeterministic.als"));
+        }
+        else if (taskid.equals("hw4_statemachine_reachable_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw4_statemachine_reachable_easy/directly_reachable.als"));
+            goldspec = "hw4_statemachine_reachable_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw4_statemachine_reachable_easy/no_initial.als", "hw4_statemachine_reachable_easy/unreachable.als"));
+        }
+        else if (taskid.equals("hw4_statemachine_deadlock_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw4_statemachine_deadlock_easy/smallest_deadlock.als"));
+            goldspec = "hw4_statemachine_deadlock_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw4_statemachine_deadlock_easy/no_initial.als", "hw4_statemachine_deadlock_easy/alive.als"));
+        }
+        else if (taskid.equals("hw4_statemachine_livelock_easy")) {
+            ocspecs = new ArrayList<String>(Arrays.asList("hw4_statemachine_livelock_easy/l_not_directly_reachable_from_cycle.als"));
+            goldspec = "hw4_statemachine_livelock_easy/gold.als";
+            ucspecs = new ArrayList<String>(Arrays.asList("hw4_statemachine_livelock_easy/no_initial.als", "hw4_statemachine_livelock_easy/cycle_unreachable.als", "hw4_statemachine_livelock_easy/cycle_contains_l.als", "hw4_statemachine_livelock_easy/l_unreachable_from_cycle.als"));
+        }
         else {
             System.out.println("INTERNAL ERROR: Task <"+taskid+"> not recognized. Aborting.");
             System.exit(1);

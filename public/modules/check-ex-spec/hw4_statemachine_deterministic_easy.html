@@ -1,0 +1,178 @@
+<div class="examples">
+	<h1>Examples</h1>
+  <div class="example">
+    <button onclick="prev()">Prev</button>
+    <span>Example <span id="e"></span> of 5</span></span>
+    <button onclick="next()">Next</button>
+    <p><button id="g" onclick="swap()"></button></p>
+  </div>
+  <div class="example"><svg></svg></div>
+  <div class="example">
+    <button onclick="remNode(true)">Remove Initial State</button>
+    <button onclick="addNode(true)">Add Initial State</button>
+  </div>
+  <div class="example">
+    <button onclick="remNode(false)">Remove State</button>
+    <button onclick="addNode(false)">Add State</button>
+  </div>
+  <div class="example" id="succ">
+  </div>
+</div>
+
+<div class="checker">
+  <h1>Checker</h1>
+  <div class="prompt">
+    <p>Produce good and bad examples of the following specification. No example should be inconsistent with the gold-standard specification. Cases you cover will appear below.</p>
+    <p>Deterministic State Machines (see homework for a detailed definition).</p>
+    <p><button id="run">Run examples against specifications</button></p>
+    <p>Status: <span id="out"></span></p>
+  </div>
+</div>
+
+<div class="cases">
+  <h1>Covered Cases</h1>
+  <div class="example">Under-constraint: <span class="case" id="no_initial">Allows no Initial States.</span></div>
+  <div class="example">Under-constraint: <span class="case" id="nondeterministic">Allows multiple successors (nondeterministic).</span></div>
+  <div class="example">Over-constraint: <span class="case" id="one_succ">Disallows States with no successors.</span></div>
+</div>
+
+<script>
+// modelinput
+function graph2run(example) {
+  var nodes = example.nodes;
+  var links = example.links;
+  var good = example.good;
+  //
+  var line1 = "";
+  var Is = example.nodes.filter(n => n.id.includes("I"));
+  if(Is.length != 0) {
+    line1 = "one sig ";
+    for(n in Is) {
+      var node = Is[n];
+      line1 += node.id + ", ";
+    }
+    line1 = line1.substring(0, line1.length-2);
+    line1 += " extends Initial {}";
+  }
+  //
+  var line2 = "";
+  var Ss = example.nodes.filter(n => n.id.includes("S"));
+  if(Ss.length != 0) {
+    line2 = "one sig ";
+    for(n in Ss) {
+      var node = Ss[n];
+      line2 += node.id + ", ";
+    }
+    line2 = line2.substring(0, line2.length-2);
+    line2 += " extends State {}";
+  }
+  //
+  var line3 = "run {";
+  if(example.links.length == 0) {
+     line3 += "no succ}";
+  } 
+  else {
+    line3 += "succ = ";
+    for(l in example.links) {
+      var link = example.links[l];
+      line3 += "("+link.target.id+"->"+link.source.id+")+";
+    }
+    line3 = line3.substring(0, line3.length-1);
+    line3 += "}";
+  }
+  line3 += " for "+example.nodes.length;
+  if(good) {
+    line3 += " expect 1";
+  } else {
+    line3 += " expect 0";
+  }
+  return line1+"\n"+line2+"\n"+line3;
+}
+function update2() {
+  update();
+  var example = examples[e];
+  d3.select("#succ").text("successor(State,State) (I=Initial, S=State)").append("p");
+  for(i in example.nodes) {
+    var nodeA = example.nodes[i];
+    for(j in example.nodes) {
+      var nodeB = example.nodes[j];
+      var nextAB = example.links.filter(l => l.source.id == nodeB.id && l.target.id == nodeA.id);
+      d3.select("#succ").append("input")
+        .attr("type", "button")
+        .attr("class", function () {
+          if(nextAB.length == 0) {
+            return "";
+          }
+          else {
+            return "toggled";
+          }
+        })
+        .attr("name", nodeA.id+","+nodeB.id)
+        .attr("value", nodeA.id+","+nodeB.id)
+        .attr("onclick", "toggleSucc(\'"+nodeA.id+"\',\'"+nodeB.id+"\')"); 
+    }
+    d3.select("#succ").append("br");
+  }
+  viz(example.nodes, example.links);
+}
+function addNode(isI) {
+  var example = examples[e];
+  var n = null;
+  var node = null;
+  if(isI) {
+    n = (example.nodes.filter(n => n.id.includes("I"))).length+1;
+    node = "I"+n;
+  } else {
+     n = (example.nodes.filter(n => n.id.includes("S"))).length+1;
+     node = "S"+n;
+  }
+  example.nodes = example.nodes.concat([{id:node}]);
+  update2();
+}
+function remNode(isI) {
+  var example = examples[e];
+  var n = null;
+  var node = null;
+  if(isI) {
+    n = (example.nodes.filter(n => n.id.includes("I"))).length;
+    node = "I"+n;
+  } else {
+     n = (example.nodes.filter(n => n.id.includes("S"))).length;
+     node = "S"+n;
+  }
+  example.links = example.links.filter(l => l.source.id != node && l.target.id != node);
+  example.nodes = example.nodes.filter(n => n.id != node);
+  update2();
+}
+function toggleSucc(atomB, atomA) {
+  var example = examples[e];
+  var nextAB = example.links.filter(l => l.source.id == atomA && l.target.id == atomB);
+  if(nextAB.length == 0) {
+    example.links = example.links.concat([{source:atomA, target:atomB}]);
+  } else {
+    example.links = example.links.filter(l => l.source.id != atomA || l.target.id != atomB);
+  }
+  update2();
+  update2();
+}
+examples = [
+      {good : true, nodes : [{id:"I1"}], links: []},
+      {good : true, nodes : [{id:"I1"}], links: []},
+      {good : true, nodes : [{id:"I1"}], links: []},
+      {good : true, nodes : [{id:"I1"}], links: []},
+      {good : true, nodes : [{id:"I1"}], links: []}];
+init();
+toggleSucc("I1","I1");
+next();
+toggleSucc("I1","I1");
+next();
+toggleSucc("I1","I1");
+next();
+toggleSucc("I1","I1");
+next();
+toggleSucc("I1","I1");
+prev();
+prev();
+prev();
+prev();
+</script>

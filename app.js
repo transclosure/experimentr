@@ -167,3 +167,35 @@ app.get('/hw3_goatswolves_event_easy', function handlePost(req, res) {
     res.send(stdout);
   });
 })
+app.get('/hw4_statemachine_deterministic_easy', function handlePost(req, res) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  ip = ip.replace(/:/g,'');
+  var dir = process.cwd()+"/alloy/";
+  exec("timeout 15s java -jar Run_checker.jar hw4_statemachine_deterministic_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+    res.send(stdout);
+  });
+})
+app.get('/hw4_statemachine_reachable_easy', function handlePost(req, res) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  ip = ip.replace(/:/g,'');
+  var dir = process.cwd()+"/alloy/";
+  exec("timeout 15s java -jar Run_checker.jar hw4_statemachine_reachable_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+    res.send(stdout);
+  });
+})
+app.get('/hw4_statemachine_deadlock_easy', function handlePost(req, res) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  ip = ip.replace(/:/g,'');
+  var dir = process.cwd()+"/alloy/";
+  exec("timeout 15s java -jar Run_checker.jar hw4_statemachine_deadlock_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+    res.send(stdout);
+  });
+})
+app.get('/hw4_statemachine_livelock_easy', function handlePost(req, res) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  ip = ip.replace(/:/g,'');
+  var dir = process.cwd()+"/alloy/";
+  exec("timeout 15s java -jar Run_checker.jar hw4_statemachine_livelock_easy "+ip+" "+req.query.ex1+" "+req.query.ex2+" "+req.query.ex3+" "+req.query.ex4+" "+req.query.ex5, {cwd: dir}, function(error, stdout, stderr) {
+    res.send(stdout);
+  });
+})
