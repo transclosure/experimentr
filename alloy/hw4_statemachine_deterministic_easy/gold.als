@@ -3,7 +3,7 @@ sig Initial extends State {}
 
 fact {
 	-- one or more initial states
-	some Initial	
+	one Initial	
 	-- (a) Deterministic: each state has at most one successor
 	all s: State | lone s.succ
 }
