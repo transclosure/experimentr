@@ -1,7 +1,7 @@
 <div id="debrief">
 
 <p>
-Thank you again for your participation. Feel free submit any additional comments below.
+Thank you again for your participation. Submit any additional comments below. Your unique completion ID will be displayed after you submit your comments. 
 </p>
 
 <textarea name="textarea" rows="10" cols="50">Leave feedback here</textarea>
@@ -9,6 +9,7 @@ Thank you again for your participation. Feel free submit any additional comments
 <button id="submitComments" disabled="true" type="button">Submit</button>
 <br>
 <div id="submitFeedback"></div>
+<div id="postId"></div>
 
 </div>
 
@@ -16,11 +17,7 @@ Thank you again for your participation. Feel free submit any additional comments
 </style>
 
 <script>
-(function() {
-  var postId  = experimentr.postId()
-    , data    = {};
-
-  d3.select("#postId").text(postId);
+  var postId  = experimentr.postId();
 
   var comments = d3.select('#debrief').select('textarea')
     .on('keypress', function() { d3.select('#submitComments').attr('disabled', null); })
@@ -32,10 +29,12 @@ Thank you again for your participation. Feel free submit any additional comments
   function validate() {
     if( data.comments ) {
       data.finished = true;
+      data["task"] = "COMMENTS";
+      data["postId"] = null; // needed to not overwrite previous data entry
       experimentr.addData(data);
       d3.select('#submitComments').attr('disabled', 'true');
       d3.select('#submitFeedback').text('Submit Successful');
+      d3.select("#postId").text(postId);
     }
   }
-}());
 </script>

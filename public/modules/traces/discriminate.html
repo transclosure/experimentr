@@ -1,0 +1,95 @@
+<div class="examples">
+	<h1>Building Walkthrough Directions</h1>
+  <div class="example">
+    <img id="img" src="" width="380px">
+  </div>
+</div>
+
+<div class="question">
+  <h1>Question <span id="current">0</span> of <span id="total">0</span></h1>
+  <div class="prompt">
+    <p>There are directions to the left, paired with a command in bold below. Good directions follow the command correctly, while bad directions violate the command in some way. Answer whether the given directions are good/bad below. You will be given feedback on your answer before proceeding.</p>
+    <b><p id="command">NL command goes here</p></b>
+    <span id="answer">
+      <button id="pos">Good directions for the given walkthrough command.</button>
+      <button id="neg">Bad directions for the given walkthrough command.</button>
+    </span>
+    <p id="feedback"></p>
+    <span id="continue">
+      <button id="understood">I understand why I was right/wrong. Continue.</button>
+      <button id="confused">I am confused why I was right/wrong. Continue.</button>
+    </span>
+  </div>
+</div>
+
+<script>
+  var commands = [
+['avoid landmark one and go to landmark two . if you have reached landmark two then you can go to landmark one . (-).jpg', 'landmark one was not avoided'],
+['avoid landmark one and go to landmark two . if you have reached landmark two then you can go to landmark one . (+).jpg', 'landmark one was avoided'],
+['avoid landmark one and go to the green room . (-).jpg', 'landmark one was not avoided'],
+['avoid landmark one and go to the green room . (+).jpg', 'landmark one was avoided'],
+['avoid landmark one until you go to the red room . (-).jpg', 'landmark one was not avoided'],
+['avoid landmark one until you go to the red room . (+).jpg', 'landmark one only visited after the red room'],
+['avoid the blue room and go to the second floor . (-).jpg', 'the blue room was not avoided'],
+['avoid the blue room and go to the second floor . (+).jpg', 'the blue room was avoided'],
+['avoid the blue room until passing landmark one . (-).jpg', 'the blue room was not avoided'],
+['avoid the blue room until passing landmark one . (+).jpg', 'the blue room was avoided'],
+['go to landmark one and always avoid the blue room . (-).jpg', 'landmark one was not reached'],
+['go to landmark one and always avoid the blue room . (+).jpg', 'landmark one was reached without entering the blue room'],
+['go to landmark one before navigating to the first floor . (-).jpg', 'the first floor was not reached'],
+['go to landmark one before navigating to the first floor . (+).jpg', 'the first floor was reached'],
+['go to landmark one by only navigating within the green room . (-).jpg', 'the green room was left'],
+['go to landmark one by only navigating within the green room . (+).jpg', 'the green room was not left'],
+['go to landmark two but avoid landmark one . (-).jpg', 'landmark two was not reached'],
+['go to landmark two but avoid landmark one . (+).jpg', 'landmark two was reached while avoiding landmark one'],
+['go to the green room while always avoiding the blue room . (-).jpg', 'the blue room was not avoided'],
+['go to the green room while always avoiding the blue room . (+).jpg', 'the green room was reached while avoiding the blue room'],
+['go to the second floor and then go to the yellow room . (-).jpg', 'the second floor was not reached first'],
+['go to the second floor and then go to the yellow room . (+).jpg', 'the second floor was reached before the first floor'],
+['go to the second floor but do not go through the red room first . (-).jpg', 'the red room was not avoided'],
+['go to the second floor but do not go through the red room first . (+).jpg', 'the red room was avoided while going to the second floor'],
+['go to the third floor but avoid landmark two . (-).jpg', 'the third floor was not reached'],
+['go to the third floor but avoid landmark two . (+).jpg', 'the third floor was reached while avoiding landmark two'],
+['move to the first floor by going through the green room . (-).jpg', 'the green room was not visited'],
+['move to the first floor by going through the green room . (+).jpg', 'the first floor was visited after the green room was visited'],
+['navigate through landmark one and go to the red room . (-).jpg', 'the red room was not reached'],
+['navigate through landmark one and go to the red room . (+).jpg', 'the red room was reached after visiting landmark one'],
+['navigate to the first floor via the green room . (-).jpg', 'the first floor was not reached'],
+['navigate to the first floor via the green room . (+).jpg', 'the first floor was reached through the green room'],
+['pass through landmark one on your way to the first floor . (-).jpg', 'landmark one was not visited'],
+['pass through landmark one on your way to the first floor . (+).jpg', 'landmark one was visited while reaching the first floor'],
+['proceed to the red room without going to any other floors . (-).jpg', 'other floors were visited'],
+['proceed to the red room without going to any other floors . (+).jpg', 'the red room was reached without using the elevator'],
+['stay on the second floor to get to landmark one . (-).jpg', 'landmark one was not visited'],
+['stay on the second floor to get to landmark one . (+).jpg', 'landmark one was visited']];
+  var i = -1;
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function update() {
+    i = i + 1;
+    if(i >= commands.length) {
+      experimentr.next();
+    } else {
+      var actual = commands[i][0].includes("(+)");
+      var command = commands[i][0].substring(0, commands[i][0].length-8);
+      d3.select("#img").attr('src', 'modules/traces/'+commands[i][0]);
+      d3.select("#command").text(command);
+      d3.select("#current").text(i+1);
+      discriminate(command, actual);
+    }
+  }
+  function feedback() {
+    var a = data["answer"] ? "good" : "bad"
+    var c = data["answer"]==data["actual"] ? "correct" : "incorrect";
+    var f = commands[i][1];
+    d3.select("#feedback").text("You answered "+a+", which was "+c+", because "+f+".");
+  }
+  d3.select("#total").text(commands.length);
+  commands = shuffle(commands);
+  update();
+</script>

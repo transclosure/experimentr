@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 
 <meta charset="utf-8">
-<title>✓✗spec</title>
+<title>Critique Building Walkthrough Directions</title>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="experimentr.js"></script>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en"></link>
-<meta name="google-signin-client_id" content="975859806601-n3oca6fa673lv3f7b6u5ev9bqr5ij666.apps.googleusercontent.com">
 
 <style>
   * {
@@ -16,7 +14,7 @@
     }
   body {
     margin: auto auto auto auto;
-    width: 1080px;
+    width: 800px;
   }
   h1 {
     font-size: 150%;
@@ -34,7 +32,7 @@
     padding-left: 1.5em;
   }
   b{
-    font-weight: normal;
+    font-weight: bold;
     text-shadow : 0 0 0 #333;
   }
   i {
@@ -51,17 +49,14 @@
   }
   #experimentr {
     margin: 0em auto 0em auto;
-    width: 1080px;
-  }
-  #control {
-    margin-top: 1em;
+    width: 800px;
   }
   #next-button {
     float: right;
     font-size: xx-large;
     font-weight: bold;
   }
-  .examples, .checker, .cases {
+  .examples, .question {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
@@ -72,235 +67,66 @@
     width: 50%;
     float:left;
   }
-  .checker {
+  .question {
     width: 45%;
     float: right;  
   }
-  .cases {
-    width: 45%;
-    float: right;  
-  }
-  .prompt, .example, .case {
+  .prompt, .example {
     border: 1px solid #AAA;
     border-radius: 5px;
     padding: 5px;
     background: #FFF;
     text-align:center;
   }
-  .toggled {
-    -webkit-appearance: button;
-    font-weight: bolder;
-  }
 </style>
 
-<body><div id="signin" class="g-signin2" data-onsuccess="onSignIn"></div></body>
+<body></body>
 
 <script>
-/* OVERALL EXPERIMENT FUNCTIONS */
-  var tasks = ["hw2_directedtree", "hw2_ring", "hw2_spanningtree", "hw2_undirectedtree", "timdemo", "hw3_goatswolves_initial", "hw3_goatswolves_final", "hw3_goatswolves_event", "hw4_statemachine_deterministic", "hw4_statemachine_reachable", "hw4_statemachine_deadlock", "hw4_statemachine_livelock"];
   var data = {};
-  var experimentID = null;
-  var taskID = null;
-  var e = null;
-  var examples = null;
-  function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    document.getElementById("signin").innerText = "Welcome " + profile.getName();
-    data['email'] = profile.getEmail();
-    gettask();
+  var time = Date.now();
+/* OVERALL EXPERIMENT FUNCTIONS */
+  function getsequence() {
+    var consent = "modules/consent/";
+    var t = "modules/traces/discriminate.html";
+    var debrief = "modules/debrief";
+    return [consent, t, debrief];
   }
-  function gettask() {
-    d3.select("body").append("p")
-      .text("Select a task:")
-      .attr("class", "prompt")
-      .append("div").attr("id", "taskselect");
-    for(t in tasks) {
-      var task = tasks[t];
-      d3.select("#taskselect").append("input")
-        .attr("type", "button")
-        .attr("onclick", "load(\'"+task+"\')")
-        .attr("name", task)
-        .attr("value", task);
-      d3.select("#taskselect").append("br");
-    }
-  }
-  function load(tid) {
-    taskID = tid;
-    if(taskID!="timdemo") {
-      if (true) {
-        taskID = taskID + "_easy";
-      } else {
-        taskID = taskID + "_hard";
-      }
-    }
-    d3.select("body").html("");
-    var task = 'modules/check-ex-spec/'+taskID+".html";
-    data['taskID'] = taskID;
-    experimentr.sequence([task]).start();
-  }
-  function init() {
-    e = 0;
-    //
+  function discriminate(t, a) {
+    data["task"] = t;
+    data["actual"] = a;
+    // 
     experimentr.hideNext();
-    d3.select("#run").on('click', check);
-    d3.selectAll(".case").style('visibility', 'hidden');
-    update2();
+    d3.select("#answer").style("display", null);
+    d3.select("#pos").on("click", function(){answer(true)});
+    d3.select("#neg").on("click", function(){answer(false)});
+    d3.select("#feedback").text("");
+    d3.select("#understood").on("click", function(){cont(true)});
+    d3.select("#confused").on("click", function(){cont(false)});
+    d3.select("#continue").style("display", "none");
   }
 /* GENERIC TASK FUNCTIONS */
-  function check() {
-    data['time'] = new Date(Date.now()).toString();
-    data['examples'] = "\""+getExamples()+"\"";
-    data['postId'] = null;
-    runalloy();
+  function answer(goodorbad) {
+    data["elapsed"] = (Date.now() - time) / 1000;
+    time = Date.now();
+    data["time"] = Date(time).toString();
+    data["answer"] = goodorbad; 
+    //
+    d3.select("#answer").style("display", "none");
+    d3.select("#continue").style("display", null);
+    feedback();
+  }
+  function cont(understoodorconfused) {
+    data["postId"] = null; // needed to not overwrite previous data entry
+    data.comments = "n/a";
+    data["understoodfeedback"] = understoodorconfused; 
     experimentr.addData(data);
+    //
+    data["elapsed"] = null;
+    data["time"] = null;
+    data["answer"] = null; 
+    data["understoodfeedback"] = null; 
+    update();
   }
-  function prev() {
-    if(e > 0) e--;
-    update2();
-  }
-  function next() {
-    if(e < 4) e++;
-    update2();
-  }
-  function swap() {
-    examples[e].good = !(examples[e].good);
-    update2();
-  }
-  function update() {
-    d3.select("#e").text(e+1);
-    if(examples[e].good) {
-      d3.select("#g").text("Good example: any over-constraint that does not accept this example will be revealed as a covered case.");
-    } else {
-      d3.select("#g").text("Bad example: any under-constraint that does accept this example will be revealed as a covered case.");
-    }
-    var example = examples[e];
-  }
-  function getExamples() {
-    var ex1 = "\'"+graph2run(examples[0])+"\'";
-    ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex2 = "\'"+graph2run(examples[1])+"\'";
-    ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex3 = "\'"+graph2run(examples[2])+"\'";
-    ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex4 = "\'"+graph2run(examples[3])+"\'";
-    ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex5 = "\'"+graph2run(examples[4])+"\'";
-    ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
-    return [ex1,ex2,ex3,ex4,ex5];
-  }
-  function alloyparams() {
-    var ex1 = "ex1=\'"+encodeURIComponent(graph2run(examples[0]))+"\'";
-    ex1 = ex1.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex2 = "ex2=\'"+encodeURIComponent(graph2run(examples[1]))+"\'";
-    ex2 = ex2.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex3 = "ex3=\'"+encodeURIComponent(graph2run(examples[2]))+"\'";
-    ex3 = ex3.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex4 = "ex4=\'"+encodeURIComponent(graph2run(examples[3]))+"\'";
-    ex4 = ex4.replace(/(?:\r\n|\r|\n)/g, '@');
-    var ex5 = "ex5=\'"+encodeURIComponent(graph2run(examples[4]))+"\'";
-    ex5 = ex5.replace(/(?:\r\n|\r|\n)/g, '@');
-    return "?"+ex1+"&"+ex2+"&"+ex3+"&"+ex4+"&"+ex5;
-  }
-  function runalloy() {
-    d3.select("#out").text("Checking...");
-    var req = new XMLHttpRequest();
-    var url = "/"+taskID+alloyparams();
-    req.open("GET", url, false);
-    req.send();
-    var response = req.response.split('\n');
-    try {
-      d3.selectAll(".case").style('visibility', 'hidden');
-      var cases = response.shift();
-      for (c in cases.split(" ")) {
-        if(c>0) {
-          var id = cases.split(" ")[c].split("/")[1].split(".als")[0];
-          d3.select("#"+id).style('visibility', null);
-        }
-      }
-      var info = response.join('\n');
-      var oc = info.match(new RegExp("Avoided " + "(.*)" + " of"))[1];
-      var octotal = info.match(new RegExp("of " + "(.*)" + " over-constrained"))[1];
-      var uc = info.match(new RegExp("Caught " + "(.*)" + " of"))[1];
-      var uctotal = info.match(new RegExp("of " + "(.*)" + " under-constrained"))[1];
-      data['oc'] = oc;
-      data['octotal'] = octotal;
-      data['uc'] = uc;
-      data['uctotal'] = uctotal;
-      d3.select("#out").text(info);
-    } catch (e) {
-      d3.select("#out").text(req.response);
-    }
-  }
-  function viz(nodes, links) {
-    var width = 400;
-    var height = 400;
-    var radius = 20;
-    var svg = d3.select('svg');
-    svg.text("");
-    svg.attr('width', width).attr('height', height)
-    var linkForce = d3
-      .forceLink()
-      .id(function (link) { return link.id })
-      .distance(100);
-    var simulation = d3
-      .forceSimulation()
-      .force('link', linkForce)
-      .force('charge', d3.forceManyBody().strength(500))
-      .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide().radius(50))
-    var linkElements = svg.append("g")
-      .attr("class", "links")
-      .selectAll("line")
-      .data(links)
-      .enter().append("line")
-        .attr("stroke-width", 3)
-        .attr("stroke", "black")
-        .attr("opacity", 0.2)
-        .attr("marker-end", "url(#arrow)");
-    var arrowElements = svg.append("svg:defs").append("svg:marker")
-      .attr("id", "arrow")
-      .attr("refX", radius*.5)
-      .attr("refY", 2)
-      .attr("markerWidth", 6)
-      .attr("markerHeight", 6)
-      .attr("orient", "auto")
-      .append("path")
-      .attr("d", "M 0 0 4 2 0 4 1 2")
-      .style("fill", "black");
-    var nodeElements = svg.append("g")
-      .attr("class", "nodes")
-      .selectAll("circle")
-      .data(nodes)
-      .enter().append("circle")
-        .attr("r", radius)
-        .attr("stroke", "black")
-        .style("fill", "white");
-    var textElements = svg.append("g")
-      .attr("class", "texts")
-      .selectAll("text")
-      .data(nodes)
-      .enter().append("text")
-        .text(function (node) { return node.id })
-          .attr("font-size", radius*.5)
-          .attr("dx", -radius*.75)
-        .attr("dy", 0);
-    simulation.nodes(nodes).on('tick', () => {
-      nodeElements
-        .attr('cx', function (node) { return node.x })
-        .attr('cy', function (node) { return node.y })
-      textElements
-        .attr('x', function (node) { return node.x })
-        .attr('y', function (node) { return node.y })
-      linkElements
-        .attr('x1', function (link) { return link.target.x })
-        .attr('y1', function (link) { return link.target.y })
-        .attr('x2', function (link) { return link.source.x })
-        .attr('y2', function (link) { return link.source.y })
-    })
-    simulation.force("link").links(links)
-  }
+  experimentr.sequence(getsequence()).start();
 </script>
