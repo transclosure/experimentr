@@ -94,7 +94,7 @@
   }
   function discriminate(t, a) {
     data["task"] = t;
-    data["actual"] = a;
+    data["actual"] = String(a);
     // 
     experimentr.hideNext();
     d3.select("#answer").style("display", null);
@@ -110,7 +110,7 @@
     data["elapsed"] = (Date.now() - time) / 1000;
     time = Date.now();
     data["time"] = Date(time).toString();
-    data["answer"] = goodorbad; 
+    data["answer"] = String(goodorbad); 
     //
     d3.select("#answer").style("display", "none");
     d3.select("#continue").style("display", null);
@@ -119,7 +119,7 @@
   function cont(understoodorconfused) {
     data["postId"] = null; // needed to not overwrite previous data entry
     data.comments = "n/a";
-    data["understoodfeedback"] = understoodorconfused; 
+    data["understoodfeedback"] = String(understoodorconfused); 
     experimentr.addData(data);
     //
     data["elapsed"] = null;

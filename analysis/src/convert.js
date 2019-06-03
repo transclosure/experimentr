@@ -2,28 +2,20 @@ var j2c           = require('json2csv')
   , fs            = require('fs')
   , file          = process.argv[2]
   , _             = require('underscore')
-  , fields        = getFields()
+  , fields        = ['id','task','actual','answer','understoodfeedback','elapsed','time','comments']
   , data;
-
-function getFields() {
-  var experimentFields = ['email','taskID','time','uc','uctotal','oc','octotal','examples'];
-  var taskFields = [];
-  return experimentFields;
-}
 
 fs.readFile(file, 'utf8', function (err, data) {
   if (err) console.log(err)
 
   data = JSON.parse(data)
 
-  data = addConditions(data);
-
   // filters any undefined data (it makes R scripting easier)
   data = filterUndefined(data)
 
-  // use 'debug' for your workerId when testing experiments, 
+  // use 'debug' for your workerId when testing experiments,
   //   comment out if you want to analyze data from yourself
-  //data = filterDebug(data) 
+  //data = filterDebug(data)
 
   if (data.length > 0) convert( data )
 })

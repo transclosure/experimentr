@@ -1,24 +1,19 @@
 <div id="debrief">
-
-<p>
-Thank you again for your participation. Submit any additional comments below. Your unique completion ID will be displayed after you submit your comments. 
-</p>
-
-<textarea name="textarea" rows="10" cols="50">Leave feedback here</textarea>
-<br>
-<button id="submitComments" disabled="true" type="button">Submit</button>
-<br>
-<div id="submitFeedback"></div>
-<div id="postId"></div>
-
+  <p>
+    Thank you again for your participation. Submit any additional comments below. Your unique completion ID will be displayed after you submit your comments. 
+  </p>
+  <p>
+    <textarea name="textarea" rows="10" cols="50">Leave feedback here</textarea>
+    <br>
+    <button id="submitComments" disabled="true" type="button">Submit</button>
+  </p>
+  <p id="submitFeedback"></p>
+  <p id="postId"></p>
 </div>
 
-<style>
-</style>
+<style></style>
 
 <script>
-  var postId  = experimentr.postId();
-
   var comments = d3.select('#debrief').select('textarea')
     .on('keypress', function() { d3.select('#submitComments').attr('disabled', null); })
     .on('blur', function() { d3.select('#submitComments').attr('disabled', null); });
@@ -31,10 +26,15 @@ Thank you again for your participation. Submit any additional comments below. Yo
       data.finished = true;
       data["task"] = "COMMENTS";
       data["postId"] = null; // needed to not overwrite previous data entry
+      data["actual"] = "n/a";
+      data["answer"] = "n/a";
+      data["understoodfeedback"] = "n/a";
+      data["elapsed"] = "n/a";
+      data["time"] = "n/a";
       experimentr.addData(data);
       d3.select('#submitComments').attr('disabled', 'true');
       d3.select('#submitFeedback').text('Submit Successful');
-      d3.select("#postId").text(postId);
+      d3.select("#postId").text((+new Date()).toString(36));
     }
   }
 </script>
